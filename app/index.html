@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="{{ siteConfig.description }}">
+    <meta name="keywords" content="{{ siteConfig.keywords }}">
+    <meta name="author" content="{{ siteConfig.author }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>{{ siteConfig.title }}</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="{{ siteConfig.title }}">
+    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <!-- fonts and style sheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="css/main.css?{{cachebuster}}">
+
+</head>
+
+<body>
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Quality of Life Explorer</span>
+            </div>
+        </header>
+        <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+            <header class="demo-drawer-header">
+                <a href="./">Qualify of Life Explorer</a>
+            </header>
+            <sc-sidenav></sc-sidenav>
+        </div>
+        <main class="mdl-layout__content mdl-color--grey-100">
+            <div class="mdl-grid">
+                <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+                    <div class="map-container">
+                        <sc-map></sc-map>
+                        <sc-toc></sc-toc>
+                    </div>
+                    <div class="flexcontainer">
+                        <div class="flex-item mdl-typography--text-right">
+                            <sc-years></sc-years>
+                        </div>
+                        <div class="flex-item mdl-typography--text-right">
+                            <p>
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent selected-clear">
+                                    Clear Selected
+                                </button>
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="report-button">
+                                    Report
+                                </button>
+                                <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+                                    for="report-button">
+                                    <li class="mdl-menu__item" onclick="reportEmbed()">Print Map</li>
+                                    <li class="mdl-menu__item" onclick="reportFull()">Full Report</li>
+                                </ul>
+                            </p>
+                            {{#if selectgroups}}
+                                Select Approximate:
+                                {{#each selectgroups}}
+                                    <a href="javascript:void(0)" id="selectgroup-{{@index}}" class="selectgroup-link">{{@key}}</a>
+                                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu"
+                                        for="selectgroup-{{@index}}">
+                                    {{#each this}}
+                                        <li class="mdl-menu__item" data-selectgroup="{{this}}">{{@key}}</li>
+                                    {{/each}}
+                                    </ul>
+                                {{/each}}
+                            {{/if}}
+                        </div>
+                    </div>
+                    <sc-datatable></<sc-datatable>
+                </div>
+                <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
+                    <sc-search></sc-search>
+                    <sc-scatterplot></sc-scatterplot>
+                    <sc-trendchart></sc-trendchart>
+                </div>
+            </div>
+            <sc-metadata></sc-metadata>
+            <div class="mdl-grid">
+                <sc-embedcode></sc-embedcode>
+                <div class="mdl-typography--text-center mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet comment-container">
+                    <div class="comment-form">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="email" id="contact-email" required>
+                            <label class="mdl-textfield__label" for="contact-email">Email Address</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <textarea class="mdl-textfield__input" type="text" rows= "3" id="contact-message" required></textarea>
+                            <label class="mdl-textfield__label" for="contact-message">Message</label>
+                        </div>
+                        <p>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" style="display: inline" id="contact-submit">
+                                  <i class="material-icons">contact_mail</i> Contact Us
+                            </button>
+                        </p>
+                    </div>
+                    <div class="comment-complete">
+                        <p>
+                            <i class="material-icons">thumb_up</i><br>
+                            Thanks!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <footer class="mdl-grid">
+                <div class="mdl-typography--text-center mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet">
+                        <p>
+                            <img src="img/seals.png" width="177" height="36" alt="City and County Seals">
+                        </p>
+                        <p class='site-links'>
+                            {{#each siteConfig.links}}
+                            <a href="{{this.href}}" target="_blank">{{this.text}}</a>
+                            {{/each}}
+                        </p>
+                        <p class="text-muted">
+                            Created by <a href="http://charmeck.org/mecklenburg/county/Pages/Default.aspx">Mecklenburg County</a>, the <a href="http://charmeck.org/city/charlotte/Pages/default.aspx">City of Charlotte</a>, and <a href="http://www.uncc.edu/">UNCC</a>
+                            <br>
+							with much &#9829; for the projects that make this site possible:
+                            <br>
+                            <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>,
+                            <a href="http://osm2vectortiles.org/" target="_blank">OSM2VectorTiles</a>,
+                            <a href="https://www.mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL JS</a>,
+                            <a href="http://vuejs.org/" target="_blank">Vue.js</a>, and
+                            <a href="http://getmdl.io/" target="_blank">Material Design Lite</a>
+                            <br>
+                            <br>Source code on <a href="https://github.com/tobinbradley/Mecklenburg-County-Quality-of-Life-Dashboard">Github</a>
+                        </p>
+                </div>
+
+            </footer>
+        </main>
+
+    </div>
+
+
+    <script src="js/main.js?{{cachebuster}}"></script>
+    <!--   Google Analytics -->
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o),
+				m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', '{{ siteConfig.gaKey }}', 'auto');
+		ga('send', 'pageview');
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+@import '../../node_modules/material-design-lite/material.css';
+@import '../../node_modules/chartist/dist/chartist.css';
+@import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
+@import './modules/material.css';
+
+
+html, body {
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    color: #333;
+}
+
+.selectgroup-link {
+    padding-left: 6px;
+    white-space: nowrap;
+}
+
+.logo-img {
+    width: 100%;
+    /*height: 48px;*/
+    /*border-radius: 24px;*/
+}
+.demo-drawer-header a {
+    text-decoration: none;
+    color: inherit;
+    padding-top: 5px;
+}
+
+
+/* prevent top-of-page spasms */
+.map-container {
+    height: 600px;
+}
+.qol-chart {
+    min-height: 260px;
+}
+
+/* fix for mdl menu on linux screwing up page scrolling */
+.mdl-menu, .mdl-menu__container, .mdl-menu__outline {
+    z-index: 0;
+}
+
+/* footer stuff */
+footer {
+    .material-icons {
+        padding-right: 10px;
+    }
+    .mdl-cell {
+        padding: 10px;
+    }
+    div {
+
+    }
+}
+
+/* used in footer, TOC metric numbers */
+.flexcontainer {
+    display: flex;
+    flex-direction: row;
+    .flex-item {
+        flex-grow: 1;
+        width: 50%;
+        padding: 10px;
+    }
+}
+
+
+
+.comment-container {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .mdl-textfield {
+        width: 100%;
+    }
+    .comment-form {
+        width: 100%;
+    }
+    .comment-complete {
+        display: none;
+        i {
+            font-size: 3em;
+            text-shadow: 2px 2px 2px #ccc;
+        }
+        p {
+            font-size: 2em;
+        }
+    }
+}
+
+
+.search-container {
+    padding: 10px;
+    min-height: 91px;
+    .mdl-textfield {
+        width: 100%;
+        display: block;
+    }
+}
+
+.site-links a {
+    padding-left: 10px;
+    white-space: nowrap;
+}

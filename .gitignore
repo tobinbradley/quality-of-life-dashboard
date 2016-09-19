@@ -1,0 +1,9 @@
+.directory
+.htaccess
+node_modules
+bower_components
+data
+deploy.sh
+public
+npm-debug.log
+TODO.md
