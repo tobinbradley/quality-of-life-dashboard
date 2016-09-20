@@ -2,12 +2,7 @@ module.exports = {
 
     // provide your own postcss plugins
     postcss: [require("postcss-import")(),
-        require("postcss-nested"),
-        require("postcss-cssnext")({
-            'customProperties': true,
-            'colorFunction': true,
-            'customSelectors': true
-        })
+        require("postcss-nested")
     ],
     // configure autoprefixer
     autoprefixer: {
