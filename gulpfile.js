@@ -70,11 +70,8 @@ gulp.task("css", function() {
         .pipe(postcss([
             require("postcss-import")(),
             require("postcss-nested"),
-            require("postcss-cssnext")({
-                'browers': ['last 2 version'],
-                'customProperties': true,
-                'colorFunction': true,
-                'customSelectors': true
+            require("autoprefixer")({
+                'browers': ['last 2 version']
             })
         ]))
         .pipe(gutil.env.type === 'production' ? nano() : gutil.noop())
@@ -86,8 +83,8 @@ gulp.task("css", function() {
 gulp.task('js', function () {
     _.each(['main.js'], function(file) {
         browserify(`./app/js/${file}`)
-          .transform(babelify)
           .transform(vueify)
+          .transform(babelify)
           .transform(rollupify)
           .bundle()
           .pipe(source(file))

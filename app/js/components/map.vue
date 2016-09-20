@@ -40,7 +40,7 @@ export default {
             });
 
             // after map initiated, grab geography and intiate/style neighborhoods
-            map.on('load', function () {
+            map.on('style.load', function () {
                 axios.get('data/geography.geojson.json')
                     .then(function(response) {
                         _this.privateState.mapLoaded = true;
@@ -117,7 +117,7 @@ export default {
                     'line-color': '#666',
                     'line-width': 0.8
                 }
-            }, 'building');
+            }, _this.privateState.neighborhoodsBefore);
 
             // neighborhood boundaries highlight
             map.addLayer({
@@ -146,7 +146,7 @@ export default {
                         ]
                     }
                 }
-            }, 'water_label');
+            }, _this.privateState.neighborhoodsSelectedBefore);
 
             // neighborhoods fill
             map.addLayer({

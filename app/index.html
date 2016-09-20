@@ -37,16 +37,16 @@
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
             <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title">Quality of Life Explorer</span>
+                <span class="mdl-layout-title">{{ siteConfig.title }}</span>
             </div>
         </header>
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
             <header class="demo-drawer-header">
-                <a href="./">Qualify of Life Explorer</a>
+                <a href="./">{{ siteConfig.title }}</a>
             </header>
             <sc-sidenav></sc-sidenav>
         </div>
-        <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid">
                 <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
                     <div class="map-container">
@@ -121,7 +121,7 @@
                 </div>
             </div>
             <footer class="mdl-grid">
-                <div class="mdl-typography--text-center mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet">
+                <div class="mdl-typography--text-center mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet">
                         <p>
                             <img src="img/seals.png" width="177" height="36" alt="City and County Seals">
                         </p>
@@ -141,12 +141,11 @@
                             <a href="http://vuejs.org/" target="_blank">Vue.js</a>, and
                             <a href="http://getmdl.io/" target="_blank">Material Design Lite</a>
                             <br>
-                            <br>Source code on <a href="https://github.com/tobinbradley/Mecklenburg-County-Quality-of-Life-Dashboard">Github</a>
+                            <br>Source code on <a href="https://github.com/tobinbradley/quality-of-life-dashboard">Github</a>
                         </p>
                 </div>
-
             </footer>
-        </main>
+        </div>
 
     </div>
 

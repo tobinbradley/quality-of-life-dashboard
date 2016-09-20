@@ -173,7 +173,9 @@ MapGL.data = function() {
             mapLoaded: false,
             metricId: null,
             geoJSON: null,
-            locationPopup: null
+            locationPopup: null,
+            neighborhoodsBefore: mapConfig.neighborhoodsBefore,
+            neighborhoodsSelectedBefore: mapConfig.neighborhoodsSelectedBefore
         }
     };
 };
