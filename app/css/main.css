@@ -88,16 +88,6 @@ footer {
     }
 }
 
-
-.search-container {
-    padding: 10px;
-    min-height: 91px;
-    .mdl-textfield {
-        width: 100%;
-        display: block;
-    }
-}
-
 .site-links a {
     padding-left: 10px;
     white-space: nowrap;

@@ -143,6 +143,12 @@ export default {
 
 <style lang="css">
 .search-container {
+    padding: 10px;
+    min-height: 91px;
+    .mdl-textfield {
+        width: 100%;
+        display: block;
+    }
     /*Search results formatting*/
     .search-results {
         ul {

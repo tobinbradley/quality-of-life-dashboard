@@ -4,18 +4,14 @@
             <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col meta">
                 <h3>Why This is Important</h3>
                 {{{ sharedState.metadata | important }}}
+                <h4>Additional Resources</h4>
+                {{{ sharedState.metadata | resources }}}
             </div>
             <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing meta-side">
                 <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop meta">
                     <h3>About the Data</h3>
                     {{{ sharedState.metadata | about }}}
                 </div>
-            </div>
-        </div>
-        <div class="mdl-grid">
-            <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col meta meta-resources">
-                <h3>Additional Resources</h3>
-                {{{ sharedState.metadata | resources }}}
             </div>
         </div>
     </template>
@@ -26,7 +22,7 @@ import axios from 'axios';
 import {metaDescription, metaAbout, metaImportant, metaResources} from '../modules/meta.js';
 
 export default {
-    name: 'sc-metadata',    
+    name: 'sc-metadata',
     filters: {
         description: function(data) {
             return metaDescription(data);

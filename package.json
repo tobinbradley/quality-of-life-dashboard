@@ -38,6 +38,7 @@
     "mkdirp": "^0.5.1",
     "postcss-import": "^8.1.2",
     "postcss-nested": "^1.0.0",
+    "querystring": "^0.2.0",
     "rollupify": "^0.3.4",
     "turf-point-on-surface": "^3.0.12",
     "vinyl-buffer": "^1.0.0",

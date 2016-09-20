@@ -3,11 +3,11 @@
         <div v-if="sharedState.metric.config" class="embedcode">
             <h3>Embed This Map</h3>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-mdl>
-                <input class="mdl-textfield__input" type="text" id="sample3" value="{{sharedState.metric.config.title}}" v-model="privateState.title">
+                <input class="mdl-textfield__input" type="text" id="sample3" value="{{sharedState.metric.config.title}}" v-model="privateState.title" autocomplete="off">
                 <label class="mdl-textfield__label" for="sample3">Map Title</label>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="embed-textarea" v-mdl>
-                <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" onclick="this.select()" v-on:keypress.stop.prevent>{{privateState.title | createIframe}}</textarea>
+                <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" onclick="this.select()" v-on:keypress.stop.prevent autocomplete="off">{{privateState.title | createIframe}}</textarea>
                 <label class="mdl-textfield__label" for="sample5">Drop this in your web page</label>
             </div>
         </div>

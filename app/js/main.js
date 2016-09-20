@@ -20,6 +20,7 @@ import mapConfig from '../../data/config/map';
 import colors from './modules/breaks';
 import fetchData from './modules/fetch';
 import getURLParameter from './modules/geturlparams';
+import querystring from 'querystring';
 import Sidenav from './components/sidebar-nav.vue';
 import Metadata from './components/metadata.vue';
 import YearControl from './components/years.vue';
@@ -238,17 +239,23 @@ document.querySelector('#contact-submit').addEventListener('click', function() {
     let email = document.querySelector('#contact-email');
 
     if (message.checkValidity() && email.checkValidity()) {
-        axios.post('http://mcmap.org/utilities/feedback.php', {
-            email: email.value,
-            url: window.location.href,
-            agent: navigator.userAgent,
-            subject: "Quality of Life Dashboard Feedback",
-            to: "tobin.bradley@gmail.com",
-            message: message.value
-        })
-        .then(function() {
-            document.querySelector('.comment-form').style.display = 'none';
-            document.querySelector('.comment-complete').style.display = 'block';
-        });
+        axios.post('http://mcmap.org/utilities/feedback.php',
+            querystring.stringify({
+                email: email.value,
+                url: window.location.href,
+                agent: navigator.userAgent,
+                subject: "Quality of Life Dashboard Feedback",
+                to: "tobin.bradley@gmail.com",
+                message: message.value
+            }),
+            {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            })
+            .then(function() {
+                document.querySelector('.comment-form').style.display = 'none';
+                document.querySelector('.comment-complete').style.display = 'block';
+            });
     }
 });
