@@ -47,15 +47,11 @@ gulp.task('template', function(cb) {
             selectgroups: selectGroups
         };
 
-        handlebars.registerHelper('ifCond', function(v1, v2, options) {
-            if(v1 === v2) {
+        handlebars.registerHelper('ifEither', function(v1, v2, options) {
+            if(v1 !== null || v2 !== null) {
                 return options.fn(this);
             }
             return options.inverse(this);
-        });
-
-        handlebars.registerHelper('desc', function(m) {
-            return data.description['m' + m];
         });
 
         var template = handlebars.compile(source);
