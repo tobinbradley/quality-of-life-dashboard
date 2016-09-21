@@ -68,8 +68,12 @@
                                 </button>
                                 <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
                                     for="report-button">
-                                    <li class="mdl-menu__item" onclick="reportEmbed()">Print Map</li>
-                                    <li class="mdl-menu__item" onclick="reportFull()">Full Report</li>
+                                    {{#if siteConfig.qolembedURL}}
+                                    <li class="mdl-menu__item" data-printmap>Print Map</li>
+                                    {{/if}}
+                                    {{#if siteConfig.qolreportURL}}
+                                    <li class="mdl-menu__item" data-fullreport>Full Report</li>
+                                    {{/if}}
                                 </ul>
                                 {{/ifEither}}
                             </p>

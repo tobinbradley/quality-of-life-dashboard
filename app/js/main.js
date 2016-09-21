@@ -17,6 +17,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import dataConfig from '../../data/config/data';
 import mapConfig from '../../data/config/map';
+import siteConfig from '../../data/config/site';
 import colors from './modules/breaks';
 import fetchData from './modules/fetch';
 import getURLParameter from './modules/geturlparams';
@@ -226,36 +227,45 @@ document.querySelector('.selected-clear').addEventListener('click', function() {
 }, false);
 
 // Reports
-window.reportFull = function() {
-    window.open(`http://mcmap.org/qol-report/?s=${appState.selected.join(',')}`);
-};
-window.reportEmbed = function() {
-    window.open(`http://mcmap.org/qol-embed/?m=${appState.metricId}&y=${appState.year}&s=${appState.selected.join(',')}`);
-};
+let reportEmbed = document.querySelector('li[data-printmap]');
+let reportFull = document.querySelector('li[data-fullreport]');
+if (reportEmbed) {
+    reportEmbed.addEventListener('click', function() {
+        window.open(`${siteConfig.qolembedURL}?m=${appState.metricId}&y=${appState.year}&s=${appState.selected.join(',')}`);
+    });
+}
+if (reportFull) {
+    reportFull.addEventListener('click', function() {
+        window.open(`${siteConfig.qolreportURL}?s=${appState.selected.join(',')}`);
+    });
+}
 
 // contact form
-document.querySelector('#contact-submit').addEventListener('click', function() {
-    let message = document.querySelector('#contact-message');
-    let email = document.querySelector('#contact-email');
+let contactForm = document.querySelector('#contact-submit');
+if (contactForm) {
+    contactForm.addEventListener('click', function() {
+        let message = document.querySelector('#contact-message');
+        let email = document.querySelector('#contact-email');
 
-    if (message.checkValidity() && email.checkValidity()) {
-        axios.post('http://mcmap.org/utilities/feedback.php',
-            querystring.stringify({
-                email: email.value,
-                url: window.location.href,
-                agent: navigator.userAgent,
-                subject: "Quality of Life Dashboard Feedback",
-                to: "tobin.bradley@gmail.com",
-                message: message.value
-            }),
-            {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
-            })
-            .then(function() {
-                document.querySelector('.comment-form').style.display = 'none';
-                document.querySelector('.comment-complete').style.display = 'block';
-            });
-    }
-});
+        if (message.checkValidity() && email.checkValidity()) {
+            axios.post(siteConfig.contactForm,
+                querystring.stringify({
+                    email: email.value,
+                    url: window.location.href,
+                    agent: navigator.userAgent,
+                    subject: "Quality of Life Dashboard Feedback",
+                    to: "tobin.bradley@gmail.com",
+                    message: message.value
+                }),
+                {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                })
+                .then(function() {
+                    document.querySelector('.comment-form').style.display = 'none';
+                    document.querySelector('.comment-complete').style.display = 'block';
+                });
+        }
+    });
+}
