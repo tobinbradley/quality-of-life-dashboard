@@ -215,7 +215,7 @@ Array.from(selectGroups).forEach(link => {
     link.addEventListener('click', function() {
         let selectList = link.getAttribute('data-selectGroup').split(",");
         appState.selected = selectList;
-        appState.zoomNeighborhoods = selectList;
+        appState.zoomNeighborhoods = selectList.slice(0);
     });
 });
 
