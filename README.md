@@ -14,7 +14,7 @@ The original repository with old versions of the Dashboard is [here](https://git
 
 This project requires [NodeJS](https://nodejs.org).
 
-```bash
+``` terminal
 git clone https://github.com/tobinbradley/quality-of-life-dashboard.git dashboard
 cd dashboard
 git clone https://github.com/tobinbradley/mecklenburg-quality-of-life-data.git data
