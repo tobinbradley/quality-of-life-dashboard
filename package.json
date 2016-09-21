@@ -40,7 +40,6 @@
     "postcss-nested": "^1.0.0",
     "querystring": "^0.2.0",
     "rollupify": "^0.3.4",
-    "turf-point-on-surface": "^3.0.12",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "vue": "^1.0.26",

@@ -18,6 +18,7 @@ This project requires [NodeJS](https://nodejs.org).
 git clone https://github.com/tobinbradley/quality-of-life-dashboard.git dashboard
 cd dashboard
 git clone https://github.com/tobinbradley/mecklenburg-quality-of-life-data.git data
+npm install
 npm run build
 npm run datagen
 npm start
@@ -27,7 +28,7 @@ The Dashboard should launch in your default web browser with a live reload serve
 
 ## Customizing the Dashboard
 
-Most Dashboard customization can be accomplished by creating your own data repository [following the directions here]. The data repository includes Dashboard meta (title, author, keywords, etc.), map style and configuration settings, data, etc.
+Most Dashboard customization can be accomplished by creating your own data repository [following the directions here](https://github.com/tobinbradley/mecklenburg-quality-of-life-data). The data repository includes Dashboard meta (title, author, keywords, etc.), map style and configuration settings, data, etc.
 
 The Dashboard is built using [Vue.js](http://vuejs.org/), [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/), and [Material Design Lite](https://getmdl.io/). The business end of things consists of independent Vue.js components in `app/js/components`. You can very easily create or disable your own components as needed. Each component has a shared state between all the components. Additionally, some components have a private state for things only needed by that component.
 

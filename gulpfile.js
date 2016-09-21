@@ -25,42 +25,44 @@ var postcss = require("gulp-postcss"),
     selectGroups = require('./data/config/selectgroups.js');
 
 
-gulp.task('datagen', ['clean', 'markdown', 'csv2json', 'transform', 'centroids']);
+gulp.task('datagen', ['clean', 'markdown', 'csv2json', 'transform']);
 gulp.task('default', ['watch', 'browser-sync']);
 gulp.task('build', ['css', 'js', 'workers', 'template', 'imagemin', 'move']);
 
 // template
 gulp.task('template', function(cb) {
-    var categories = [];
-    _.each(dataConfig, function(el) {
-        if (categories.indexOf(el.category) === -1) { categories.push(el.category); }
+    mkdirp('./public/', function() {
+        var categories = [];
+        _.each(dataConfig, function(el) {
+            if (categories.indexOf(el.category) === -1) { categories.push(el.category); }
+        });
+
+        var source = fs.readFileSync('./app/index.html', 'utf-8').toString();
+        var data = {
+            cachebuster: Math.floor((Math.random() * 100000) + 1),
+            siteConfig: siteConfig,
+            dataConfig: dataConfig,
+            categories: categories,
+            header: siteConfig.header,
+            selectgroups: selectGroups
+        };
+
+        handlebars.registerHelper('ifCond', function(v1, v2, options) {
+            if(v1 === v2) {
+                return options.fn(this);
+            }
+            return options.inverse(this);
+        });
+
+        handlebars.registerHelper('desc', function(m) {
+            return data.description['m' + m];
+        });
+
+        var template = handlebars.compile(source);
+        var html = template(data);
+        fs.writeFileSync(path.join('./public/', 'index.html'), html);
+        cb();
     });
-
-    var source = fs.readFileSync('./app/index.html', 'utf-8').toString();
-    var data = {
-        cachebuster: Math.floor((Math.random() * 100000) + 1),
-        siteConfig: siteConfig,
-        dataConfig: dataConfig,
-        categories: categories,
-        header: siteConfig.header,
-        selectgroups: selectGroups
-    };
-
-    handlebars.registerHelper('ifCond', function(v1, v2, options) {
-        if(v1 === v2) {
-            return options.fn(this);
-        }
-        return options.inverse(this);
-    });
-
-    handlebars.registerHelper('desc', function(m) {
-        return data.description['m' + m];
-    });
-
-    var template = handlebars.compile(source);
-    var html = template(data);
-    fs.writeFileSync(path.join('./public/', 'index.html'), html);
-    cb();
 });
 
 // css
@@ -158,30 +160,6 @@ gulp.task('move', function(cb) {
 ////////////////////////////////////////////////
 // data processing
 ///////////////////////////////////////////////
-
-// create point geojson from polygons
-gulp.task('centroids', function() {
-    mkdirp("./public/data", function() {
-        var turfCentroid = require('turf-point-on-surface');
-        var geojson = require('./data/geography.geojson.json');
-
-        var result = {
-            "type": "FeatureCollection",
-            "features": []
-        };
-        for (var i = 0; i < geojson.features.length; i++) {
-            result.features.push({
-                "type": "Feature",
-                "properties": {
-                    "id": geojson.features[i].properties.id
-                },
-                "geometry": turfCentroid(geojson.features[i]).geometry
-            });
-        }
-        fs.writeFile(path.join("./public/data", `labels.geojson.json`), JSON.stringify(result, null, '  '));
-    });
-
-});
 
 // clean junk before build
 gulp.task('clean', function(cb) {
