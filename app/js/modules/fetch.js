@@ -1,5 +1,6 @@
 import dataConfig from '../../../data/config/data';
 import axios from 'axios';
+import jenksBreaks from './jenksbreaks';
 
 export default function fetchData(appState, metric) {
     appState.metricId = metric;
@@ -24,14 +25,9 @@ export default function fetchData(appState, metric) {
                 years: years,
                 data: data.data
             };
-            appState.year = years[years.length - 1];            
+            appState.year = years[years.length - 1];
+            appState.breaks = jenksBreaks(data.data.map, years, nKeys, 5);
 
-            // jenks worker
-            let worker = new Worker('./js/workers/jenksbreaks.js');
-            worker.addEventListener('message', function(e) {
-                appState.breaks = e.data;
-            }, false);
-            worker.postMessage([data.data.map, years, 5]);
         });
 
     // fetch metadata

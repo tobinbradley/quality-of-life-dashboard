@@ -26,7 +26,7 @@ var postcss = require("gulp-postcss"),
 
 gulp.task('datagen', ['clean', 'markdown', 'csv2json', 'transform']);
 gulp.task('default', ['watch', 'browser-sync']);
-gulp.task('build', ['css', 'js', 'workers', 'template', 'imagemin', 'move']);
+gulp.task('build', ['css', 'js', 'template', 'imagemin', 'move']);
 
 // template
 gulp.task('template', function(cb) {
@@ -93,22 +93,6 @@ gulp.task('js', function () {
     });
 });
 
-// workers
-gulp.task('workers', function () {
-    _.each(['jenksbreaks.js'], function(file) {
-        browserify(`./app/js/workers/${file}`)
-          .transform(babelify)
-          .bundle()
-          .pipe(source(file))
-          .pipe(buffer())
-          .pipe(sourcemaps.init({loadMaps: true}))
-          .pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
-          .on('error', gutil.log)
-          .pipe(sourcemaps.write('./'))
-          .pipe(gulp.dest('./public/js/workers'));
-    });
-});
-
 
 // browser-sync
 gulp.task('browser-sync', function() {
@@ -124,7 +108,6 @@ gulp.task('watch', function () {
     gulp.watch(['./app/*.html'], ['template']);
     gulp.watch(['./app/css/**/*.css'], ['css']);
     gulp.watch(['./app/js/*.js', './app/js/modules/*.js', './app/js/components/*.vue'], ['js']);
-    gulp.watch(['./app/js/workers/*.js'], ['workers']);
     gulp.watch('./app/img/**/*', ['imagemin']);
 });
 
