@@ -58,8 +58,11 @@ window.appState = appState;
 // get random metric if none provided and validate provided
 let keys = Object.keys(dataConfig);
 let metricId = keys[Math.floor(Math.random() * keys.length)].replace('m', '');
-if (getURLParameter("m") && keys.indexOf(`m${getURLParameter("m")}`) !== -1) {
-    metricId = getURLParameter("m");
+if (getURLParameter("m")) {
+    let passedMetric = getURLParameter("m").replace('m', '');
+    if (keys.indexOf(`m${passedMetric}`) !== -1) {
+        metricId = passedMetric;
+    }
 }
 
 // set selected if provided
@@ -92,7 +95,9 @@ Search.data = function() {
                 neighborhood: [],
                 zipcode: [],
                 address: []
-            }
+            },
+            neighborhoodDescriptor: siteConfig.neighborhoodDescriptor,
+            neighborhoodDefinition: siteConfig.neighborhoodDefinition
         },
         sharedState: appState
     };
@@ -121,7 +126,11 @@ EmbedCode.data = function() {
 
 DataTable.data = function() {
     return {
-        sharedState: appState
+        sharedState: appState,
+        privateState: {
+            neighborhoodDescriptor: siteConfig.neighborhoodDescriptor,
+            neighborhoodDefinition: siteConfig.neighborhoodDefinition
+        }
     };
 };
 
