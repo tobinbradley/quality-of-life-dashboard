@@ -1,8 +1,11 @@
 <template lang="html">
     <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop search-container">
-        <div class="mdl-textfield mdl-js-textfield">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input class="mdl-textfield__input" type="text" id="sample3" v-model="privateState.query" v-on:focus="search()" debounce="300" autocomplete="off">
             <label class="mdl-textfield__label" for="sample3">Search...</label>
+        </div>
+        <div class="search-instructions" v-if=" privateState.results.neighborhood.length === 0 &&  privateState.results.zipcode.length === 0 && privateState.results.address.length === 0">
+            Start typing a <span class="tooltip" title="{{{ privateState.neighborhoodDefinition }}}">{{ privateState.neighborhoodDescriptor }}</span> id, address, or zip code.
         </div>
         <div class="search-results">
             <ul v-for="n in privateState.results.neighborhood">
@@ -22,7 +25,7 @@
             <ul v-for="n in privateState.results.address">
                 <li v-on:click="selectLocation(n.lng, n.lat, n.label)">
                     <span class="search-result-type">ADDRESS</span>
-                    <span class="search-result-label">{{n.label}}</span>
+                    <span class="search-result-label">{{n.label | trimLabel}}</span>
                     <i class="material-icons" role="presentation">chevron_right</i>
                 </li>
             </ul>
@@ -39,6 +42,14 @@ export default {
     name: 'sc-search',
     watch: {
         'privateState.query': 'search'
+    },
+    filters: {
+        trimLabel: function(label) {
+            if (label.length > 32) {
+                label = `${label.substring(0, 32)}...`;
+            }
+            return label;
+        }
     },
     methods: {
         search: function() {
@@ -98,9 +109,8 @@ export default {
                     }
                   })
                   .then(function (response) {
-                      if (response.data.length > 0) {
-                          _this.privateState.results.address = [];
-                          let selected = [];
+                       _this.privateState.results.address = [];
+                      if (response.data.length > 0) {                         
                           for (let i = 0; i < response.data.length; i++) {
                               _this.privateState.results.address.push({ 'label': response.data[i].address, 'lng':  response.data[i].lng, 'lat': response.data[i].lat});
                           }
@@ -148,6 +158,9 @@ export default {
     .mdl-textfield {
         width: 100%;
         display: block;
+    }
+    .tooltip {
+        border-bottom: 1px dashed;
     }
     /*Search results formatting*/
     .search-results {
