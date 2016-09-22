@@ -137,7 +137,7 @@ export default {
     }
 
     .metricboxes {
-        padding: 20px 0 10px;
+        padding: 10px 0 10px;
         text-align: center;
         display: flex;
         flex-flow: row nowrap;
@@ -170,7 +170,7 @@ export default {
     }
 
     .description {
-        padding: 10px 10px 15px;
+        padding: 5px 10px 10px;
 	    font-size: 12px;
     }
 
