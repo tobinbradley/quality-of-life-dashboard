@@ -281,9 +281,9 @@ export default {
                    }]
             };
             map.getSource("markers").setData(markers);
-            this.privateState.locationPopup.setLngLat([this.sharedState.marker.lng, this.sharedState.marker.lat])
-                .setHTML(theLabel)
-                .addTo(map);
+            // this.privateState.locationPopup.setLngLat([this.sharedState.marker.lng, this.sharedState.marker.lat])
+            //     .setHTML(theLabel)
+            //     .addTo(map);
         }
     },
     ready: function () {
