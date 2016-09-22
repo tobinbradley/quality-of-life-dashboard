@@ -4,8 +4,10 @@
             <table class="mdl-data-table mdl-js-data-table">
                 <thead>
                     <tr>
-                        <th class="mdl-data-table__cell--non-numeric">NPA</th>
-                        <th>{{sharedState.year}} Value<br></th>
+                        <th class="mdl-data-table__cell--non-numeric">
+                            <span class="tooltip" title="{{{ privateState.neighborhoodDefinition }}}">{{ privateState.neighborhoodDescriptor }}</span>
+                        </th>
+                        <th>{{sharedState.year}} Value</th>
                         <th v-if="sharedState.metric.data.a">Accuracy</th>
                         <th v-if="sharedState.metric.years.length > 1">Trend<br>{{sharedState.metric.years[0]}}-{{sharedState.metric.years[sharedState.metric.years.length - 1]}}</th>
                         <th v-if="sharedState.metric.config.raw_label">Number</th>
@@ -115,6 +117,9 @@ export default {
     }
     .material-icons {
         vertical-align: middle;
+    }
+    .tooltip {
+        border-bottom: 1px dashed rgba(0,0,0,.54);
     }
 }
 </style>
