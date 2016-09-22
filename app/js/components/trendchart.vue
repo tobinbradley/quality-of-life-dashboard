@@ -52,25 +52,25 @@ export default {
                     this.privateState.chart = new Chartist.Line('.ct-trendchart', data, options);
 
                     // animation
-                    // this.privateState.chart.on('draw', function(data) {
-                    //     if(data.type === 'line') {
-                    //         data.element.animate({
-                    //           d: {
-                    //             begin: 500 * data.index,
-                    //             dur: 500,
-                    //             from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                    //             to: data.path.clone().stringify(),
-                    //             easing: Chartist.Svg.Easing.easeOutQuint
-                    //           },
-                    //           opacity: {
-                    //             begin: 500 * data.index,
-                    //             dur: 500,
-                    //             from: 0,
-                    //             to: 1
-                    //           }
-                    //       });
-                    //     }
-                    // });
+                    this.privateState.chart.on('draw', function(data) {
+                        if(data.type === 'line') {
+                            data.element.animate({
+                              d: {
+                                begin: 500 * data.index,
+                                dur: 500,
+                                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                                to: data.path.clone().stringify(),
+                                easing: Chartist.Svg.Easing.easeOutQuint
+                              },
+                              opacity: {
+                                begin: 500 * data.index,
+                                dur: 500,
+                                from: 0,
+                                to: 1
+                              }
+                          });
+                        }
+                    });
 
                 } else {
                     this.privateState.chart.update(data);
@@ -98,7 +98,7 @@ export default {
                 if (metric.config.world_val && metric.config.world_val[`y_${this.sharedState.metric.years[i]}`]) {
                     areaValue = metric.config.world_val[`y_${this.sharedState.metric.years[i]}`];
                 } else {
-                    areaValue = calcValue(this.sharedState.metric.data, this.sharedState.metric.config.type, this.sharedState.metric.years[i], keys);                    
+                    areaValue = calcValue(this.sharedState.metric.data, this.sharedState.metric.config.type, this.sharedState.metric.years[i], keys);
                 }
                 areaArray.push(areaValue);
             }
