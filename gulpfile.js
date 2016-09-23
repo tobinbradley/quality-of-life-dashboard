@@ -107,7 +107,7 @@ gulp.task('browser-sync', function() {
 gulp.task('watch', function () {
     gulp.watch(['./app/*.html'], ['template']);
     gulp.watch(['./app/css/**/*.css'], ['css']);
-    gulp.watch(['./app/js/*.js', './app/js/modules/*.js', './app/js/components/*.vue'], ['js']);
+    gulp.watch(['./data/config/*.js', './app/js/*.js', './app/js/modules/*.js', './app/js/components/*.vue'], ['js']);
     gulp.watch('./app/img/**/*', ['imagemin']);
 });
 
