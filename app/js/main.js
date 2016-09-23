@@ -119,7 +119,8 @@ EmbedCode.data = function() {
     return {
         sharedState: appState,
         privateState: {
-            title: null
+            title: null,
+            qolembedURL: siteConfig.qolembedURL
         }
     };
 };
