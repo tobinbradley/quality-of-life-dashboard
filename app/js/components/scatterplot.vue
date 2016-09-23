@@ -57,30 +57,29 @@ export default {
                         });
 
                         // animation
-                        data.element.animate({
-                          x1: {
-                            begin: 1 * data.index,
-                            dur: 2,
-                            from: data.x - 10,
-                            to: data.x,
-                            easing: 'easeOutQuart'
-                          },
-                          x2: {
-                            begin: 1 * data.index,
-                            dur: 2,
-                            from: data.x - 10,
-                            to: data.x,
-                            easing: 'easeOutQuart'
-                          },
-                          opacity: {
-                            begin: 1 * data.index,
-                            dur: 2,
-                            from: 0,
-                            to: 1,
-                            easing: 'easeOutQuart'
-                          }
-                        });
-
+                        // data.element.animate({
+                        //   x1: {
+                        //     begin: 1 * data.index,
+                        //     dur: 2,
+                        //     from: data.x - 10,
+                        //     to: data.x,
+                        //     easing: 'easeOutQuart'
+                        //   },
+                        //   x2: {
+                        //     begin: 1 * data.index,
+                        //     dur: 2,
+                        //     from: data.x - 10,
+                        //     to: data.x,
+                        //     easing: 'easeOutQuart'
+                        //   },
+                        //   opacity: {
+                        //     begin: 1 * data.index,
+                        //     dur: 2,
+                        //     from: 0,
+                        //     to: 1,
+                        //     easing: 'easeOutQuart'
+                        //   }
+                        // });
                     }
                 });
             } else {
