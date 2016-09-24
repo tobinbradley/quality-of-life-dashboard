@@ -10,7 +10,7 @@
         <div class="search-results">
             <ul v-for="n in privateState.results.neighborhood">
                 <li v-on:click="selectNeighborhoods(n.select)">
-                    <span class="search-result-type">NEIGHBORHOOD</span>
+                    <span class="search-result-type">{{privateState.neighborhoodDescriptor}}</span>
                     <span class="search-result-label">{{n.label}}</span>
                     <i class="material-icons" role="presentation">chevron_right</i>
                 </li>
