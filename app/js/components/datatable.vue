@@ -17,10 +17,10 @@
                 <tbody>
                     <tr v-for="n in sharedState.selected">
                         <td class="mdl-data-table__cell--non-numeric">{{n}}</td>
-                        <td>{{sharedState.metric.data.map[n][`y_${sharedState.year}`] | formatVal }}</td>
-                        <td v-if="sharedState.metric.config.accuracy"> &#177; {{sharedState.metric.data.a[n][`y_${sharedState.year}`] | formatVal}}</td>
+                        <td>{{n | getVal | formatVal}}</td>
+                        <td v-if="sharedState.metric.config.accuracy"> &#177; {{ n | getAccuracy | formatVal}}</td>
                         <td v-if="sharedState.metric.years.length > 1">{{{n | trend}}}</td>
-                        <td v-if="sharedState.metric.config.raw_label &&  sharedState.metric.data.w">{{ sharedState.metric.data.w[n][`y_${sharedState.year}`] * sharedState.metric.data.map[n][`y_${sharedState.year}`] | formatRaw}}<span class="units" v-if="sharedState.metric.config.raw_label"> {{{sharedState.metric.config.raw_label}}}</span></td>
+                        <td v-if="sharedState.metric.config.raw_label &&  sharedState.metric.data.w">{{ n | getRaw | formatRaw}}<span class="units" v-if="sharedState.metric.config.raw_label"> {{{sharedState.metric.config.raw_label}}}</span></td>
                         <td v-if="sharedState.metric.years.length > 1 && sharedState.metric.config.raw_label">{{{n | trendRaw }}}</td>
                     </tr>
                 </tbody>
@@ -63,6 +63,18 @@ export default {
         }
     },
     filters: {
+        getVal: function(n) {
+            let sharedState = this.sharedState;
+            return sharedState.metric.data.map[n][`y_${sharedState.year}`];
+        },
+        getAccuracy: function(n) {
+            let sharedState = this.sharedState;
+            return sharedState.metric.data.a[n][`y_${sharedState.year}`];
+        },
+        getRaw: function(n) {
+            let sharedState = this.sharedState;
+            return sharedState.metric.data.w[n][`y_${sharedState.year}`] * sharedState.metric.data.map[n][`y_${sharedState.year}`];
+        },
         formatVal: function(num) {
             let sharedState = this.sharedState;
             return prettyNumber(num, sharedState.metric.config.decimals, sharedState.metric.config.prefix, sharedState.metric.config.suffix);
