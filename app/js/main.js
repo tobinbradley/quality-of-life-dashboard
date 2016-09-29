@@ -220,6 +220,14 @@ new Vue({
 // General non-component page interactions
 ///////////////////////////////////////////////////////////////////////////
 
+// change metric from meta links
+// meta links look like:
+// <a href="javascript:void(0)" onclick="changeMetric('m19')">Commercial Construction</a>
+window.changeMetric = function(m) {
+    fetchData(appState, m.replace('m', ''));
+};
+
+
 // select groups if present
 let selectGroups = document.querySelectorAll('li[data-selectGroup]');
 Array.from(selectGroups).forEach(link => {
