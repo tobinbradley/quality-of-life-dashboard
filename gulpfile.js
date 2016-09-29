@@ -53,6 +53,10 @@ gulp.task('template', function(cb) {
             return options.inverse(this);
         });
 
+        handlebars.registerHelper('whatsnew', function(id, options) {
+            return new handlebars.SafeString(dataConfig[`m${id}`].title);
+        });
+
         var template = handlebars.compile(source);
         var html = template(data);
         fs.writeFileSync(path.join('./public/', 'index.html'), html);

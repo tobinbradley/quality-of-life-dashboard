@@ -63,6 +63,29 @@ footer {
     }
 }
 
+.whatsnew {
+    padding: 15px;
+    span {
+        cursor: pointer;
+    }
+    h1 {
+        font-size: 1.2em;
+        margin: 0 0 15px;
+    }
+    .mdl_chip {
+        height: 24px;
+        line-height: 24px;
+    }
+    .material-icons {
+        vertical-align: middle;
+        padding-right: 5px;
+        font-size: 18px;
+        max-width: 20px;
+    }
+    .mdl-chip__text {
+        font-size: 12px;
+    }
+}
 
 
 .comment-container {

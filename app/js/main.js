@@ -26,7 +26,7 @@ import Sidenav from './components/sidebar-nav.vue';
 import Metadata from './components/metadata.vue';
 import YearControl from './components/years.vue';
 import DataTable from './components/datatable.vue';
-import ScatterPlot from './components/scatterplot.vue';
+//import ScatterPlot from './components/scatterplot.vue';
 import TrendChart from './components/trendchart.vue';
 import ToC from './components/toc.vue';
 import MapGL from './components/map.vue';
@@ -135,15 +135,15 @@ DataTable.data = function() {
     };
 };
 
-ScatterPlot.data = function() {
-    return {
-        sharedState: appState,
-        privateState: {
-            chart: null,
-            chartData: null
-        }
-    };
-};
+// ScatterPlot.data = function() {
+//     return {
+//         sharedState: appState,
+//         privateState: {
+//             chart: null,
+//             chartData: null
+//         }
+//     };
+// };
 
 TrendChart.data = function() {
     return {
@@ -207,7 +207,7 @@ new Vue({
         'sc-metadata': Metadata,
         'sc-years': YearControl,
         'sc-datatable': DataTable,
-        'sc-scatterplot': ScatterPlot,
+        //'sc-scatterplot': ScatterPlot,
         'sc-trendchart': TrendChart,
         'sc-toc': ToC,
         'sc-map': MapGL,
@@ -227,6 +227,14 @@ Array.from(selectGroups).forEach(link => {
         let selectList = link.getAttribute('data-selectGroup').split(",");
         appState.selected = selectList;
         appState.zoomNeighborhoods = selectList.slice(0);
+    });
+});
+
+// what's new links
+let whatsnew = document.querySelectorAll('span[data-whatsnew]');
+Array.from(whatsnew).forEach(link => {
+    link.addEventListener('click', function() {
+        fetchData(appState, link.getAttribute('data-whatsnew'));
     });
 });
 

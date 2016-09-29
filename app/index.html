@@ -49,7 +49,7 @@
         <div class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid">
                 <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
-                    <div class="map-container">
+                    <div class="map-container" style="position: relative">
                         <sc-map></sc-map>
                         <sc-toc></sc-toc>
                     </div>
@@ -95,7 +95,21 @@
                 </div>
                 <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
                     <sc-search></sc-search>
-                    <sc-scatterplot></sc-scatterplot>
+                    <!-- <sc-scatterplot></sc-scatterplot> -->
+                    {{#if siteConfig.whatsnew}}
+                    <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop whatsnew">
+                        <div class="">
+                            <h1 class="mdl-typography--text-center">What's New</h1>
+                            {{#each siteConfig.whatsnew}}
+                            <span class="mdl-chip mdl-color--teal mdl-color-text--white">
+                                <i class="material-icons">assessment</i>
+                                <span class="mdl-chip__text" data-whatsnew="{{this}}">{{#whatsnew this}}{{/whatsnew}}</span>
+                            </span>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <div class="demo-separator mdl-cell--1-col"></div>
+                    {{/if}}
                     <sc-trendchart></sc-trendchart>
                 </div>
             </div>
