@@ -1,7 +1,11 @@
 <template lang="html">
-    <div id="toc" v-if="sharedState.metric.config">
+    <div id="toc" v-if="sharedState.metric.config" class="top left">
         <div>
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=" class="background-print-img" alt="white background for printing">
+            <div class="tocposition">
+                <a href="javascript:void(0)" title="swap horizontal position" v-on:click="swap_horizontal()"><i class="material-icons" title="swap vertical position">swap_horiz</i></a>
+                <a href="javascript:void(0)" v-on:click="swap_vertical()"><i class="material-icons">swap_vert</i></a>
+            </div>
             <h1 class="title">{{ sharedState.metric.config.title }}, {{ sharedState.year }}</h1>
             <div class="metricboxes">
                 <div class="metricbox" v-if="sharedState.selected.length > 0">
@@ -117,19 +121,64 @@ export default {
         processYear: function() {
             this.processArea();
             this.processSelected();
+        },
+        swap_horizontal: function() {
+            let el = document.querySelector("#toc");
+            if (el.classList.contains("left")) {
+                el.classList.remove("left");
+                el.classList.add("right");
+            } else {
+                el.classList.remove("right");
+                el.classList.add("left");
+            }
+        },
+        swap_vertical: function() {
+            let el = document.querySelector("#toc");
+            if (el.classList.contains("top")) {
+                el.classList.remove("top");
+                el.classList.add("bottom");
+            } else {
+                el.classList.remove("bottom");
+                el.classList.add("top");
+            }
         }
     }
 }
 </script>
 
 <style lang="css">
+#toc.top {
+    top: 3px;
+}
+#toc.bottom {
+    bottom: 3px;
+}
+#toc.left {
+    left: 3px;
+}
+#toc.right {
+    right: 3px;
+}
 #toc {
     position: absolute;
-    top: 20px;
-    left: 20px;
     width: 260px;
     background: white;
     box-shadow: 0 1px 3px #666, 0 6px 5px -5px #666;
+
+    .tocposition {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 0.8em;
+        z-index: 20;
+        a {
+            color: #333;
+            opacity: 0.8;
+        }
+        .material-icons {
+            font-size: 18px;
+        }
+    }
 
 	.title, .description, .legend, .metricboxes {
       position: relative;
@@ -227,6 +276,9 @@ export default {
             position:absolute;
             left: 0;
             top: 0;
+        }
+        .tocposition {
+            display: none;
         }
     }
 
