@@ -221,6 +221,20 @@ new Vue({
 // General non-component page interactions
 ///////////////////////////////////////////////////////////////////////////
 
+// scroll to top of container div on metric change
+// when link is down the page
+function scrollTo(element, to, duration) {
+    if (duration <= 0) return;
+    var difference = to - element.scrollTop;
+    var perTick = difference / duration * 10;
+
+    setTimeout(function() {
+        element.scrollTop = element.scrollTop + perTick;
+        if (element.scrollTop === to) return;
+        scrollTo(element, to, duration - 10);
+    }, 10);
+}
+
 // change metric from meta links
 // meta links look like:
 // <a href="javascript:void(0)" onclick="changeMetric('m19')">Commercial Construction</a>
@@ -229,6 +243,7 @@ window.changeMetric = function(m) {
     replaceState(metric, appState.selected);
     gaEvent('metric', dataConfig[`m${metric}`].title.trim(), dataConfig[`m${metric}`].category.trim());
     fetchData(appState, metric);
+    scrollTo(document.querySelector(".mdl-layout__content"), 0, 600);
 };
 
 
@@ -250,6 +265,7 @@ Array.from(whatsnew).forEach(link => {
         replaceState(metric, appState.selected);
         gaEvent('metric', dataConfig[`m${metric}`].title.trim(), dataConfig[`m${metric}`].category.trim());
         fetchData(appState, metric);
+        scrollTo(document.querySelector(".mdl-layout__content"), 0, 600);
     });
 });
 

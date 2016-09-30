@@ -96,24 +96,24 @@
                 <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
                     <sc-search></sc-search>
                     <!-- <sc-scatterplot></sc-scatterplot> -->
-                    {{#if siteConfig.whatsnew}}
-                    <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop whatsnew">
-                        <div class="">
-                            <h1 class="mdl-typography--text-center">What's New</h1>
-                            {{#each siteConfig.whatsnew}}
-                            <span class="mdl-chip mdl-color--teal mdl-color-text--white">
-                                <span class="mdl-chip__text" data-whatsnew="{{this}}">{{#whatsnew this}}{{/whatsnew}}</span>
-                            </span>
-                            {{/each}}
-                        </div>
-                    </div>
-                    <div class="demo-separator mdl-cell--1-col"></div>
-                    {{/if}}
+
                     <sc-trendchart></sc-trendchart>
                 </div>
             </div>
             <sc-metadata></sc-metadata>
-            <div class="mdl-grid">
+            <div class="mdl-grid demo-cards">
+                {{#if siteConfig.whatsnew}}
+                <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet whatsnew">
+                    <div class="">
+                        <h1 class="mdl-typography--text-center">What's New</h1>
+                        {{#each siteConfig.whatsnew}}
+                        <span class="mdl-chip mdl-color--teal mdl-color-text--white">
+                            <span class="mdl-chip__text" data-whatsnew="{{this}}">{{#whatsnew this}}{{/whatsnew}}</span>
+                        </span>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/if}}
                 <sc-embedcode></sc-embedcode>
                 {{#if siteConfig.contactForm}}
                 <div class="mdl-typography--text-center mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet comment-container">
