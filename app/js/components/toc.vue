@@ -3,8 +3,8 @@
         <div>
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=" class="background-print-img" alt="white background for printing">
             <div class="tocposition">
-                <a href="javascript:void(0)" title="swap horizontal position" v-on:click="swap_horizontal()"><i class="material-icons" title="swap vertical position">swap_horiz</i></a>
-                <a href="javascript:void(0)" v-on:click="swap_vertical()"><i class="material-icons">swap_vert</i></a>
+                <a href="javascript:void(0)" title="Move Left or Right" v-on:click="swap_horizontal()"><i class="material-icons">swap_horiz</i></a>
+                <a href="javascript:void(0)" title="Move Up or Down" v-on:click="swap_vertical()"><i class="material-icons">swap_vert</i></a>
             </div>
             <h1 class="title">{{ sharedState.metric.config.title }}, {{ sharedState.year }}</h1>
             <div class="metricboxes">
@@ -173,6 +173,9 @@ export default {
         z-index: 20;
         a {
             color: #333;
+            opacity: 0.2;
+        }
+        a:hover {
             opacity: 0.8;
         }
         .material-icons {
