@@ -21,6 +21,7 @@
 <script>
 import axios from 'axios';
 import fetchData from '../modules/fetch';
+import {replaceState, gaEvent} from '../modules/tracking';
 
 export default {
     name: 'sc-sidenav',
@@ -37,15 +38,8 @@ export default {
             }
 
             if (this.sharedState.metricId !== metric) {
-                // push state
-                window.history.replaceState(null, null, `./?m=${metric}&s=${this.sharedState.selected.join(',')}`);
-
-                // push analytics
-                if (window.ga) {
-                    ga('send', 'event', 'metric', this.privateState.data[`m${metric}`].title.trim(), this.privateState.data[`m${metric}`].category.trim());
-                }
-
-                // get data
+                replaceState(metric, this.sharedState.selected);
+                gaEvent('metric', this.privateState.data[`m${metric}`].title.trim(), this.privateState.data[`m${metric}`].category.trim());
                 fetchData(this.sharedState, metric);
             }
         }

@@ -8,6 +8,7 @@ import axios from 'axios';
 import geojsonDataMerge from '../modules/geojsondatamerge';
 import {prettyNumber} from '../modules/number_format';
 import getURLParameter from '../modules/geturlparams';
+import {replaceState} from '../modules/tracking';
 
 export default {
     name: 'sc-map',
@@ -199,7 +200,7 @@ export default {
                 if (getURLParameter("m")) {
                     linkMetric = getURLParameter("m");
                 }
-                window.history.replaceState(null, null, `./?m=${linkMetric}&s=${this.sharedState.selected.join(',')}`);
+                replaceState(linkMetric, this.sharedState.selected);
 
                 map.setFilter("neighborhoods-line-selected", filter);
             }

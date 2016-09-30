@@ -20,6 +20,7 @@ import mapConfig from '../../data/config/map';
 import siteConfig from '../../data/config/site';
 import colors from './modules/breaks';
 import fetchData from './modules/fetch';
+import {replaceState, gaEvent} from './modules/tracking';
 import getURLParameter from './modules/geturlparams';
 import querystring from 'querystring';
 import Sidenav from './components/sidebar-nav.vue';
@@ -224,7 +225,10 @@ new Vue({
 // meta links look like:
 // <a href="javascript:void(0)" onclick="changeMetric('m19')">Commercial Construction</a>
 window.changeMetric = function(m) {
-    fetchData(appState, m.replace('m', ''));
+    let metric = m.replace('m', '');
+    replaceState(metric, appState.selected);
+    gaEvent('metric', dataConfig[`m${metric}`].title.trim(), dataConfig[`m${metric}`].category.trim());
+    fetchData(appState, metric);
 };
 
 
@@ -242,14 +246,17 @@ Array.from(selectGroups).forEach(link => {
 let whatsnew = document.querySelectorAll('span[data-whatsnew]');
 Array.from(whatsnew).forEach(link => {
     link.addEventListener('click', function() {
-        fetchData(appState, link.getAttribute('data-whatsnew'));
+        let metric = link.getAttribute('data-whatsnew');
+        replaceState(metric, appState.selected);
+        gaEvent('metric', dataConfig[`m${metric}`].title.trim(), dataConfig[`m${metric}`].category.trim());
+        fetchData(appState, metric);
     });
 });
 
 // clear selected button
 document.querySelector('.selected-clear').addEventListener('click', function() {
     appState.selected = [];
-    window.history.replaceState(null, null, `./?m=${appState.metricId}&s=${appState.selected.join(',')}`);
+    replaceState(appState.metricId, []);
 }, false);
 
 // Reports
