@@ -1,11 +1,11 @@
 <template lang="html">
     <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop search-container">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="sample3" v-model="privateState.query" v-on:focus="search()" debounce="300" autocomplete="off">
+            <input class="mdl-textfield__input" type="text" id="sample3" v-model="privateState.query" v-on:focus="search()" autocomplete="off">
             <label class="mdl-textfield__label" for="sample3">Search...</label>
         </div>
         <div class="search-instructions" v-if=" privateState.results.neighborhood.length === 0 &&  privateState.results.zipcode.length === 0 && privateState.results.address.length === 0">
-            Enter a <span class="tooltip" title="{{{ privateState.neighborhoodDefinition }}}">{{ privateState.neighborhoodDescriptor }}</span>, address, or zip code.
+            Enter a <span class="tooltip" v-bind:title="privateState.neighborhoodDefinition">{{ privateState.neighborhoodDescriptor }}</span>, address, or zip code.
         </div>
         <div class="search-results">
             <ul v-for="n in privateState.results.neighborhood">
@@ -31,7 +31,6 @@
             </ul>
         </div>
     </div>
-    <div class="demo-separator mdl-cell--1-col"></div>
 </template>
 
 <script>
@@ -151,68 +150,68 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .search-container {
     padding: 10px;
     min-height: 91px;
-    .mdl-textfield {
-        width: 100%;
-        display: block;
-    }
-    .tooltip {
-        border-bottom: 1px dashed;
-    }
-    /*Search results formatting*/
-    .search-results {
-        ul {
-            padding: 0;
-            margin: 0;
-        }
-        li {
-            list-style-type:none;
-            padding: 2px;
-            border: 1px solid rgb(0,145,234);
-            border-radius: 3px;
-            margin: 5px 0 5px 0;
-            display: inline-block;
-            width: 100%;
-            box-sizing: border-box;
-            cursor: pointer;
-            transition: 0.2s ease all;
-            color: rgb(0,145,234);
-            font-size: 0.9em;
-        }
-        li:hover {
-           background: rgb(0,145,234);
-           color: white;
-       }
-       .search-result-label {
-           text-decoration: none;
-           padding-left: 6px;
-       }
-       i, span {
-           pointer-events: none;
-       }
-       .material-icons {
-           display: inline-block;
-           float: right;
-       }
-       .search-result-type {
-           background-color: rgb(0,145,234);
-           color: white;
-           padding: 3px;
-           font-weight: bold;
-           border-radius: 3px;
-       }
-       .search-result-empty {
-           font-size: 1.4em;
-           margin-left: 20px;
-           margin-right: 20px;
-       }
-       .search-result-empty i {
-           margin-right: 5px;
-           float: left;
-       }
-    }
+}
+.search-instructions {
+    font-size: 0.9em;
+}
+.mdl-textfield {
+    width: 100%;
+    display: block;
+}
+.tooltip {
+    border-bottom: 1px dashed;
+}
+ul {
+    padding: 0;
+    margin: 0;
+}
+li {
+    list-style-type:none;
+    padding: 2px;
+    border: 1px solid rgb(0,145,234);
+    border-radius: 3px;
+    margin: 5px 0 5px 0;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: 0.2s ease all;
+    color: rgb(0,145,234);
+    font-size: 0.9em;
+}
+li:hover {
+   background: rgb(0,145,234);
+   color: white;
+}
+.search-result-label {
+   text-decoration: none;
+   padding-left: 2px;
+}
+.search-results.i, search-results.span {
+   pointer-events: none;
+}
+.material-icons {
+   display: inline-block;
+   float: right;
+}
+.search-result-type {
+   background-color: rgb(0,145,234);
+   color: white;
+   padding: 3px;
+   font-weight: bold;
+   border-radius: 3px;
+}
+.search-result-empty {
+   font-size: 1.4em;
+   margin-left: 20px;
+   margin-right: 20px;
+}
+.search-result-empty i {
+   margin-right: 5px;
+   float: left;
 }
 </style>

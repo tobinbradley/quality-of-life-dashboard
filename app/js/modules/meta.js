@@ -14,6 +14,6 @@ export function metaAbout(meta) {
 
 export function metaResources(meta) {
     let resources = meta.substring(getSubstringIndex(meta, '</h3>', 3) + 5, meta.length);
-    resources = resources.replace(/\<table/g, '<table class="mdl-data-table mdl-js-data-table"');
+    resources = resources.replace(/\<table/g, '<table class="mdl-data-table mdl-js-data-table meta-table"');
     return resources;
 }

@@ -1,32 +1,29 @@
 <template lang="html">
-    <template v-if="sharedState.metadata">
+    <div v-if="sharedState.metadata" id="metadata">
         <div class="mdl-grid">
             <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col meta">
                 <h3>Why This is Important</h3>
-                {{{ sharedState.metadata | important }}}
+                <div v-html="important(sharedState.metadata)"></div>
                 <h4>Additional Resources</h4>
-                {{{ sharedState.metadata | resources }}}
+                <div v-html="resources(sharedState.metadata)" v-mdl></div>
             </div>
             <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing meta-side">
                 <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop meta">
                     <h3>About the Data</h3>
-                    {{{ sharedState.metadata | about }}}
+                    <div v-html="about(sharedState.metadata)"></div>
                 </div>
             </div>
         </div>
-    </template>
+    </div>
 </template>
 
 <script>
 import axios from 'axios';
-import {metaDescription, metaAbout, metaImportant, metaResources} from '../modules/meta.js';
+import {metaAbout, metaImportant, metaResources} from '../modules/meta.js';
 
 export default {
     name: 'sc-metadata',
-    filters: {
-        description: function(data) {
-            return metaDescription(data);
-        },
+    methods: {
         important: function(data) {
             return metaImportant(data);
         },
@@ -41,24 +38,24 @@ export default {
 </script>
 
 <style lang="css">
-    .meta {
-        padding: 0 20px 20px;
-        h3 {
-            font-size: 2em;
-        }
-        h4 {
-            font-size: 1.5em;
-        }
-        table {
-            width: 100%;
-            white-space: normal;
-        }
-        table:first-of-type {
-            margin-bottom: 15px;
-        }
-    }
-    .meta-side {
-        align-items: flex-start;
-        align-content: flex-start;
-    }
+#metadata .meta {
+    padding: 0 20px 20px;
+}
+#metadata .meta h3 {
+    font-size: 2em;
+}
+#metadata .meta h4 {
+    font-size: 1.5em;
+}
+#metadata .meta-side {
+    align-items: flex-start;
+    align-content: flex-start;
+}
+#metadata table {
+    width: 100%;
+    white-space: normal;
+}
+#metadata table:first-of-type {
+    margin-bottom: 15px;
+}
 </style>

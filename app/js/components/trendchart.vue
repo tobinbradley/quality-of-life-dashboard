@@ -1,5 +1,5 @@
 <template lang="html">
-    <div v-if="sharedState.metric.years.length > 1" class="qol-chart mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop mdl-typography--text-center">
+    <div v-show="sharedState.metric.years.length > 1" class="qol-chart mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop mdl-typography--text-center">
         <div class="trendchart">
             <h1>Trend</h1>
             <span class="legend"><i class="material-icons legend-county">trending_up</i> County</span>
@@ -23,6 +23,7 @@ export default {
     methods: {
         renderChart: function() {
             if (this.sharedState.metric.years.length > 1) {
+                console.log("running chart");
                 let _this = this;
                 let data = this.updateData();
 
@@ -120,28 +121,26 @@ export default {
 };
 </script>
 
-<style lang="css">
-.trendchart {
-    h1 {
-        font-size: 1.2em;
-        margin: 15px 0 0;
-    }
-    span.legend {
-        font-size: 0.8em;
-        display: inline !important;
-    }
-    .material-icons {
-        vertical-align: middle;
-        font-size: 1.5em;
-    }
-    .legend-selected {
-        color: orange;
-    }
-    .legend-county {
-        color: #d70206;
-    }
-    .ct-series-b .ct-line, .ct-series-b .ct-point {
-        stroke: orange;
-    }
+<style lang="css" scoped>
+
+h1 {
+    font-size: 1.2em;
+    margin: 15px 0 0;
 }
+span.legend {
+    font-size: 0.8em;
+    display: inline !important;
+}
+.material-icons {
+    vertical-align: middle;
+    font-size: 1.5em;
+}
+.legend-selected {
+    color: orange;
+}
+.legend-county {
+    color: #d70206;
+}
+
+
 </style>

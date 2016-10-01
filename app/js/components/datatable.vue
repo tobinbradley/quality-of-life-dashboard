@@ -1,11 +1,11 @@
 <template lang="html">
     <div v-if="sharedState.selected.length > 0 && sharedState.metric.data" id="datatable">
         <div class="tablescroll">
-            <table class="mdl-data-table mdl-js-data-table">
+            <table class="mdl-data-table mdl-js-data-table datatable">
                 <thead>
                     <tr>
                         <th class="mdl-data-table__cell--non-numeric">
-                            <span class="tooltip" title="{{{ privateState.neighborhoodDefinition }}}">{{ privateState.neighborhoodDescriptor }}</span>
+                            <span class="tooltip" v-bind:title="privateState.neighborhoodDefinition">{{ privateState.neighborhoodDescriptor }}</span>
                         </th>
                         <th>{{sharedState.year}} Value</th>
                         <th v-if="sharedState.metric.data.a">Accuracy</th>
@@ -17,11 +17,11 @@
                 <tbody>
                     <tr v-for="n in sharedState.selected">
                         <td class="mdl-data-table__cell--non-numeric">{{n}}</td>
-                        <td>{{n | getVal | formatVal}}</td>
-                        <td v-if="sharedState.metric.config.accuracy"> &#177; {{ n | getAccuracy | formatVal}}</td>
-                        <td v-if="sharedState.metric.years.length > 1">{{{n | trend}}}</td>
-                        <td v-if="sharedState.metric.config.raw_label &&  sharedState.metric.data.w">{{ n | getRaw | formatRaw}}<span class="units" v-if="sharedState.metric.config.raw_label"> {{{sharedState.metric.config.raw_label}}}</span></td>
-                        <td v-if="sharedState.metric.years.length > 1 && sharedState.metric.config.raw_label">{{{n | trendRaw }}}</td>
+                        <td>{{ formatVal(getVal(n)) }}</td>
+                        <td v-if="sharedState.metric.config.accuracy"> &#177; {{ formatVal(getAccuracy(n)) }}</td>
+                        <td v-if="sharedState.metric.years.length > 1" v-html="trend(n)"></td>
+                        <td v-if="sharedState.metric.config.raw_label &&  sharedState.metric.data.w">{{ formatRaw(getRaw(n)) }}<span class="units" v-if="sharedState.metric.config.raw_label" v-html="' ' + sharedState.metric.config.raw_label"></span></td>
+                        <td v-if="sharedState.metric.years.length > 1 && sharedState.metric.config.raw_label" v-html="trendRaw(n)"></td>
                     </tr>
                 </tbody>
             </table>
@@ -36,7 +36,7 @@
 
 <script>
 import table2csv from '../modules/table2csv';
-import {prettyNumber} from '../modules/number_format';
+import {prettyNumber, round} from '../modules/number_format';
 import isNumeric from '../modules/isnumeric';
 
 export default {
@@ -60,9 +60,31 @@ export default {
             } else {
                 return '<i class="material-icons">trending_down</i>';
             }
-        }
-    },
-    filters: {
+        },
+        trend: function (n) {
+            let sharedState = this.sharedState;
+            let begin = sharedState.metric.data.map[n][`y_${sharedState.metric.years[sharedState.metric.years.length - 1]}`];
+            let end = sharedState.metric.data.map[n][`y_${sharedState.metric.years[0]}`];
+
+            if (isNumeric(begin) && isNumeric(end)) {
+                let trendVal = round(Number(begin), sharedState.metric.config.decimals) - round(Number(end), sharedState.metric.config.decimals);
+                return `${this.trendIcon(trendVal)} ${prettyNumber(trendVal, this.sharedState.metric.config.decimals, this.sharedState.metric.config.prefix, this.sharedState.metric.config.suffix)}`;
+            } else {
+                return '--';
+            }
+        },
+        trendRaw(n) {
+            let sharedState = this.sharedState;
+            let begin = sharedState.metric.data.map[n][`y_${sharedState.metric.years[sharedState.metric.years.length - 1]}`] * sharedState.metric.data.w[n][`y_${sharedState.metric.years[sharedState.metric.years.length - 1]}`];
+            let end = sharedState.metric.data.map[n][`y_${sharedState.metric.years[0]}`] * sharedState.metric.data.w[n][`y_${sharedState.metric.years[0]}`];
+
+            if (isNumeric(begin) && isNumeric(end)) {
+                let trendVal = begin - end;
+                return  `${this.trendIcon(trendVal)} ${prettyNumber(trendVal, 0)}`;
+            } else {
+                return  '--';
+            }
+        },
         getVal: function(n) {
             let sharedState = this.sharedState;
             return sharedState.metric.data.map[n][`y_${sharedState.year}`];
@@ -81,57 +103,32 @@ export default {
         },
         formatRaw: function(num) {
             return prettyNumber(num, 0);
-        },
-        trend: function (n) {
-            let sharedState = this.sharedState;
-            let begin = sharedState.metric.data.map[n][`y_${sharedState.metric.years[sharedState.metric.years.length - 1]}`];
-            let end = sharedState.metric.data.map[n][`y_${sharedState.metric.years[0]}`];
-
-            if (isNumeric(begin) && isNumeric(end)) {
-                let trendVal = begin - end;
-                return `${this.trendIcon(trendVal)} ${prettyNumber(trendVal, this.sharedState.metric.config.decimals, this.sharedState.metric.config.prefix, this.sharedState.metric.config.suffix)}`;
-            } else {
-                return '--';
-            }
-        },
-        trendRaw(n) {
-            let sharedState = this.sharedState;
-            let begin = sharedState.metric.data.map[n][`y_${sharedState.metric.years[sharedState.metric.years.length - 1]}`] * sharedState.metric.data.w[n][`y_${sharedState.metric.years[sharedState.metric.years.length - 1]}`];
-            let end = sharedState.metric.data.map[n][`y_${sharedState.metric.years[0]}`] * sharedState.metric.data.w[n][`y_${sharedState.metric.years[0]}`];
-
-            if (isNumeric(begin) && isNumeric(end)) {
-                let trendVal = begin - end;
-                return  `${this.trendIcon(trendVal)} ${prettyNumber(trendVal, 0)}`;
-            } else {
-                return  '--';
-            }
         }
     }
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+
 #datatable {
     margin: 10px 15px;
-    .tablescroll {
-        max-height: 350px;
-        overflow: auto;
-    }
-    table {
-        width: 100%;
-        tbody tr, tbody td {
-            height: 28px;
-            padding: 5px 18px 5px 24px;
-        }
-    }
-    p {
-        margin-top: 10px;
-    }
-    .material-icons {
-        vertical-align: middle;
-    }
-    .tooltip {
-        border-bottom: 1px dashed rgba(0,0,0,.54);
-    }
 }
+#datatable table {
+    width: 100%;
+}
+#datatable tbody tr, #datatable tbody td {
+    height: 28px;
+    padding: 5px 18px 5px 24px;
+}
+#datatable .tablescroll {
+    max-height: 350px;
+    overflow: auto;
+}
+#datatable p {
+    margin-top: 10px;
+}
+#datatable .tooltip {
+    border-bottom: 1px dashed rgba(0,0,0,.54);
+}
+
 </style>

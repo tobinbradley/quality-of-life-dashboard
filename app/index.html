@@ -58,7 +58,7 @@
                             <sc-years></sc-years>
                         </div>
                         <div class="flex-item mdl-typography--text-right">
-                            <p>
+                            <p style="margin-top: 0;">
                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent selected-clear">
                                     Clear Selected
                                 </button>
@@ -95,8 +95,8 @@
                 </div>
                 <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
                     <sc-search></sc-search>
+                    <div class="demo-separator mdl-cell--1-col"></div>
                     <!-- <sc-scatterplot></sc-scatterplot> -->
-
                     <sc-trendchart></sc-trendchart>
                 </div>
             </div>
@@ -127,8 +127,8 @@
                             <label class="mdl-textfield__label" for="contact-message">Message</label>
                         </div>
                         <p>
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" style="display: inline" id="contact-submit">
-                                  <i class="material-icons">contact_mail</i> Contact Us
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="display: inline" id="contact-submit">
+                                  Contact Us
                             </button>
                         </p>
                     </div>
@@ -166,7 +166,6 @@
                 </div>
             </footer>
         </div>
-
     </div>
 
 
@@ -188,6 +187,7 @@
 		ga('create', '{{ siteConfig.gaKey }}', 'auto');
 		ga('send', 'pageview');
 	</script>
+
 </body>
 
 </html>

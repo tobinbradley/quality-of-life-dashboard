@@ -287,49 +287,23 @@ export default {
             //     .addTo(map);
         }
     },
-    ready: function () {
+    mounted: function () {
         this.initMap();
     }
 
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 #map {
     width: 100%;
     height: 600px;
 }
-.mapboxgl-popup {
+#map .mapboxgl-popup {
     max-width: 400px;
 }
-.mapboxgl-popup-content {
-    /*color: white;
-    background-color: black;*/
+#map .mapboxgl-popup-content {
     padding: 5px 10px;
     font-weight: bold;
 }
-/*.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
-    border-bottom-color: black;
-}
-.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip {
-    border-bottom-color: black;
-}
-.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
-    border-bottom-color: black;
-}
-.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-    border-top-color: black;
-}
-.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip {
-    border-top-color: black;
-}
-.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
-    border-top-color: black;
-}
-.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
-    border-right-color: black;
-}
-.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
-    border-left-color: black;
-}*/
 </style>

@@ -1,12 +1,12 @@
 <template lang="html">
-    <nav class="data-sidenav demo-navigation mdl-navigation mdl-color--blue-grey-900">
+    <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-900">
         <template v-if="privateState.filterVal">
             <a class="mdl-navigation__link" v-on:click="changeFilter(null)" href="javascript:void(0)"><i class="mdl-color-text--blue-grey-400 material-icons navleft" role="presentation">chevron_left</i>Back</a>
-            <template  v-for="metric in privateState.data | filterMetrics privateState.filterVal">
-                <a class="mdl-navigation__link" v-on:click="changeMetric(metric.metric)" href="javascript:void(0)">{{metric.title}}</a>
+            <template  v-for="m in filterMetrics(privateState.data, privateState.filterVal)">
+                <a class="mdl-navigation__link" v-on:click="changeMetric(m.metric)" href="javascript:void(0)">{{m.title}}</a>
             </template>
         </template>
-        <template v-if="!privateState.filterVal" v-for="category in privateState.data | filterCategories">
+        <template v-else v-for="category in filterCategories(privateState.data)">
             <a class="mdl-navigation__link" v-on:click="changeFilter(category)" href="javascript:void(0)">{{category}}<i class="mdl-color-text--blue-grey-400 material-icons navright" role="presentation">chevron_right</i></a>
         </template>
 
@@ -42,9 +42,7 @@ export default {
                 gaEvent('metric', this.privateState.data[`m${metric}`].title.trim(), this.privateState.data[`m${metric}`].category.trim());
                 fetchData(this.sharedState, metric);
             }
-        }
-    },
-    filters: {
+        },
         filterCategories: function(value) {
             let categories = [];
             for (let key in value) {
@@ -63,16 +61,14 @@ export default {
 };
 </script>
 
-<style lang="css">
-.data-sidenav {
-    .mdl-navigation__link {
-        padding: 8px 20px !important;
-    }
-    .navright {
-        padding: 0;
-        margin-right: 20px !important;
-        position: absolute;
-        right: 0;
-    }
+<style lang="css" scoped>
+.mdl-navigation__link {
+    padding: 8px 20px !important;
+}
+.navright {
+    padding: 0;
+    margin-right: 20px !important;
+    position: absolute;
+    right: 0;
 }
 </style>

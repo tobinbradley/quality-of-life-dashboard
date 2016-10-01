@@ -42,7 +42,7 @@ function numberfixes(number, prefix = '', suffix = '') {
 
 function prettyNumber(number, decimals = 0, prefix = '', suffix = '') {
     if (isNumeric(number)) {
-        return numberfixes(commafy(round(number, decimals)), prefix, suffix);
+        return numberfixes(commafy(round(Number(number), decimals)), prefix, suffix);
     } else {
         return '--';
     }

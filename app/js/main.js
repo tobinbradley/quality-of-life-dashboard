@@ -13,7 +13,7 @@
 require('es6-promise').polyfill(); // Fix for axios on IE11
 require('material-design-lite');
 
-import Vue from 'vue';
+import Vue from 'vue/dist/vue.js';
 import axios from 'axios';
 import dataConfig from '../../data/config/data';
 import mapConfig from '../../data/config/map';
@@ -22,6 +22,7 @@ import colors from './modules/breaks';
 import fetchData from './modules/fetch';
 import {replaceState, gaEvent} from './modules/tracking';
 import getURLParameter from './modules/geturlparams';
+import scrollTo from './modules/scrollto';
 import querystring from 'querystring';
 import Sidenav from './components/sidebar-nav.vue';
 import Metadata from './components/metadata.vue';
@@ -136,16 +137,6 @@ DataTable.data = function() {
     };
 };
 
-// ScatterPlot.data = function() {
-//     return {
-//         sharedState: appState,
-//         privateState: {
-//             chart: null,
-//             chartData: null
-//         }
-//     };
-// };
-
 TrendChart.data = function() {
     return {
         sharedState: appState,
@@ -194,46 +185,54 @@ MapGL.data = function() {
 };
 
 Vue.directive('mdl', {
-    bind: function() {
-        componentHandler.upgradeElement(this.el);
+    bind: function(el) {
+        componentHandler.upgradeElement(el);
     }
 });
 
+
 // initialize components
 new Vue({
-    el: 'body',
-    components: {
-        'sc-search': Search,
-        'sc-sidenav': Sidenav,
-        'sc-metadata': Metadata,
-        'sc-years': YearControl,
-        'sc-datatable': DataTable,
-        //'sc-scatterplot': ScatterPlot,
-        'sc-trendchart': TrendChart,
-        'sc-toc': ToC,
-        'sc-map': MapGL,
-        'sc-embedcode': EmbedCode
-    }
+    el: 'sc-search',
+    render: h => h(Search)
+});
+new Vue({
+    el: 'sc-sidenav',
+    render: h => h(Sidenav)
+});
+new Vue({
+    el: 'sc-metadata',
+    render: h => h(Metadata)
+});
+new Vue({
+    el: 'sc-years',
+    render: h => h(YearControl)
+});
+new Vue({
+    el: 'sc-datatable',
+    render: h => h(DataTable)
+});
+new Vue({
+    el: 'sc-trendchart',
+    render: h => h(TrendChart)
+});
+new Vue({
+    el: 'sc-toc',
+    render: h => h(ToC)
+});
+new Vue({
+    el: 'sc-embedcode',
+    render: h => h(EmbedCode)
+});
+new Vue({
+    el: 'sc-map',
+    render: h => h(MapGL)
 });
 
 
 ////////////////////////////////////////////////////////////////////////////
 // General non-component page interactions
 ///////////////////////////////////////////////////////////////////////////
-
-// scroll to top of container div on metric change
-// when link is down the page
-function scrollTo(element, to, duration) {
-    if (duration <= 0) return;
-    var difference = to - element.scrollTop;
-    var perTick = difference / duration * 10;
-
-    setTimeout(function() {
-        element.scrollTop = element.scrollTop + perTick;
-        if (element.scrollTop === to) return;
-        scrollTo(element, to, duration - 10);
-    }, 10);
-}
 
 // change metric from meta links
 // meta links look like:
@@ -270,10 +269,14 @@ Array.from(whatsnew).forEach(link => {
 });
 
 // clear selected button
-document.querySelector('.selected-clear').addEventListener('click', function() {
-    appState.selected = [];
-    replaceState(appState.metricId, []);
-}, false);
+let clearselected = document.querySelector('.selected-clear');
+if (clearselected) {
+    clearselected.addEventListener('click', function() {
+        appState.selected = [];
+        replaceState(appState.metricId, []);
+    }, false);
+}
+
 
 // Reports
 let reportEmbed = document.querySelector('li[data-printmap]');

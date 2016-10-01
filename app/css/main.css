@@ -9,6 +9,15 @@ html, body {
     color: #333;
 }
 
+table .material-icons {
+    vertical-align: middle;
+}
+
+.ct-series-b .ct-line, .ct-series-b .ct-point {
+    stroke: orange;
+}
+
+
 .selectgroup-link {
     padding-left: 6px;
     white-space: nowrap;
@@ -40,16 +49,11 @@ html, body {
 }
 
 /* footer stuff */
-footer {
-    .material-icons {
-        padding-right: 10px;
-    }
-    .mdl-cell {
-        padding: 10px;
-    }
-    div {
-
-    }
+footer .material-icons {
+    padding-right: 10px;
+}
+footer .mdl-cell {
+    padding: 10px;
 }
 
 /* used in footer, TOC metric numbers */
