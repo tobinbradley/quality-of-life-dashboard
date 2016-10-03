@@ -70,7 +70,6 @@ gulp.task("css", function() {
         .pipe(sourcemaps.init())
         .pipe(postcss([
             require("postcss-import")(),
-            require("postcss-nested"),
             require("autoprefixer")({
                 'browers': ['last 2 version']
             })

@@ -38,7 +38,6 @@
     "material-design-lite": "^1.2.1",
     "mkdirp": "^0.5.1",
     "postcss-import": "^8.1.2",
-    "postcss-nested": "^1.0.0",
     "querystring": "^0.2.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
