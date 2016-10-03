@@ -9,6 +9,9 @@
 
 html, body {
     font-family: 'Roboto', 'Helvetica', sans-serif;
+    color: #555;
+}
+h1, h2, h3, h4, h5 {
     color: #333;
 }
 
