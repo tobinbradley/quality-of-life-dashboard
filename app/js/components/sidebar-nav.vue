@@ -13,7 +13,7 @@
         <!-- you can put stuff on the bottom of the sidebar here -->
         <!--
         <div class="mdl-layout-spacer"></div>
-        <a class="mdl-navigation__link" href="http://qol.charmeck.org/"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i>Help</a>
+        <a class="mdl-navigation__link" v-on:click="doSomething()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i>Help</a>
         -->
     </nav>
 </template>
@@ -29,14 +29,16 @@ export default {
         changeFilter: function(filter) {
             this.privateState.filterVal = filter;
         },
-        changeMetric: function(metric) {
+        hideOverlay: function() {
             // hide floating sidebar on metric change
             let drawer = document.querySelector('.mdl-layout__drawer');
             if (drawer) {
                 drawer.classList.remove('is-visible');
                 document.querySelector('.mdl-layout__obfuscator').classList.remove('is-visible');
             }
-
+        },
+        changeMetric: function(metric) {
+            this.hideOverlay();
             if (this.sharedState.metricId !== metric) {
                 replaceState(metric, this.sharedState.selected);
                 gaEvent('metric', this.privateState.data[`m${metric}`].title.trim(), this.privateState.data[`m${metric}`].category.trim());

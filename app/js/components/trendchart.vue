@@ -23,7 +23,6 @@ export default {
     methods: {
         renderChart: function() {
             if (this.sharedState.metric.years.length > 1) {
-                console.log("running chart");
                 let _this = this;
                 let data = this.updateData();
 
@@ -121,8 +120,16 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
+.qol-chart .ct-series-b .ct-line, .qol-chart .ct-series-b .ct-point {
+    stroke: orange;
+}
+.qol-chart {
+    min-height: 260px;
+}
+</style>
 
+<style lang="css" scoped>
 h1 {
     font-size: 1.2em;
     margin: 15px 0 0;
@@ -141,6 +148,4 @@ span.legend {
 .legend-county {
     color: #d70206;
 }
-
-
 </style>

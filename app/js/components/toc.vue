@@ -164,128 +164,128 @@ export default {
     box-shadow: 0 1px 3px #666, 0 6px 5px -5px #666;
 }
 
-    .tocposition {
-        position: absolute;
-        top: 0;
-        right: 0;
-        font-size: 0.8em;
-        z-index: 20;
-    }
-    .tocposition a {
-        color: #333;
-        opacity: 0.2;
-    }
-    .tocposition a:hover {
-        opacity: 0.8;
-    }
-    .tocposition .material-icons {
-        font-size: 18px;
-    }
+.tocposition {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.8em;
+    z-index: 20;
+}
+.tocposition a {
+    color: #333;
+    opacity: 0.2;
+}
+.tocposition a:hover {
+    opacity: 0.8;
+}
+.tocposition .material-icons {
+    font-size: 18px;
+}
 
-	.title, .description, .legend, .metricboxes {
-      position: relative;
-      z-index: 10;
-    }
+.title, .description, .legend, .metricboxes {
+  position: relative;
+  z-index: 10;
+}
 
-    .metricboxes {
-        padding: 10px 0 10px;
-        text-align: center;
-        display: flex;
-        flex-flow: row nowrap;
-    }
-    .metricbox {
-        width: 50%;
-        padding: 0 10px;
-        margin: 0 auto;
+.metricboxes {
+    padding: 10px 0 10px;
+    text-align: center;
+    display: flex;
+    flex-flow: row nowrap;
+}
+.metricbox {
+    width: 50%;
+    padding: 0 10px;
+    margin: 0 auto;
 
-    }
-    .metricbox span {
-        display: block;
-        font-size: 12px;
-    }
-    .metrictype {
-        font-weight: bold;
-        font-size: 12px;
-        color: #727272;
-    }
-    .metricvalue {
-        margin-top: 3px;
-        font-weight: bold;
-        font-size: 19px !important;
-    }
+}
+.metricbox span {
+    display: block;
+    font-size: 12px;
+}
+.metrictype {
+    font-weight: bold;
+    font-size: 12px;
+    color: #727272;
+}
+.metricvalue {
+    margin-top: 3px;
+    font-weight: bold;
+    font-size: 19px !important;
+}
 
-    .title {
-      padding: 20px 10px 15px;
-      border-bottom: 1px solid rgba(0,0,0,0.15);
-      word-wrap: break-word;
-	  font-size: 16px;
-    }
+.title {
+  padding: 20px 10px 15px;
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+  word-wrap: break-word;
+  font-size: 16px;
+}
 
-    .description {
-        padding: 5px 10px 10px;
-	    font-size: 12px;
-    }
+.description {
+    padding: 5px 10px 10px;
+    font-size: 12px;
+}
 
-    h1, h2 {
-        margin: 0;
-        line-height: normal;
-    }
-    h1 {
-        font-weight: bold;
-        line-height: 20px;
-    }
+h1, h2 {
+    margin: 0;
+    line-height: normal;
+}
+h1 {
+    font-weight: bold;
+    line-height: 20px;
+}
 
-    h2 {
-        font-weight: normal;
-    }
+h2 {
+    font-weight: normal;
+}
 
-    svg {
-        display: block;
-        width: 100%;
-        height: auto;
-        max-height: 41px;
-        pointer-events: none; /* fix for ie11 click making legend disappear */
-    }
+svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 41px;
+    pointer-events: none; /* fix for ie11 click making legend disappear */
+}
 
-    .legendText {
-        font-family:'Roboto', sans-serif;
-        font-size: 10px;
-        letter-spacing:0px;
-        line-height:100%;
-        stroke-width:1px;
-        text-align:center;
-        text-anchor:middle;
-        word-spacing:0px;
-    }
+.legendText {
+    font-family:'Roboto', sans-serif;
+    font-size: 10px;
+    letter-spacing:0px;
+    line-height:100%;
+    stroke-width:1px;
+    text-align:center;
+    text-anchor:middle;
+    word-spacing:0px;
+}
 
-    .legendText:first-of-type {
-        text-align:start;
-        text-anchor:start;
-    }
-    .legendText:last-of-type {
-        text-align:end;
-        text-anchor:end;
-    }
+.legendText:first-of-type {
+    text-align:start;
+    text-anchor:start;
+}
+.legendText:last-of-type {
+    text-align:end;
+    text-anchor:end;
+}
 
+.background-print-img{
+    display: none;
+}
+
+@media print{
     .background-print-img{
+        display: block;
+        width:100%;
+        height: 99%;
+        position:absolute;
+        left: 0;
+        top: 0;
+    }
+    .tocposition {
         display: none;
     }
+}
 
-    @media print{
-        .background-print-img{
-            display: block;
-            width:100%;
-            height: 99%;
-            position:absolute;
-            left: 0;
-            top: 0;
-        }
-        .tocposition {
-            display: none;
-        }
-    }
+@media all and (max-width: 480px) {
 
-    @media all and (max-width: 480px) {
-
-    }
+}
 </style>

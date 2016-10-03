@@ -1,0 +1,23 @@
+/*comment section*/
+.comment-container {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.comment-container .mdl-textfield {
+  width: 100%;
+}
+.comment-container .comment-form {
+  width: 100%;
+}
+.comment-container .comment-complete {
+  display: none;
+}
+.comment-container .comment-complete i {
+  font-size: 3em;
+  text-shadow: 2px 2px 2px #ccc;
+}
+.comment-container .comment-complete p {
+  font-size: 2em;
+}

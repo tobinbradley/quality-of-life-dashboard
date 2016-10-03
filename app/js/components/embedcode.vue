@@ -38,7 +38,7 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 .embedcode {
   padding: 15px;
   width: 100%;
@@ -51,12 +51,12 @@ export default {
   margin: 0 0 10px;
   line-height: 1em;
 }
-#embed-textarea .mdl-textfield__label {
+.embedcode #embed-textarea .mdl-textfield__label {
   top: 4px;
   color: #3f51b5;
   font-size: 12px;
 }
-#embed-textarea .mdl-textfield__input {
+.embedcode #embed-textarea .mdl-textfield__input {
   font-size: 12px;
 }
 </style>

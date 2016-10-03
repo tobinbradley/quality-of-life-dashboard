@@ -108,8 +108,7 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-
+<style lang="css">
 #datatable {
     margin: 10px 15px;
 }
@@ -130,5 +129,7 @@ export default {
 #datatable .tooltip {
     border-bottom: 1px dashed rgba(0,0,0,.54);
 }
-
+#datatable .material-icons {
+    vertical-align: middle;
+}
 </style>

@@ -28,7 +28,6 @@ import Sidenav from './components/sidebar-nav.vue';
 import Metadata from './components/metadata.vue';
 import YearControl from './components/years.vue';
 import DataTable from './components/datatable.vue';
-//import ScatterPlot from './components/scatterplot.vue';
 import TrendChart from './components/trendchart.vue';
 import ToC from './components/toc.vue';
 import MapGL from './components/map.vue';
@@ -57,7 +56,7 @@ let appState = {
 // for debugging
 window.appState = appState;
 
-// get random metric if none provided and validate provided
+// get random metric if none provided and validate if metric is provided
 let keys = Object.keys(dataConfig);
 let metricId = keys[Math.floor(Math.random() * keys.length)].replace('m', '');
 if (getURLParameter("m")) {
@@ -76,9 +75,7 @@ if (getURLParameter("s")) {
 fetchData(appState, metricId);
 
 
-// Component data
-// data store divided into privateState, for things specific to that component,
-// and sharedState, for data shared between components
+// Component data setup
 Sidenav.data = function() {
     return {
         privateState: {
@@ -88,7 +85,6 @@ Sidenav.data = function() {
         sharedState: appState
     };
 };
-
 Search.data = function() {
     return {
         privateState: {
@@ -104,7 +100,6 @@ Search.data = function() {
         sharedState: appState
     };
 };
-
 Metadata.data = function() {
     return {
         sharedState: appState
@@ -116,7 +111,6 @@ YearControl.data = function() {
         sharedState: appState
     };
 };
-
 EmbedCode.data = function() {
     return {
         sharedState: appState,
@@ -126,7 +120,6 @@ EmbedCode.data = function() {
         }
     };
 };
-
 DataTable.data = function() {
     return {
         sharedState: appState,
@@ -136,7 +129,6 @@ DataTable.data = function() {
         }
     };
 };
-
 TrendChart.data = function() {
     return {
         sharedState: appState,
@@ -145,7 +137,6 @@ TrendChart.data = function() {
         }
     };
 };
-
 ToC.data = function() {
     return {
         sharedState: appState,
@@ -158,7 +149,6 @@ ToC.data = function() {
         }
     };
 };
-
 MapGL.data = function() {
     return {
         sharedState: appState,
@@ -184,6 +174,8 @@ MapGL.data = function() {
     };
 };
 
+
+// pass newly created mdl elements through mdl
 Vue.directive('mdl', {
     bind: function(el) {
         componentHandler.upgradeElement(el);
@@ -235,8 +227,6 @@ new Vue({
 ///////////////////////////////////////////////////////////////////////////
 
 // change metric from meta links
-// meta links look like:
-// <a href="javascript:void(0)" onclick="changeMetric('m19')">Commercial Construction</a>
 window.changeMetric = function(m) {
     let metric = m.replace('m', '');
     replaceState(metric, appState.selected);
@@ -276,7 +266,6 @@ if (clearselected) {
         replaceState(appState.metricId, []);
     }, false);
 }
-
 
 // Reports
 let reportEmbed = document.querySelector('li[data-printmap]');

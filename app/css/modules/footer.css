@@ -1,0 +1,11 @@
+/* footer stuff */
+footer .material-icons {
+    padding-right: 10px;
+}
+footer .mdl-cell {
+    padding: 10px;
+}
+footer .site-links a {
+    padding-left: 10px;
+    white-space: nowrap;
+}

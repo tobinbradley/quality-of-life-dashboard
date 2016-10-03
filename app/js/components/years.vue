@@ -1,6 +1,6 @@
 <template lang="html">
     <div>
-        <ul v-if="sharedState.metric.years.length > 1">
+        <ul v-show="sharedState.metric.years.length > 1">
             <template v-for="y in sharedState.metric.years">
             <li v-if="y == sharedState.year" class="selected">{{y}}</li>
             <li v-else v-on:click="setYear(y)">{{y}}</li>
