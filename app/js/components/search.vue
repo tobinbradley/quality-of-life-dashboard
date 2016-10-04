@@ -35,6 +35,7 @@
 
 <script>
 import axios from 'axios';
+import debounce from 'lodash.debounce';
 import isNumeric from '../modules/isnumeric';
 
 export default {
@@ -52,11 +53,15 @@ export default {
     },
     methods: {
         search: function() {
-            let query = this.privateState.query.trim();
-
-            this.searchNeighborhood(query);
-            this.searchAddress(query);
-            this.searchZipcode(query);
+            let _this = this;
+            let debounceSearch = debounce(function() {
+                let query = _this.privateState.query.trim();
+             
+                _this.searchNeighborhood(query);
+                _this.searchAddress(query);
+                _this.searchZipcode(query);
+            }, 250);
+            debounceSearch();
         },
         clearResults: function() {
             let keys = Object.keys(this.privateState.results);

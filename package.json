@@ -34,6 +34,7 @@
     "gulp-uglify": "^2.0.0",
     "handlebars": "^4.0.5",
     "lodash": "^4.15.0",
+    "lodash.debounce": "^4.0.8",
     "mapbox-gl": "^0.25.1",
     "material-design-lite": "^1.2.1",
     "mkdirp": "^0.5.1",
