@@ -174,6 +174,7 @@ export default {
 .tocposition a {
     color: #333;
     opacity: 0.2;
+    transition: opacity 0.5s;
 }
 .tocposition a:hover {
     opacity: 0.8;
