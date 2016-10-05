@@ -31,9 +31,8 @@ export default {
                 closeOnClick: false
             });
 
-            // disable map rotation using right click + drag and touch
+            // disable map rotation with mouse - confuses noobs
             map.dragRotate.disable();
-            map.touchZoomRotate.disableRotation();
 
             map.on('moveend', function() {
                 let bounds = map.getBounds();
@@ -80,23 +79,27 @@ export default {
                 }
             });
 
-            // show feature info on mouse move
-            map.on('mousemove', function (e) {
-                var features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill'] });
-                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+            // fix for popup cancelling click event on iOS
+            let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (!iOS) {
+                // show feature info on mouse move
+                map.on('mousemove', function (e) {
+                    var features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill'] });
+                    map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 
-                if (!features.length) {
-                    popup.remove();
-                    return;
-                }
+                    if (!features.length) {
+                        popup.remove();
+                        return;
+                    }
 
-                let feature = features[0];
-                let val = prettyNumber(feature.properties.choropleth, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);
+                    let feature = features[0];
+                    let val = prettyNumber(feature.properties.choropleth, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);
 
-                popup.setLngLat(map.unproject(e.point))
-                    .setHTML(val)
-                    .addTo(map);
-            });
+                    popup.setLngLat(map.unproject(e.point))
+                        .setHTML(val)
+                        .addTo(map);
+                });
+            }
         },
         initNeighborhoods: function() {
             let map = this.privateState.map;
