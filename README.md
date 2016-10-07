@@ -1,6 +1,6 @@
 # Quality of Life Dashboard v3
 
-A dashboard for community data and health. See our [site](http://mcmap.org/qol).
+A dashboard for community data and health. See our [demo site](http://mcmap.org/qol-dev).
 
 The original repository with old versions of the Dashboard is [here](https://github.com/tobinbradley/Mecklenburg-County-Quality-of-Life-Dashboard).
 
