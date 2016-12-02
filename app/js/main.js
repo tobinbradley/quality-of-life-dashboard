@@ -48,7 +48,6 @@ let appState = {
     selected: [],
     year: null,
     metadata: null,
-    mapBounds: [],
     marker: null,
     zoomNeighborhoods: []
 };

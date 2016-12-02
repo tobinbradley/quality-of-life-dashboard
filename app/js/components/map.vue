@@ -34,11 +34,6 @@ export default {
             // disable map rotation with mouse - confuses noobs
             map.dragRotate.disable();
 
-            map.on('moveend', function() {
-                let bounds = map.getBounds();
-                _this.sharedState.mapBounds = [bounds._sw.lng.toFixed(4), bounds._sw.lat.toFixed(4), bounds._ne.lng.toFixed(4), bounds._ne.lat.toFixed(4)];
-            });
-
             // after map initiated, grab geography and intiate/style neighborhoods
             map.on('style.load', function () {
                 axios.get('data/geography.geojson.json')

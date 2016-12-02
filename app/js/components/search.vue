@@ -56,7 +56,7 @@ export default {
             let _this = this;
             let debounceSearch = debounce(function() {
                 let query = _this.privateState.query.trim();
-             
+
                 _this.searchNeighborhood(query);
                 _this.searchAddress(query);
                 _this.searchZipcode(query);
@@ -107,7 +107,7 @@ export default {
         searchAddress: function(query) {
             if (query.length > 4 && !isNumeric(query)) {
                 let _this = this;
-                axios.get(`http://maps.co.mecklenburg.nc.us/api/search/v1/${query}`, {
+                axios.get(`http://maps.co.mecklenburg.nc.us/api/search/v1/${query.toLowerCase()}`, {
                     params: {
                       'limit': 5
                     }
