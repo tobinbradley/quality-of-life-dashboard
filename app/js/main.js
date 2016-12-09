@@ -29,6 +29,7 @@ import Metadata from './components/metadata.vue';
 import YearControl from './components/years.vue';
 import DataTable from './components/datatable.vue';
 import TrendChart from './components/trendchart.vue';
+import DistributionChart from './components/distributionchart.vue';
 import ToC from './components/toc.vue';
 import MapGL from './components/map.vue';
 import Search from './components/search.vue';
@@ -136,6 +137,15 @@ TrendChart.data = function() {
         }
     };
 };
+DistributionChart.data = function() {
+    return {
+        sharedState: appState,
+        privateState: {
+            chart: null,
+            chartData: null
+        }
+    };
+};
 ToC.data = function() {
     return {
         sharedState: appState,
@@ -202,6 +212,10 @@ new Vue({
 new Vue({
     el: 'sc-datatable',
     render: h => h(DataTable)
+});
+new Vue({
+    el: 'sc-distributionchart',
+    render: h => h(DistributionChart)
 });
 new Vue({
     el: 'sc-trendchart',

@@ -29,7 +29,7 @@ export default {
                 if (!this.privateState.chart) {
                     let options = {
                         fullWidth: true,
-                        height: '200px',
+                        height: '160px',
                         showArea: false,
                         chartPadding: {
                             right: 40
@@ -124,9 +124,7 @@ export default {
 .qol-chart .ct-series-b .ct-line, .qol-chart .ct-series-b .ct-point {
     stroke: orange;
 }
-.qol-chart {
-    min-height: 260px;
-}
+
 </style>
 
 <style lang="css" scoped>
