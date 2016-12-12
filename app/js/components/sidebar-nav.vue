@@ -6,8 +6,8 @@
                 <a class="mdl-navigation__link" v-on:click="changeMetric(m.metric)" href="javascript:void(0)">{{m.title}}</a>
             </template>
         </template>
-        <template v-else v-for="category in filterCategories(privateState.data)">
-            <a class="mdl-navigation__link" v-on:click="changeFilter(category)" href="javascript:void(0)">{{category}}<i class="mdl-color-text--blue-grey-400 material-icons navright" role="presentation">chevron_right</i></a>
+        <template v-else >            
+            <a v-for="category in filterCategories(privateState.data)" class="mdl-navigation__link" v-on:click="changeFilter(category)" href="javascript:void(0)">{{category}}<i class="mdl-color-text--blue-grey-400 material-icons navright" role="presentation">chevron_right</i></a>    
         </template>
 
         <!-- you can put stuff on the bottom of the sidebar here -->
@@ -15,6 +15,10 @@
         <div class="mdl-layout-spacer"></div>
         <a class="mdl-navigation__link" v-on:click="doSomething()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i>Help</a>
         -->
+        <div class="mdl-layout-spacer"></div>
+        <div style="text-align: center">
+        <a class="mdl-navigation__link-bottom" href="http://qol.charmeck.org/">About</a> &bull; <a class="mdl-navigation__link-bottom" href="downloads/qol-data.zip">Download Data</a>
+        </div>
     </nav>
 </template>
 
@@ -67,10 +71,24 @@ export default {
 .mdl-navigation__link {
     padding: 8px 20px !important;
 }
+.mdl-navigation__link-bottom {
+    color: hsla(0,0%,100%,.75);
+    text-decoration: none;
+    display: inline;
+    font-size: 0.9em;
+}
 .navright {
     padding: 0;
     margin-right: 20px !important;
     position: absolute;
     right: 0;
+}
+</style>
+
+<style lang="css">
+.mdl-navigation__link-bottom {
+    color: hsla(0,0%,100%,.75);
+    text-decoration: none;
+    display: inline;
 }
 </style>
