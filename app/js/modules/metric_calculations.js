@@ -18,6 +18,19 @@ function weighted(arr, weight) {
     return sumR / sumW;
 }
 
+function median(arr) {
+    arr.sort( function(a,b) {return a - b;} );
+    let half = Math.floor(arr.length/2);
+
+    if (arr.length % 2) {
+        return arr[half];
+    }
+    else {
+        return (arr[half-1] + arr[half]) / 2.0;
+    }
+}
+
+
 function valsToArray(data, years, keys) {
     let arr = [];
     for (let y = 0; y < years.length; y++) {
@@ -60,4 +73,4 @@ function calcValue(data, calcType = sum, year, keys) {
 }
 
 
-export {sum, mean, weighted, valsToArray, wValsToArray, calcValue};
+export {sum, mean, weighted, median, valsToArray, wValsToArray, calcValue};
