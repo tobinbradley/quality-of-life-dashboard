@@ -142,7 +142,8 @@ DistributionChart.data = function() {
         sharedState: appState,
         privateState: {
             chart: null,
-            chartData: null
+            chartData: null,
+            median: null
         }
     };
 };
