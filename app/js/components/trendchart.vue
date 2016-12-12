@@ -3,7 +3,7 @@
         <div class="trendchart">
             <h1>Trend</h1>
             <span class="legend"><i class="material-icons legend-county">trending_up</i> County</span>
-            <span class="legend"><i class="material-icons legend-selected">trending_up</i> Selected</span>
+            <span v-show="sharedState.selected.length > 0" class="legend"><i class="material-icons legend-selected">trending_up</i> Selected</span>
             <div class="ct-trendchart"></div>
         </div>
     </div>
@@ -134,7 +134,6 @@ h1 {
 }
 span.legend {
     font-size: 0.8em;
-    display: inline !important;
 }
 .material-icons {
     vertical-align: middle;
