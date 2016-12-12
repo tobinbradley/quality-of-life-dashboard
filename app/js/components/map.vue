@@ -91,8 +91,9 @@ export default {
                     let val = prettyNumber(feature.properties.choropleth, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);
 
                     popup.setLngLat(map.unproject(e.point))
-                        .setHTML(val)
+                        .setHTML(`<div style="text-align: center; margin: 0; padding: 0;"><h3 style="font-size: 1.2em; margin: 0; padding: 0; line-height: 1em; font-weight: bold;">NPA ${feature.properties.id}</h1>${val}</div>`)
                         .addTo(map);
+
                 });
             }
         },
@@ -297,11 +298,13 @@ export default {
     width: 100%;
     height: 600px;
 }
-#map .mapboxgl-popup {
+</style>
+
+<style lang="css">
+.mapboxgl-popup {
     max-width: 400px;
 }
-#map .mapboxgl-popup-content {
-    padding: 5px 10px;
-    font-weight: bold;
+.mapboxgl-popup-content {
+    padding: 10px 10px 5px;
 }
 </style>
