@@ -35,7 +35,7 @@
     "handlebars": "^4.0.5",
     "lodash": "^4.15.0",
     "lodash.debounce": "^4.0.8",
-    "mapbox-gl": "^0.25.1",
+    "mapbox-gl": "^0.29.0",
     "material-design-lite": "^1.2.1",
     "mkdirp": "^0.5.1",
     "postcss-import": "^8.1.2",
