@@ -28,7 +28,8 @@
     <link rel="shortcut icon" href="img/favicon.png">
 
     <!-- fonts and style sheets -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
     <link rel="stylesheet" href="css/main.css?{{cachebuster}}">
 
 </head>
@@ -57,7 +58,7 @@
                         <div class="flex-item mdl-typography--text-right">
                             <sc-years></sc-years>
                         </div>
-                        <div class="flex-item mdl-typography--text-right">
+                        <div class="flex-item mdl-typography--text-right undermap-controls">
                             <p style="margin-top: 0;">
                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent selected-clear">
                                     Clear Selected
@@ -102,19 +103,7 @@
                 </div>
             </div>
             <sc-metadata></sc-metadata>
-            <div class="mdl-grid demo-cards">
-                {{#if siteConfig.whatsnew}}
-                <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet whatsnew">
-                    <div class="">
-                        <h1 class="mdl-typography--text-center">What's New</h1>
-                        {{#each siteConfig.whatsnew}}
-                        <span class="mdl-chip mdl-color--teal mdl-color-text--white">
-                            <span class="mdl-chip__text" data-whatsnew="{{this}}">{{#whatsnew this}}{{/whatsnew}}</span>
-                        </span>
-                        {{/each}}
-                    </div>
-                </div>
-                {{/if}}
+            <div class="mdl-grid demo-cards">               
                 <sc-embedcode></sc-embedcode>
                 {{#if siteConfig.contactForm}}
                 <div class="mdl-typography--text-center mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet comment-container">
@@ -141,31 +130,20 @@
                     </div>
                 </div>
                 {{/if}}
-            </div>
-            <footer class="mdl-grid">
-                <div class="mdl-typography--text-center mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet">
-                        <p>
-                            <img src="img/seals.png" width="177" height="36" alt="City and County Seals">
-                        </p>
-                        <p class='site-links'>
-                            {{#each siteConfig.links}}
-                            <a href="{{this.href}}" target="_blank">{{this.text}}</a>
-                            {{/each}}
-                        </p>
-                        <p class="text-muted">
-                            Created by <a href="http://charmeck.org/mecklenburg/county/Pages/Default.aspx">Mecklenburg County</a>, the <a href="http://charmeck.org/city/charlotte/Pages/default.aspx">City of Charlotte</a>, and <a href="http://www.uncc.edu/">UNC Charlotte</a>
-							with much &#9829; for the projects that make this site possible:
-                            <br>
-                            <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>,
-                            <a href="http://osm2vectortiles.org/" target="_blank">OSM2VectorTiles</a>,
-                            <a href="https://www.mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL JS</a>,
-                            <a href="http://vuejs.org/" target="_blank">Vue.js</a>, and
-                            <a href="http://getmdl.io/" target="_blank">Material Design Lite</a>
-                            <br>
-                            <br>Source code on <a href="https://github.com/tobinbradley/quality-of-life-dashboard">Github</a>
-                        </p>
+                {{#if siteConfig.whatsnew}}
+                <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet whatsnew">
+                    <div class="">
+                        <h1 class="mdl-typography--text-center">What's New</h1>
+                        {{#each siteConfig.whatsnew}}
+                        <span class="mdl-chip mdl-color--teal mdl-color-text--white">
+                            <span class="mdl-chip__text" data-whatsnew="{{this}}">{{#whatsnew this}}{{/whatsnew}}</span>
+                        </span>
+                        {{/each}}
+                    </div>
                 </div>
-            </footer>
+                {{/if}}
+            </div>
+            <sc-footer></sc-footer>            
         </div>
     </div>
 
