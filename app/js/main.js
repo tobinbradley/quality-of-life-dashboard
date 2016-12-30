@@ -34,6 +34,7 @@ import ToC from './components/toc.vue';
 import MapGL from './components/map.vue';
 import Search from './components/search.vue';
 import EmbedCode from './components/embedcode.vue';
+import Footer from './components/footer.vue';
 
 
 
@@ -137,6 +138,14 @@ TrendChart.data = function() {
         }
     };
 };
+Footer.data = function() {
+    return {
+        sharedState: appState,
+        privateState: {
+            links: siteConfig.links
+        }
+    };
+};
 DistributionChart.data = function() {
     return {
         sharedState: appState,
@@ -233,6 +242,10 @@ new Vue({
 new Vue({
     el: 'sc-map',
     render: h => h(MapGL)
+});
+new Vue({
+    el: 'sc-footer',
+    render: h => h(Footer)
 });
 
 
