@@ -11,10 +11,14 @@
                 <div class="metricbox" v-if="sharedState.selected.length > 0">
                     <span class="metrictype">SELECTED</span>
                     <span class="metricvalue">{{ privateState.selected }}</span>
+                    <!--<span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0">
+                        {{privateState.selectedRaw}} <span v-html="sharedState.metric.config.raw_label"></span>
+                    <span>-->
                 </div>
                 <div class="metricbox">
                     <span class="metrictype">COUNTY</span>
                     <span class="metricvalue">{{ privateState.area }}</span>
+                    <!--<span v-if="sharedState.metric.config.raw_label">{{privateState.areaRaw}} <span v-html="sharedState.metric.config.raw_label"></span></span>-->
                 </div>
             </div>
             <h2 v-if="privateState.metaDesc" class="description">
