@@ -1,5 +1,10 @@
 <template lang="html">
-    <div id="map"></div>
+    <div class="" style="position: relative; width: 100%; height: 100%">
+        <div id="map"></div>
+        <button class="mdl-button" id="btnPitch" v-on:click="togglePitch()">
+            2D/3D
+        </button>
+    </div>
 </template>
 
 <script>
@@ -31,8 +36,22 @@ export default {
                 closeOnClick: false
             });
 
+            // add nav control
+            var nav = new mapboxgl.NavigationControl();
+            map.addControl(nav, 'top-right');
+
             // disable map rotation with mouse - confuses noobs
-            map.dragRotate.disable();
+            // map.dragRotate.disable();
+
+            map.on('rotate', function(e) {
+                if (map.getPitch() > 25) {
+                    map.setLayoutProperty('neighborhoods-fill-extrude', 'visibility', 'visible');
+                    map.setLayoutProperty('neighborhoods-fill-selected', 'visibility', 'visible');
+                } else {
+                    map.setLayoutProperty('neighborhoods-fill-extrude', 'visibility', 'none');
+                    map.setLayoutProperty('neighborhoods-fill-selected', 'visibility', 'none');
+                }
+            });
 
             // after map initiated, grab geography and intiate/style neighborhoods
             map.on('style.load', function () {
@@ -47,6 +66,14 @@ export default {
                     });
             });
 
+        },
+        togglePitch: function() {
+            let _this = this;
+            if (this.privateState.map.getPitch() === 0) {
+                this.privateState.map.easeTo({pitch: 75, bearing: -40});
+            } else {
+                this.privateState.map.easeTo({pitch: 0, bearing: 0});
+            }
         },
         initMapEvents: function() {
             let map = this.privateState.map;
@@ -117,7 +144,7 @@ export default {
                     'line-color': '#666',
                     'line-width': 0.8
                 }
-            }, _this.privateState.neighborhoodsBefore);
+            }, 'building');
 
             // neighborhood boundaries highlight
             map.addLayer({
@@ -146,37 +173,50 @@ export default {
                         ]
                     }
                 }
-            }, _this.privateState.neighborhoodsSelectedBefore);
+            }, 'water_label');
+            map.addLayer({
+                'id': 'neighborhoods-fill-selected',
+                'type': 'fill-extrusion',
+                'source': 'neighborhoods',
+                'layout': {
+                    'visibility': 'none'
+                },
+                "filter": ["in", "id", "-999999"],
+                'paint': {
+                    'fill-extrusion-color': '#ba00e4',
+                    'fill-extrusion-opacity': 0.7,
+                    'fill-extrusion-height': {
+                        'type': 'identity',
+                        'property': 'height'
+                    }
+                }
+            }, 'water_label');
 
-            // neighborhoods fill
             map.addLayer({
                 'id': 'neighborhoods-fill',
                 'type': 'fill',
                 'source': 'neighborhoods',
-                'layout': {},
                 'filter': ['!=', 'choropleth', 'null'],
                 'paint': {
-                    'fill-opacity': 1
                 }
             }, 'neighborhoods-line');
 
-            // markers layer
-            map.addSource("markers", {
-                "type": "geojson",
-                "data": {
-                    "type": "FeatureCollection",
-                    "features": []
-                }
-            });
             map.addLayer({
-                "id": "markers",
-                "type": "symbol",
-                "source": "markers",
-                "interactive": true,
-                "layout": {
-                    "icon-image": "marker"
+                'id': 'neighborhoods-fill-extrude',
+                'type': 'fill-extrusion',
+                'source': 'neighborhoods',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'filter': ['!=', 'choropleth', 'null'],
+                'paint': {
+                    'fill-extrusion-opacity': 0.7,
+                    'fill-extrusion-height': {
+                        'type': 'identity',
+                        'property': 'height'
+                    }
                 }
-            });
+            }, 'neighborhoods-fill-selected');
 
         },
         selectNeighborhoods: function() {
@@ -199,9 +239,9 @@ export default {
                 if (getURLParameter("m")) {
                     linkMetric = getURLParameter("m");
                 }
-                replaceState(linkMetric, this.sharedState.selected);
 
                 map.setFilter("neighborhoods-line-selected", filter);
+                map.setFilter("neighborhoods-fill-selected", filter);
             }
         },
         styleNeighborhoods: function() {
@@ -220,6 +260,7 @@ export default {
                     ]
                 };
                 map.setPaintProperty("neighborhoods-fill", 'fill-color', fillColor);
+                map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-color', fillColor);
         },
         updateChoropleth: function() {
             let _this = this;
@@ -261,6 +302,7 @@ export default {
 
             this.privateState.map.fitBounds(bounds, {padding: 100});
         },
+        
         createMarker: function() {
             let map = this.privateState.map;
 
@@ -281,11 +323,39 @@ export default {
                    }]
             };
             map.getSource("markers").setData(markers);
-            // this.privateState.locationPopup.setLngLat([this.sharedState.marker.lng, this.sharedState.marker.lat])
-            //     .setHTML(theLabel)
-            //     .addTo(map);
+        },
+        getFullBounds: function() {
+            let bounds = new mapboxgl.LngLatBounds();
+            let _this = this;
+
+            this.privateState.geoJSON.features.forEach(function(feature) {
+                feature.geometry.coordinates.forEach(function(coord) {
+                    coord.forEach(function(el) {
+                        bounds.extend(el);
+                    })
+                });
+            });
+
+            return bounds;
+        },
+        getSelectedBounds: function() {
+            let bounds = new mapboxgl.LngLatBounds();
+            let _this = this;
+
+            this.privateState.geoJSON.features.forEach(function(feature) {
+                if (_this.sharedState.selected.indexOf(feature.properties.id) !== -1) {
+                    feature.geometry.coordinates.forEach(function(coord) {
+                        coord.forEach(function(el) {
+                            bounds.extend(el);
+                        })
+                    });
+                }
+            });
+
+            return bounds;
         }
     },
+    
     mounted: function () {
         this.initMap();
     }
@@ -293,18 +363,29 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 #map {
     width: 100%;
     height: 600px;
 }
-</style>
-
-<style lang="css">
 .mapboxgl-popup {
     max-width: 400px;
 }
 .mapboxgl-popup-content {
     padding: 10px 10px 5px;
+}
+#btnPitch {
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    border-radius: 4px;
+    /*width: 30px;*/
+    height: 30px;
+    min-width: 30px;
+    padding: 4px 7px;
+    /*box-shadow: 0 0 0 2px rgba(0,0,0,.1);*/
+    line-height: inherit;
+    background-color: rgba(158,158,158, 0.40);
+    /*background: #ffffff;*/
 }
 </style>
