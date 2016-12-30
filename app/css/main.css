@@ -8,8 +8,11 @@
 
 
 html, body {
-    font-family: 'Roboto', 'Helvetica', sans-serif;
     color: #555;
+    font-family: "Helvetica Neue", "Calibri Light", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.02em;
 }
 h1, h2, h3, h4, h5 {
     color: #333;
@@ -50,4 +53,8 @@ h1, h2, h3, h4, h5 {
   flex-grow: 1;
   width: 50%;
   padding: 10px;
+}
+
+.undermap-controls button {
+    margin-bottom: 5px;
 }
