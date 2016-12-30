@@ -122,6 +122,9 @@ export default {
 
 <style lang="css">
 .qol-chart .ct-series-b .ct-line, .qol-chart .ct-series-b .ct-point {
+    stroke: #ba00e4;
+}
+.qol-chart .ct-series-a .ct-line, .qol-chart .ct-series-a .ct-point {
     stroke: orange;
 }
 
@@ -140,9 +143,9 @@ span.legend {
     font-size: 1.5em;
 }
 .legend-selected {
-    color: orange;
+    color: #ba00e4;
 }
 .legend-county {
-    color: #d70206;
+    color: orange;
 }
 </style>

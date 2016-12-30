@@ -173,13 +173,13 @@ export default {
 <style>
     /* selected */    
     .ct-distributionchart .ct-point {
-        stroke: orange;
+        stroke: #ba00e4;
         stroke-width: 10;
     }
 
     /* distribution series */
     .ct-distributionchart .ct-area {
-        fill-opacity: 0.8;
+        fill-opacity: 1;
     }
     .ct-distributionchart .ct-series-a .ct-line, .ct-distributionchart .ct-series-a .ct-area {
         stroke: rgb(238,250,227);
@@ -224,7 +224,7 @@ export default {
         font-size: 1.2em;
     }
     .legend-selected {
-        color: orange;
+        color: #ba00e4;
     }
     .legend-median {
         color: #666;
