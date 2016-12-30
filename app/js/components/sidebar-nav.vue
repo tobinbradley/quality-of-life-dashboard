@@ -6,7 +6,8 @@
                 <a class="mdl-navigation__link" v-on:click="changeMetric(m.metric)" href="javascript:void(0)">{{m.title}}</a>
             </template>
         </template>
-        <template v-else >            
+        <template v-else >
+            <span class="sidebar-title">Explore the Data</span>
             <a v-for="category in filterCategories(privateState.data)" class="mdl-navigation__link" v-on:click="changeFilter(category)" href="javascript:void(0)">{{category}}<i class="mdl-color-text--blue-grey-400 material-icons navright" role="presentation">chevron_right</i></a>    
         </template>
 
@@ -82,6 +83,9 @@ export default {
     margin-right: 20px !important;
     position: absolute;
     right: 0;
+}
+.sidebar-title {
+    padding-left: 12px;
 }
 </style>
 
