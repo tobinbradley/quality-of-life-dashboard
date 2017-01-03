@@ -295,8 +295,8 @@ if (clearselected) {
 }
 
 // Reports
-let reportEmbed = document.querySelector('li[data-printmap]');
-let reportFull = document.querySelector('li[data-fullreport]');
+let reportEmbed = document.querySelector('button[data-printmap]');
+let reportFull = document.querySelector('button[data-fullreport]');
 if (reportEmbed) {
     reportEmbed.addEventListener('click', function() {
         window.open(`${siteConfig.qolembedURL}?m=${appState.metricId}&y=${appState.year}&s=${appState.selected.join(',')}`);
