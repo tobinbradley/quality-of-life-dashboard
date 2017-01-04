@@ -26,55 +26,62 @@ export default {
                 let _this = this;
                 let data = this.updateData();
 
-                if (!this.privateState.chart) {
-                    let options = {
-                        fullWidth: true,
-                        height: '160px',
-                        showArea: false,
-                        chartPadding: {
-                            right: 40
-                        },
-                        axisY: {
-                            labelInterpolationFnc: function(value, index) {
-                                return abbrNum(round(Number(value), 2), 2);
-                            }
-                        },
-                        axisX: {
-                            labelInterpolationFnc: function(value, index) {
-                                if (_this.sharedState.metric.years.length > 6) {
-                                    return index % 2 === 0 ? value : null;
-                                } else {
-                                    return value;
-                                }
+                let options = {
+                    fullWidth: true,
+                    height: '160px',
+                    showArea: false,
+                    chartPadding: {
+                        right: 40
+                    },
+                    lineSmooth: Chartist.Interpolation.cardinal({
+                        fillHoles: true,
+                    }),
+                    axisY: {
+                        labelInterpolationFnc: function(value, index) {
+                            return abbrNum(round(Number(value), 2), 2);
+                        }
+                    },
+                    axisX: {
+                        labelInterpolationFnc: function(value, index) {
+                            let len = _this.sharedState.metric.years[_this.sharedState.metric.years.length - 1] - _this.sharedState.metric.years[0];
+                            if (len > 6) {
+                                return index % 2 === 0 ? value : null;
+                            } else {
+                                return value;
                             }
                         }
-                    };
-                    this.privateState.chart = new Chartist.Line('.ct-trendchart', data, options);
+                    }
+                };
 
-                    // animation
-                    this.privateState.chart.on('draw', function(data) {
-                        if(data.type === 'line') {
-                            data.element.animate({
-                              d: {
-                                begin: 500 * data.index,
-                                dur: 500,
-                                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                                to: data.path.clone().stringify(),
-                                easing: Chartist.Svg.Easing.easeOutQuint
-                              },
-                              opacity: {
-                                begin: 500 * data.index,
-                                dur: 500,
-                                from: 0,
-                                to: 1
-                              }
-                          });
-                        }
-                    });
+                // set range from 0 to 100 for percentages
+                if (this.sharedState.metric.config.suffix && this.sharedState.metric.config.suffix === '%') {
+                    options.low = 0;
+                    options.high = 100;
+                } 
+                
+                this.privateState.chart = new Chartist.Line('.ct-trendchart', data, options);
 
-                } else {
-                    this.privateState.chart.update(data);
-                }
+                // animation
+                this.privateState.chart.on('draw', function(data) {
+                    if(data.type === 'line') {
+                        data.element.animate({
+                            d: {
+                            begin: 500 * data.index,
+                            dur: 500,
+                            from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                            to: data.path.clone().stringify(),
+                            easing: Chartist.Svg.Easing.easeOutQuint
+                            },
+                            opacity: {
+                            begin: 500 * data.index,
+                            dur: 500,
+                            from: 0,
+                            to: 1
+                            }
+                        });
+                    }
+                });
+
             } else {
                 if (this.privateState.chart) {
                     this.privateState.chart.detach();
@@ -83,8 +90,14 @@ export default {
             }
         },
         updateData: function() {
+            // for filling in missing years
+            let minYear = this.sharedState.metric.years[0];
+            let maxYear = this.sharedState.metric.years[this.sharedState.metric.years.length - 1];
+            let yearsLength = parseInt(maxYear) - parseInt(minYear) + 1;
+            let filledYears = Array.apply(0, Array(yearsLength)).map(function(_,b) { return b + parseInt(minYear) });
+
             let chartData = {
-                labels: this.sharedState.metric.years,
+                labels: filledYears,             
                 series: []
             };
 
@@ -93,13 +106,16 @@ export default {
             let areaArray = [];
             let metric = this.sharedState.metric;
 
-            for (let i = 0; i < this.sharedState.metric.years.length; i++) {
-                let areaValue;
-                if (metric.config.world_val && metric.config.world_val[`y_${this.sharedState.metric.years[i]}`]) {
-                    areaValue = metric.config.world_val[`y_${this.sharedState.metric.years[i]}`];
-                } else {
-                    areaValue = calcValue(this.sharedState.metric.data, this.sharedState.metric.config.type, this.sharedState.metric.years[i], keys);
-                }
+            // county value
+            for (let i = 0; i < chartData.labels.length; i++) {
+                let areaValue = null;
+                if (this.sharedState.metric.years.indexOf(chartData.labels[i].toString()) !== -1) {
+                    if (metric.config.world_val && metric.config.world_val[`y_${chartData.labels[i]}`]) {
+                        areaValue = metric.config.world_val[`y_${chartData.labels[i]}`];
+                    } else {
+                        areaValue = calcValue(this.sharedState.metric.data, this.sharedState.metric.config.type, chartData.labels[i], keys);
+                    }
+                }                
                 areaArray.push(areaValue);
             }
             chartData.series.push(areaArray);
@@ -107,9 +123,13 @@ export default {
             // selected values
             if (this.sharedState.selected.length > 0) {
                 let selectedArray = [];
-                for (let i = 0; i < this.sharedState.metric.years.length; i++) {
-                    let selectedValue = calcValue(this.sharedState.metric.data, this.sharedState.metric.config.type, this.sharedState.metric.years[i], this.sharedState.selected);
-                    selectedArray.push(selectedValue);
+                for (let i = 0; i < chartData.labels.length; i++) {
+                    if (this.sharedState.metric.years.indexOf(chartData.labels[i].toString()) !== -1) {
+                        let selectedValue = calcValue(this.sharedState.metric.data, this.sharedState.metric.config.type, chartData.labels[i], this.sharedState.selected);
+                        selectedArray.push(selectedValue);
+                    } else {
+                        selectedArray.push(null);
+                    }
                 }
                 chartData.series.push(selectedArray);
             }
