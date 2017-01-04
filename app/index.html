@@ -27,8 +27,7 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="img/favicon.png">
 
-    <!-- fonts and style sheets -->
-    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">-->
+    <!-- fonts and style sheets -->    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
     <link rel="stylesheet" href="css/main.css?{{cachebuster}}">
 
@@ -60,22 +59,16 @@
                         </div>
                         <div class="flex-item mdl-typography--text-right undermap-controls">
                             <p style="margin-top: 0;">
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent selected-clear">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect selected-clear">
                                     Clear Selected
                                 </button>
                                 {{#ifEither siteConfig.qolembedURL siteConfig.qolreportURL}}
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="report-button">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-fullreport>
                                     Report
                                 </button>
-                                <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-                                    for="report-button">
-                                    {{#if siteConfig.qolembedURL}}
-                                    <li class="mdl-menu__item" data-printmap>Print Map</li>
-                                    {{/if}}
-                                    {{#if siteConfig.qolreportURL}}
-                                    <li class="mdl-menu__item" data-fullreport>Full Report</li>
-                                    {{/if}}
-                                </ul>
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-printmap>
+                                    Print Map
+                                </button>                                
                                 {{/ifEither}}
                             </p>
                             {{#if selectgroups}}
