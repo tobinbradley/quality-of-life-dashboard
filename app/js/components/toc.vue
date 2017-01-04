@@ -10,24 +10,21 @@
             <div class="metricboxes">
                 <div class="metricbox" v-if="sharedState.selected.length > 0">
                     <span class="metrictype">SELECTED</span>
-                    <span class="metricvalue">{{ privateState.selected }}</span>
-                    <!--<span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0">
-                        {{privateState.selectedRaw}} <span v-html="sharedState.metric.config.raw_label"></span>
-                    <span>-->
+                    <span class="metricvalue">{{ privateState.selected }}</span>                    
                 </div>
                 <div class="metricbox">
                     <span class="metrictype">COUNTY</span>
-                    <span class="metricvalue">{{ privateState.area }}</span>
-                    <!--<span v-if="sharedState.metric.config.raw_label">{{privateState.areaRaw}} <span v-html="sharedState.metric.config.raw_label"></span></span>-->
+                    <span class="metricvalue">{{ privateState.area }}</span>                    
                 </div>
             </div>
             <h2 v-if="privateState.metaDesc" class="description">
-                <span v-html="privateState.metaDesc"></span><span v-if="sharedState.metric.config.label"> ({{ sharedState.metric.config.label.toLowerCase() }})</span>.
-                <span v-if="sharedState.metric.config.raw_label">
-                    The County total is {{privateState.areaRaw}} <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>.
+                <span v-html="privateState.metaDesc"></span><span v-if="sharedState.metric.config.label"> ({{ sharedState.metric.config.label.toLowerCase() }})</span>.                
+                <span v-if="sharedState.metric.config.raw_label">Total <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>: </span>
+                <span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0" style="font-weight: bold; white-space: nowrap;">
+                    Selected: {{privateState.selectedRaw}},  
                 </span>
-                <span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0">
-                    The selected total is {{privateState.selectedRaw}} <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>.
+                <span v-if="sharedState.metric.config.raw_label" style="font-weight: bold; white-space: nowrap;">
+                    County: {{privateState.areaRaw}}
                 </span>
             </h2>
             <div class="legend">
