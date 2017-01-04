@@ -11,11 +11,6 @@
             <a v-for="category in filterCategories(privateState.data)" class="mdl-navigation__link" v-on:click="changeFilter(category)" href="javascript:void(0)">{{category}}<i class="mdl-color-text--blue-grey-400 material-icons navright" role="presentation">chevron_right</i></a>    
         </template>
 
-        <!-- you can put stuff on the bottom of the sidebar here -->
-        <!--
-        <div class="mdl-layout-spacer"></div>
-        <a class="mdl-navigation__link" v-on:click="doSomething()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i>Help</a>
-        -->
         <div class="mdl-layout-spacer"></div>
         <div style="text-align: center">
         <a class="mdl-navigation__link-bottom" href="http://qol.charmeck.org/">About</a> &bull; <a class="mdl-navigation__link-bottom" href="downloads/qol-data.zip">Download Data</a>
@@ -70,7 +65,7 @@ export default {
 
 <style lang="css" scoped>
 .mdl-navigation__link {
-    padding: 8px 20px !important;
+    padding: 3px 20px !important;
 }
 .mdl-navigation__link-bottom {
     color: hsla(0,0%,100%,.75);
@@ -85,7 +80,7 @@ export default {
     right: 0;
 }
 .sidebar-title {
-    padding-left: 12px;
+    padding: 0 20px 8px;
 }
 </style>
 
