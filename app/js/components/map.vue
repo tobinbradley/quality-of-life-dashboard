@@ -219,6 +219,23 @@ export default {
                 }
             }, 'neighborhoods-fill-selected');
 
+            // markers layer		
+             map.addSource("markers", {		
+                 "type": "geojson",		
+                 "data": {		
+                     "type": "FeatureCollection",		
+                     "features": []		
+                 }		
+             });
+             map.addLayer({
+                 "id": "markers",
+                 "type": "symbol",
+                 "source": "markers",
+                 "layout": {
+                     "icon-image": "marker-15" 
+                 }
+            });
+
         },
         selectNeighborhoods: function() {
             if (this.privateState.mapLoaded === true) {
