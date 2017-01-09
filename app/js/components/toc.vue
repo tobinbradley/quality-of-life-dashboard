@@ -24,7 +24,7 @@
                     Selected: {{privateState.selectedRaw}},  
                 </span>
                 <span v-if="sharedState.metric.config.raw_label" style="font-weight: bold; white-space: nowrap;">
-                    County: {{privateState.areaRaw}}
+                    County: {{privateState.areaRaw}}.
                 </span>
             </h2>
             <div class="legend">
