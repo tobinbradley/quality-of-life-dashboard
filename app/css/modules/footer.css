@@ -3,9 +3,10 @@ footer .material-icons {
     padding-right: 10px;
 }
 footer .mdl-cell {
-    padding: 10px;
+    padding: 10px 10px 0;
 }
 footer .site-links a {
     padding-left: 10px;
     white-space: nowrap;
 }
+footer p:last-child { margin-bottom: 0;}
