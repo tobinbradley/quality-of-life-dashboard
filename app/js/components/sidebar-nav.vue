@@ -13,7 +13,7 @@
 
         <div class="mdl-layout-spacer"></div>
         <div style="text-align: center">
-        <a class="mdl-navigation__link-bottom" href="http://qol.charmeck.org/">About</a> &bull; <a class="mdl-navigation__link-bottom" href="downloads/qol-data.zip">Download Data</a>
+            <a class="mdl-navigation__link-bottom" href="http://qol.charmeck.org/">About</a> &bull; <a class="mdl-navigation__link-bottom" href="downloads/qol-data.zip">Download Data</a>
         </div>
     </nav>
 </template>
