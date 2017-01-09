@@ -7,12 +7,7 @@
             <p class="site-links" v-if="privateState.links" >
                 <a v-for="link in privateState.links" v-bind:href="link.href" target="_blank">{{link.text}}</a>
             </p>
-            <p class="text-muted site-links">
-                Share on: 
-                <a href="javascript:void(0)" v-on:click="social('twitter')">Twitter</a>
-                <a href="javascript:void(0)" v-on:click="social('facebook')">Facebook</a>
-                <a href="javascript:void(0)" v-on:click="social('linkedin')">LinkedIn</a>
-            </p>
+            
             <p class="text-muted">
                 Created by <a href="http://charmeck.org/mecklenburg/county/Pages/Default.aspx">Mecklenburg County</a>, the <a href="http://charmeck.org/city/charlotte/Pages/default.aspx">City of Charlotte</a>, and <a href="http://www.uncc.edu/">UNC Charlotte</a>
                 with much &#9829; for the projects that make this site possible:
@@ -21,10 +16,15 @@
                 <a href="http://osm2vectortiles.org/" target="_blank">OSM2VectorTiles</a>,
                 <a href="https://www.mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL JS</a>,
                 <a href="http://vuejs.org/" target="_blank">Vue.js</a>, and
-                <a href="http://getmdl.io/" target="_blank">Material Design Lite</a>
+                <a href="http://getmdl.io/" target="_blank">Material Design Lite</a>.
             </p>
             <p class="text-muted">
-                Source code on <a href="https://github.com/tobinbradley/quality-of-life-dashboard">Github</a>
+                Share on 
+                <a href="javascript:void(0)" v-on:click="social('twitter')"><img src="img/icon_twitter.svg" alt="share on twitter" style="height: 22px;"></a>
+                <a href="javascript:void(0)" v-on:click="social('facebook')"><img src="img/icon_facebook.svg" alt="share on facebook" style="height: 22px;"></a>
+                <a href="javascript:void(0)" v-on:click="social('linkedin')"><img src="img/icon_linkedin.svg" alt="share on linkedin" style="height: 22px;"></a>
+                &bull;
+                Source code on <a href="https://github.com/tobinbradley/quality-of-life-dashboard"><img src="img/icon_github.svg" alt="source code on github" style="height: 22px;"></a>
             </p>
         </div>
     </footer>
