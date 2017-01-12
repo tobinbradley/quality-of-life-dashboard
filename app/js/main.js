@@ -37,7 +37,6 @@ import EmbedCode from './components/embedcode.vue';
 import Footer from './components/footer.vue';
 
 
-
 // the shared state between components
 let appState = {
     metric: {
