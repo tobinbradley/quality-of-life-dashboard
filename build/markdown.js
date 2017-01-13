@@ -35,7 +35,7 @@ var _getAllFilesFromFolder = function(dir) {
         file = path.join(dir, file);
         var stat = filesystem.statSync(file);
         if (stat && stat.isDirectory() && path.extname(file) === ".md") {
-            results = results.concat(_getAllFilesFromFolder(file))
+            results = results.concat(_getAllFilesFromFolder(file));
         } else results.push(file);
     });
     return results;
