@@ -96,6 +96,7 @@ _.each(dataConfig, function(m) {
                     .fromFile('data/metric/d' + m.metric + '.csv')
                     .on('end_parsed', (jsonObj)=>{
                         var jsonArrayD = jsonTransform(jsonObj);
+                        let key, key2;
                         for (key in jsonArrayR) {
                             for (key2 in jsonArrayR[key]) {
                                 if (isNumeric(jsonArrayR[key][key2]) && isNumeric(jsonArrayD[key][key2])) {
