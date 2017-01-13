@@ -2,9 +2,8 @@
     <div id="toc" v-if="sharedState.metric.config" class="top left">
         <div>
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=" class="background-print-img" alt="white background for printing">
-            <div class="tocposition">
-                <a href="javascript:void(0)" title="Move Left or Right" v-on:click="swap_horizontal()"><i class="material-icons">swap_horiz</i></a>
-                <a href="javascript:void(0)" title="Move Up or Down" v-on:click="swap_vertical()"><i class="material-icons">swap_vert</i></a>
+            <div class="tocposition">                
+                <a href="javascript:void(0)" title="Move Table of Contents" v-on:click="position()"><i class="material-icons">zoom_out_map</i></a>
             </div>
             <h1 class="title">{{ sharedState.metric.config.title }}, {{ sharedState.year }}</h1>
             <div class="metricboxes">
@@ -19,12 +18,12 @@
             </div>
             <h2 v-if="privateState.metaDesc" class="description">
                 <span v-html="privateState.metaDesc"></span><span v-if="sharedState.metric.config.label"> ({{ sharedState.metric.config.label.toLowerCase() }})</span>.                
-                <span v-if="sharedState.metric.config.raw_label">Total <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>: </span>
+                <span v-if="sharedState.metric.config.raw_label"><br><br>Total <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>: <br></span>
                 <span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0" style="font-weight: bold; white-space: nowrap;">
-                    Selected: {{privateState.selectedRaw}},  
+                    Selected: {{privateState.selectedRaw}} &bull;   
                 </span>
                 <span v-if="sharedState.metric.config.raw_label" style="font-weight: bold; white-space: nowrap;">
-                    County: {{privateState.areaRaw}}.
+                    County: {{privateState.areaRaw}}
                 </span>
             </h2>
             <div class="legend">
@@ -66,6 +65,7 @@ import {abbrNum, round, prettyNumber} from '../modules/number_format';
 import {metaDescription} from '../modules/meta';
 import isNumeric from '../modules/isnumeric';
 import {calcValue, wValsToArray, sum} from '../modules/metric_calculations';
+
 
 export default {
     name: 'sc-toc',
@@ -121,26 +121,28 @@ export default {
             this.processArea();
             this.processSelected();
         },
-        swap_horizontal: function() {
+        position: function() {
             let el = document.querySelector("#toc");
-            if (el.classList.contains("left")) {
-                el.classList.remove("left");
-                el.classList.add("right");
-            } else {
-                el.classList.remove("right");
-                el.classList.add("left");
+
+            // move to top left from bottom right
+            if (el.classList.contains("right")) {
+                el.classList.remove('bottom');
+                el.classList.remove('right');
+                el.classList.add('top');                
+                el.classList.add('left');
+            } 
+            // move to bottom right from bottom left
+            else if (el.classList.contains("bottom")) {
+                el.classList.remove('left');
+                el.classList.add('right'); 
+            } 
+            // move to bottom left from top left
+            else if (el.classList.contains("top")) {
+                el.classList.remove('top');
+                el.classList.add('bottom');
             }
-        },
-        swap_vertical: function() {
-            let el = document.querySelector("#toc");
-            if (el.classList.contains("top")) {
-                el.classList.remove("top");
-                el.classList.add("bottom");
-            } else {
-                el.classList.remove("bottom");
-                el.classList.add("top");
-            }
-        }
+            
+        }        
     }
 }
 </script>
@@ -181,7 +183,7 @@ export default {
     opacity: 0.8;
 }
 .tocposition .material-icons {
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .title, .description, .legend, .metricboxes {
@@ -211,21 +213,21 @@ export default {
     color: #727272;
 }
 .metricvalue {
-    margin-top: 3px;
+    margin-top: 0;
     font-weight: bold;
     font-size: 19px !important;
 }
 
 .title {
-  padding: 20px 10px 15px;
+  padding: 14px 10px 7px;
   border-bottom: 1px solid rgba(0,0,0,0.15);
   word-wrap: break-word;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .description {
-    padding: 5px 10px 10px;
-    font-size: 12px;
+    padding: 0px 10px 10px;
+    font-size: 11px;
 }
 
 h1, h2 {
