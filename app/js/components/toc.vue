@@ -19,10 +19,10 @@
             <h2 v-if="privateState.metaDesc" class="description">
                 <span v-html="privateState.metaDesc"></span><span v-if="sharedState.metric.config.label"> ({{ sharedState.metric.config.label.toLowerCase() }})</span>.                
                 <span v-if="sharedState.metric.config.raw_label"><br><br>Total <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>: <br></span>
-                <span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0" style="font-weight: bold; white-space: nowrap;">
+                <span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0" style="white-space: nowrap;">
                     Selected: {{privateState.selectedRaw}} &bull;   
                 </span>
-                <span v-if="sharedState.metric.config.raw_label" style="font-weight: bold; white-space: nowrap;">
+                <span v-if="sharedState.metric.config.raw_label" style="white-space: nowrap;">
                     County: {{privateState.areaRaw}}
                 </span>
             </h2>
