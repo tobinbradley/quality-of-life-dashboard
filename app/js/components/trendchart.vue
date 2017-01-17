@@ -54,10 +54,10 @@ export default {
                 };
 
                 // set range from 0 to 100 for percentages
-                // if (this.sharedState.metric.config.suffix && this.sharedState.metric.config.suffix === '%') {
-                //     options.low = 0;
-                //     options.high = 100;
-                // } 
+                if (this.sharedState.metric.config.suffix && this.sharedState.metric.config.suffix === '%') {
+                    options.low = 0;
+                    options.high = 100;
+                } 
                 
                 this.privateState.chart = new Chartist.Line('.ct-trendchart', data, options);
 
