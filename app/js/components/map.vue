@@ -41,8 +41,8 @@ export default {
             map.addControl(nav, 'top-right');
 
             // disable map rotation until 3D support added
-            map.dragRotate.disable();
-            map.touchZoomRotate.disableRotation();
+            // map.dragRotate.disable();
+            // map.touchZoomRotate.disableRotation();
 
             map.on('rotate', function(e) {
                 if (map.getPitch() > 25) {
