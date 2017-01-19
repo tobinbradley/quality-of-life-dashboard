@@ -10,7 +10,7 @@
     "watch:js": "watchify app/js/main.js -o public/js/main.js",
     "watch:css": "onchange \"app/css/**/*.css\" -- postcss -m -u postcss-import -u autoprefixer --autoprefixer.browsers \"last 2 versions\" -o public/css/main.css app/css/main.css",
     "watch:html": "onchange \"app/*.html\" -- npm run build:html",
-    "watch:serve": "browser-sync --server \"public\" start --files \"public/**/*.html\" \"public/**/*.css\" \"public/**/*.js\" ",
+    "watch:serve": "browser-sync --cors --server \"public\" start --files \"public/**/*.html\" \"public/**/*.css\" \"public/**/*.js\" ",
     "build:html": "mkdirp public && node build/html.js",
     "build:copy": "ncp data/gl-style public/style && ncp data/geography.geojson.json public/data/geography.geojson.json",
     "build:imagemin": "mkdirp public/img && imagemin app/img/* --out-dir=public/img",
