@@ -3,7 +3,7 @@
         <template v-if="privateState.filterVal">
             <a class="mdl-navigation__link" v-on:click="changeFilter(null)" href="javascript:void(0)"><i class="mdl-color-text--blue-grey-400 material-icons navleft" role="presentation">chevron_left</i>Back</a>
             <template  v-for="m in filterMetrics(privateState.data, privateState.filterVal)">
-                <a class="mdl-navigation__link" v-on:click="changeMetric(m.metric)" href="javascript:void(0)">{{m.title}}</a>
+                <a class="mdl-navigation__link mdl-navigation__link-end" v-on:click="changeMetric(m.metric)" href="javascript:void(0)">{{m.title}}</a>
             </template>
         </template>
         <template v-else >
@@ -65,7 +65,11 @@ export default {
 
 <style lang="css" scoped>
 .mdl-navigation__link {
-    padding: 3px 20px !important;
+    padding: 5px 20px !important;
+}
+.mdl-navigation__link-end {
+    line-height: 1.3em;
+    padding: 8px 20px !important;
 }
 .mdl-navigation__link-bottom {
     color: hsla(0,0%,100%,.75);
@@ -75,7 +79,7 @@ export default {
 }
 .navright {
     padding: 0;
-    margin-right: 20px !important;
+    margin-right: 15px !important;
     position: absolute;
     right: 0;
 }
