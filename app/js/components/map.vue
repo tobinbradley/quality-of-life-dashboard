@@ -232,7 +232,8 @@ export default {
                  "type": "symbol",
                  "source": "markers",
                  "layout": {
-                     "icon-image": "marker-15" 
+                     "icon-image": "star-11",
+                     "icon-size": 1.7 
                  }
             });
 
