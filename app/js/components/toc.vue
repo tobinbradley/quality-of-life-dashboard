@@ -219,7 +219,7 @@ export default {
 }
 
 .title {
-  padding: 14px 10px 7px;
+  padding: 10px 10px 7px;
   border-bottom: 1px solid rgba(0,0,0,0.15);
   word-wrap: break-word;
   font-size: 15px;
