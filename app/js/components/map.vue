@@ -211,7 +211,7 @@ export default {
                 },
                 'filter': ['!=', 'choropleth', 'null'],
                 'paint': {
-                    'fill-extrusion-opacity': 0.7,
+                    'fill-extrusion-opacity': 0.8,
                     'fill-extrusion-height': {
                         'type': 'identity',
                         'property': 'height'
