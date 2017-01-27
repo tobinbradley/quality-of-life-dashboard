@@ -19,12 +19,10 @@
                 <a href="http://getmdl.io/" target="_blank">Material Design Lite</a>.
             </p>
             <p class="text-muted">
-                Share on 
                 <a href="javascript:void(0)" v-on:click="social('twitter')"><img src="img/icon_twitter.svg" alt="share on twitter" style="height: 22px;"></a>
                 <a href="javascript:void(0)" v-on:click="social('facebook')"><img src="img/icon_facebook.svg" alt="share on facebook" style="height: 22px;"></a>
                 <a href="javascript:void(0)" v-on:click="social('linkedin')"><img src="img/icon_linkedin.svg" alt="share on linkedin" style="height: 22px;"></a>
-                &bull;
-                Source code on <a href="https://github.com/tobinbradley/quality-of-life-dashboard"><img src="img/icon_github.svg" alt="source code on github" style="height: 22px;"></a>
+                <a href="https://github.com/tobinbradley/quality-of-life-dashboard"><img src="img/icon_github.svg" alt="source code on github" style="height: 22px;"></a>
             </p>
         </div>
     </footer>
