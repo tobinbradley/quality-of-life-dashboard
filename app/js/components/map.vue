@@ -1,9 +1,6 @@
 <template lang="html">
     <div class="" style="position: relative; width: 100%; height: 100%">
         <div id="map"></div>
-        <!--<button class="mdl-button" id="btnPitch" v-on:click="togglePitch()">
-            2D/3D
-        </button>-->
     </div>
 </template>
 
@@ -42,8 +39,8 @@ export default {
             map.addControl(nav, 'top-right');
 
             // disable map rotation until 3D support added
-            // map.dragRotate.disable();
-            // map.touchZoomRotate.disableRotation();
+            map.dragRotate.disable();
+            map.touchZoomRotate.disableRotation();
 
             map.on('rotate', function(e) {
                 if (map.getPitch() > 25) {
