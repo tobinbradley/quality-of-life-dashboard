@@ -8,13 +8,17 @@
         </template>
         <template v-else >
             <span class="sidebar-title">Explore the Data</span>
-            <a v-for="category in filterCategories(privateState.data)" class="mdl-navigation__link" v-on:click="changeFilter(category)" href="javascript:void(0)">{{category}}<i class="mdl-color-text--blue-grey-400 material-icons navright" role="presentation">chevron_right</i></a>    
+            <a v-for="category in filterCategories(privateState.data)" class="mdl-navigation__link" v-on:click="changeFilter(category)" href="javascript:void(0)">{{category}}<i class="mdl-color-text--blue-grey-400 material-icons navright" role="presentation">chevron_right</i></a>
+            <a class="mdl-navigation__link" href="http://qol.charmeck.org/">About</a>
+            <a class="mdl-navigation__link" href="downloads/qol-data.zip">Download Data</a>
         </template>
 
+        <!--
         <div class="mdl-layout-spacer"></div>
         <div style="text-align: center">
             <a class="mdl-navigation__link-bottom" href="http://qol.charmeck.org/">About</a> &bull; <a class="mdl-navigation__link-bottom" href="downloads/qol-data.zip">Download Data</a>
         </div>
+        -->
     </nav>
 </template>
 
