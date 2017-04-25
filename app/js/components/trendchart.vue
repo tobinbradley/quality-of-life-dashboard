@@ -1,7 +1,7 @@
 <template lang="html">
     <div v-show="sharedState.metric.years.length > 1" class="qol-chart mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop mdl-typography--text-center">
         <div class="trendchart">
-            <h1>Trend</h1>
+            <h1 v-if="sharedState.metric.config">{{ sharedState.metric.config.title }}</h1>
             <span class="legend"><i class="material-icons legend-county">trending_up</i> County</span>
             <span v-show="sharedState.selected.length > 0" class="legend"><i class="material-icons legend-selected">trending_up</i> Selected</span>
             <div class="ct-trendchart"></div>
@@ -30,6 +30,7 @@ export default {
                     fullWidth: true,
                     height: '160px',
                     showArea: false,
+                    low: 0,
                     chartPadding: {
                         right: 40
                     },
@@ -55,7 +56,6 @@ export default {
 
                 // set range from 0 to 100 for percentages
                 if (this.sharedState.metric.config.suffix && this.sharedState.metric.config.suffix === '%') {
-                    options.low = 0;
                     options.high = 100;
                 } 
                 
