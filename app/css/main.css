@@ -9,13 +9,16 @@
 
 html, body {
     color: #555;
-    font-family: "Helvetica Neue", "Calibri", "Liberation Sans", Roboto, sans-serif;
+    font-family: Roboto, "Helvetica Neue", "Calibri", "Liberation Sans", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.02em;
 }
 h1, h2, h3, h4, h5 {
     color: #333;
+}
+a {
+    text-decoration-skip: ink;
 }
 
 /* sidebar */
