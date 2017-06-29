@@ -10,7 +10,9 @@
 </template>
 
 <script>
+
 import Chartist from 'chartist';
+require('../modules/chartist.axis.title.js');
 import {calcValue} from '../modules/metric_calculations';
 import {abbrNum, round} from '../modules/number_format';
 
@@ -28,7 +30,7 @@ export default {
 
                 let options = {
                     fullWidth: true,
-                    height: '160px',
+                    height: '180px',
                     showArea: false,
                     low: 0,
                     chartPadding: {
@@ -51,8 +53,33 @@ export default {
                                 return value;
                             }
                         }
-                    }
+                    },
+                    plugins: []
                 };
+
+                if (_this.sharedState.metric.config.label) {
+                    options.plugins.push(Chartist.plugins.ctAxisTitle({
+                            axisX: {
+                                axisTitle: '',
+                                axisClass: 'ct-axis-title',
+                                offset: {
+                                    x: 0,
+                                    y: 50
+                                },
+                                textAnchor: 'middle'
+                            },
+                            axisY: {
+                                axisTitle: _this.sharedState.metric.config.label,
+                                axisClass: 'ct-axis-title',
+                                offset: {
+                                    x: 0,
+                                    y: -1
+                                },
+                                flipTitle: false,
+                                textAnchor: 'middle'
+                            }
+                        }));
+                }
 
                 // set range from 0 to 100 for percentages
                 if (this.sharedState.metric.config.suffix && this.sharedState.metric.config.suffix === '%') {
@@ -147,7 +174,13 @@ export default {
 .qol-chart .ct-series-a .ct-line, .qol-chart .ct-series-a .ct-point {
     stroke: orange;
 }
-
+.ct-trendchart {
+    margin-left: 20px;
+}
+.ct-axis-title {
+    font-size: 10px;
+    fill: rgba(0, 0, 0, 0.6);
+}
 </style>
 
 <style lang="css" scoped>
