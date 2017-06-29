@@ -6,7 +6,7 @@
 
 <script>
 //import mapboxgl from 'mapbox-gl';
-import mapboxgl from 'mapbox-gl/src/index.js';
+import mapboxgl from 'mapbox-gl';
 import axios from 'axios';
 import geojsonDataMerge from '../modules/geojsondatamerge';
 import {prettyNumber} from '../modules/number_format';
