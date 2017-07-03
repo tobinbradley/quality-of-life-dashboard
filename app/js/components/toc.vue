@@ -6,26 +6,31 @@
                 <a href="javascript:void(0)" title="Move Table of Contents" v-on:click="position()"><i class="material-icons">zoom_out_map</i></a>
             </div>
             <h1 class="title">{{ sharedState.metric.config.title }}, {{ sharedState.year }}</h1>
+            <h2 v-if="privateState.metaDesc" class="description">
+                <span v-html="privateState.metaDesc"></span>
+            </h2>
             <div class="metricboxes">
                 <div class="metricbox" v-if="sharedState.selected.length > 0">
                     <span class="metrictype">SELECTED</span>
-                    <span class="metricvalue">{{ privateState.selected }}</span>                    
+                    <span class="metricvalue">{{ privateState.selected }}</span>
+                    <span v-if="sharedState.metric.config.label">{{ sharedState.metric.config.label.toLowerCase() }}</span>
+                    <span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0" style="white-space: nowrap;" class="metric-raw">
+                        <span>or</span>
+                        <span class="metricvalue">{{privateState.selectedRaw}}</span>
+                        <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>
+                    </span>                    
                 </div>
                 <div class="metricbox">
                     <span class="metrictype">COUNTY</span>
-                    <span class="metricvalue">{{ privateState.area }}</span>                    
+                    <span class="metricvalue">{{ privateState.area }}</span>
+                    <span v-if="sharedState.metric.config.label">{{ sharedState.metric.config.label.toLowerCase() }}</span>
+                    <span v-if="sharedState.metric.config.raw_label" style="white-space: nowrap;" class="metric-raw">
+                        <span>or</span>
+                        <span class="metricvalue">{{privateState.areaRaw}}</span>
+                        <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>
+                    </span>                     
                 </div>
-            </div>
-            <h2 v-if="privateState.metaDesc" class="description">
-                <span v-html="privateState.metaDesc"></span><span v-if="sharedState.metric.config.label"> ({{ sharedState.metric.config.label.toLowerCase() }})</span>.                
-                <span v-if="sharedState.metric.config.raw_label"><br><br>Total <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>: <br></span>
-                <span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0" style="white-space: nowrap;">
-                    Selected: {{privateState.selectedRaw}} &bull;   
-                </span>
-                <span v-if="sharedState.metric.config.raw_label" style="white-space: nowrap;">
-                    County: {{privateState.areaRaw}}
-                </span>
-            </h2>
+            </div>            
             <div class="legend">
                 <svg  v-if="sharedState.breaks" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 248.4 39.2"id="maplegend" role="img" aria-labelledby="svgTitle">
                     <title id="svgTitle">Choropleth legend</title>
@@ -192,7 +197,7 @@ export default {
 }
 
 .metricboxes {
-    padding: 10px 0 10px;
+    padding: 3px 0 10px;
     text-align: center;
     display: flex;
     flex-flow: row nowrap;
@@ -226,8 +231,9 @@ export default {
 }
 
 .description {
-    padding: 0px 10px 10px;
-    font-size: 11px;
+    padding: 3px 10px 2px;
+    font-size: 12px;
+    text-align: center;
 }
 
 h1, h2 {
@@ -290,6 +296,11 @@ svg {
 }
 
 @media all and (max-width: 480px) {
-
+    .metric-raw {
+        display: none !important;
+    }
+    #toc {
+        width: 200px;
+    }
 }
 </style>
