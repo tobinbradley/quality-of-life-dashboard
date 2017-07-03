@@ -35,6 +35,7 @@ import MapGL from './components/map.vue';
 import Search from './components/search.vue';
 import EmbedCode from './components/embedcode.vue';
 import Footer from './components/footer.vue';
+import Social from './components/social.vue';
 
 
 // the shared state between components
@@ -145,6 +146,14 @@ Footer.data = function() {
         }
     };
 };
+Social.data = function() {
+    return {
+        sharedState: appState,
+        privateState: {
+            links: siteConfig.links
+        }
+    };
+};
 DistributionChart.data = function() {
     return {
         sharedState: appState,
@@ -245,6 +254,10 @@ new Vue({
 new Vue({
     el: 'sc-footer',
     render: h => h(Footer)
+});
+new Vue({
+    el: 'sc-social',
+    render: h => h(Social)
 });
 
 

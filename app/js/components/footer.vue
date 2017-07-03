@@ -18,23 +18,18 @@
                 <a href="http://vuejs.org/" target="_blank">Vue.js</a>, and
                 <a href="http://getmdl.io/" target="_blank">Material Design Lite</a>.
             </p>
-            <p class="text-muted">
-                <a href="javascript:void(0)" v-on:click="social('twitter')"><img src="img/icon_twitter.svg" alt="share on twitter" style="height: 22px;"></a>
-                <a href="javascript:void(0)" v-on:click="social('facebook')"><img src="img/icon_facebook.svg" alt="share on facebook" style="height: 22px;"></a>
-                <a href="javascript:void(0)" v-on:click="social('linkedin')"><img src="img/icon_linkedin.svg" alt="share on linkedin" style="height: 22px;"></a>
-                <a href="https://github.com/tobinbradley/quality-of-life-dashboard"><img src="img/icon_github.svg" alt="source code on github" style="height: 22px;"></a>
-            </p>
+            <social></social>
         </div>
     </footer>
 </template>
 
 <script>
-import {metaDescription} from '../modules/meta';
+import Social from './social.vue';
 
 export default {
     name: 'sc-footer',
-    watch: {
-
+    components: {
+        social: Social
     },
     methods: {
         social: function (socialType) {
