@@ -9,3 +9,4 @@ npm-debug.log
 TODO.md
 .vscode
 yarn.lock
+package-lock.json
