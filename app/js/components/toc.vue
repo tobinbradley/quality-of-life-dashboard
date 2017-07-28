@@ -13,21 +13,21 @@
                 <div class="metricbox" v-if="sharedState.selected.length > 0">
                     <span class="metrictype">SELECTED</span>
                     <span class="metricvalue">{{ privateState.selected }}</span>
-                    <span v-if="sharedState.metric.config.label">{{ sharedState.metric.config.label.toLowerCase() }}</span>
-                    <span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0" style="white-space: nowrap;" class="metric-raw">
+                    <span v-if="sharedState.metric.config.label" class="metriclabel">{{ sharedState.metric.config.label.toLowerCase() }}</span>
+                    <span v-if="sharedState.metric.config.raw_label && sharedState.selected.length > 0" class="metric-raw">
                         <span>or</span>
-                        <span class="metricvalue">{{privateState.selectedRaw}}</span>
-                        <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>
+                        <span class="metricvalue metricraw">{{privateState.selectedRaw}}</span>
+                        <span v-html="sharedState.metric.config.raw_label.toLowerCase()" class="metriclabel"></span>
                     </span>                    
                 </div>
                 <div class="metricbox">
                     <span class="metrictype">COUNTY</span>
                     <span class="metricvalue">{{ privateState.area }}</span>
-                    <span v-if="sharedState.metric.config.label">{{ sharedState.metric.config.label.toLowerCase() }}</span>
-                    <span v-if="sharedState.metric.config.raw_label" style="white-space: nowrap;" class="metric-raw">
+                    <span v-if="sharedState.metric.config.label" class="metriclabel">{{ sharedState.metric.config.label.toLowerCase() }}</span>
+                    <span v-if="sharedState.metric.config.raw_label" class="metric-raw">
                         <span>or</span>
-                        <span class="metricvalue">{{privateState.areaRaw}}</span>
-                        <span v-html="sharedState.metric.config.raw_label.toLowerCase()"></span>
+                        <span class="metricvalue metricraw">{{privateState.areaRaw}}</span>
+                        <span v-html="sharedState.metric.config.raw_label.toLowerCase()" class="metriclabel"></span>
                     </span>                     
                 </div>
             </div>            
@@ -200,7 +200,7 @@ export default {
     padding: 3px 0 10px;
     text-align: center;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row nowrap; 
 }
 .metricbox {
     width: 50%;
@@ -220,7 +220,13 @@ export default {
 .metricvalue {
     margin-top: 0;
     font-weight: bold;
-    font-size: 19px !important;
+    font-size: 16px !important;
+}
+.metricvalue.metricraw {
+    font-size: 13px !important;
+}
+.metriclabel {
+    line-height: 1.3em;
 }
 
 .title {
