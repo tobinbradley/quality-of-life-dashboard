@@ -8,19 +8,20 @@
 //import mapboxgl from 'mapbox-gl';
 import mapboxgl from 'mapbox-gl';
 import axios from 'axios';
-import geojsonDataMerge from '../modules/geojsondatamerge';
 import {prettyNumber} from '../modules/number_format';
 import getURLParameter from '../modules/geturlparams';
 import {replaceState} from '../modules/tracking';
+import {scaleLog} from 'd3-scale';
 
 export default {
     name: 'sc-map',
     watch: {
-        'sharedState.selected': 'selectNeighborhoods',
+        'sharedState.selected': 'styleNeighborhoods',
         'sharedState.breaks': 'updateBreaks',
         'sharedState.year': 'updateYear',
         'sharedState.marker': 'createMarker',
-        'sharedState.zoomNeighborhoods': 'zoomNeighborhoods'
+        'sharedState.zoomNeighborhoods': 'zoomNeighborhoods',
+        'privateState.isPitched3D': 'toggle3D'
     },
     methods: {
         initMap: function() {
@@ -42,16 +43,6 @@ export default {
             // map.dragRotate.disable();
             map.touchZoomRotate.disableRotation();
 
-            // map.on('rotate', function(e) {
-            //     if (map.getPitch() > 25) {
-            //         map.setLayoutProperty('neighborhoods-fill-extrude', 'visibility', 'visible');
-            //         map.setLayoutProperty('neighborhoods-fill-selected', 'visibility', 'visible');
-            //     } else {
-            //         map.setLayoutProperty('neighborhoods-fill-extrude', 'visibility', 'none');
-            //         map.setLayoutProperty('neighborhoods-fill-selected', 'visibility', 'none');
-            //     }
-            // });
-
             // after map initiated, grab geography and intiate/style neighborhoods
             map.on('style.load', function () {
                 axios.get('data/geography.geojson.json')
@@ -59,19 +50,25 @@ export default {
                         _this.privateState.mapLoaded = true;
                         _this.privateState.geoJSON = response.data;
                         _this.initNeighborhoods();
-                        _this.selectNeighborhoods();
                         _this.styleNeighborhoods();
                         _this.initMapEvents();
                     });
             });
 
         },
-        togglePitch: function() {
+        toggle3D: function() {
             let _this = this;
-            if (this.privateState.map.getPitch() === 0) {
-                this.privateState.map.easeTo({pitch: 75, bearing: -40});
+            let map = _this.privateState.map;
+            let pitched = this.privateState.isPitched3D;
+
+            if (pitched) {
+                map.setLayoutProperty('neighborhoods', 'visibility', 'none');
+                map.moveLayer('neighborhoods-fill-extrude');
+                map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-height', _this.getHeight());
             } else {
-                this.privateState.map.easeTo({pitch: 0, bearing: 0});
+                map.setLayoutProperty('neighborhoods', 'visibility', 'visible');
+                map.moveLayer('neighborhoods-fill-extrude', 'neighborhoods');
+                map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-height', 0);
             }
         },
         initMapEvents: function() {
@@ -81,6 +78,14 @@ export default {
             let popup = new mapboxgl.Popup({
                 closeButton: false,
                 closeOnClick: false
+            });
+
+            map.on('rotate', function(e) {
+                if (map.getPitch() >= 20) {
+                    _this.privateState.isPitched3D = true;
+                } else {
+                    _this.privateState.isPitched3D = false;
+                }
             });
 
             // on feature click add or remove from selected set
@@ -128,7 +133,7 @@ export default {
         initNeighborhoods: function() {
             let map = this.privateState.map;
             let _this = this;
-            let geoJSON =  _this.geoJSONMerge();
+            let geoJSON =  _this.privateState.geoJSON;
 
             map.addSource('neighborhoods', {
                 type: 'geojson',
@@ -141,23 +146,16 @@ export default {
                 'type': 'line',
                 'source': 'neighborhoods',
                 'layout': {},
-                'paint': {
-                    'line-color': '#666',
-                    'line-width': 0.8
-                }
+                'paint': {}
             }, 'building');            
 
             map.addLayer({
                 'id': 'neighborhoods-fill-extrude',
                 'type': 'fill-extrusion',
                 'source': 'neighborhoods',
-                'filter': ['!=', 'choropleth', 'null'],
+                //'filter': ['!=', 'choropleth', 'null'],
                 'paint': {
-                    'fill-extrusion-opacity': 0.8,
-                    'fill-extrusion-height': {
-                        'type': 'identity',
-                        'property': 'height'
-                    }
+                    'fill-extrusion-opacity': 1
                 }
             }, 'neighborhoods');
 
@@ -180,57 +178,20 @@ export default {
             });
 
         },
-        selectNeighborhoods: function() {
-            if (this.privateState.mapLoaded === true) {
-                let map = this.privateState.map;
-                let selected = this.sharedState.selected;
-                let filter;
-
-                if (selected.length > 0) {
-                    filter = ["in", "id"];
-                    for (let i = 0; i < selected.length; i++) {
-                        filter.push(selected[i]);
-                    }
-                } else {
-                    filter = ["in", "id", "-999999"];
-                }
-
-                // push selected state
-                let linkMetric = '';
-                if (getURLParameter("m")) {
-                    linkMetric = getURLParameter("m");
-                }
-                replaceState(linkMetric, this.sharedState.selected);
-
-                //map.setFilter("neighborhoods-line-selected", filter);
-                //map.setFilter("neighborhoods-fill-selected", filter);
-            }
-        },
         styleNeighborhoods: function() {
-                let map = this.privateState.map;
-                let breaks = this.sharedState.breaks;
-                let colors = this.sharedState.colors;
+            let map = this.privateState.map;
+            let _this = this;   
 
-                let fillColor = {
-                    property: 'choropleth',
-                    stops: [
-                        [breaks[1], colors[0]],
-                        [breaks[2], colors[1]],
-                        [breaks[3], colors[2]],
-                        [breaks[4], colors[3]],
-                        [breaks[5], colors[4]]
-                    ]
-                };
-                //map.setPaintProperty("neighborhoods-fill", 'fill-color', fillColor);
-                map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-color', fillColor);
+            map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-color', _this.getColors());
+            map.setPaintProperty("neighborhoods", 'line-color', _this.getOutlineColor());
+            map.setPaintProperty("neighborhoods", 'line-width', _this.getOutlineWidth());
+            if (_this.privateState.isPitched3D) {
+                map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-height', _this.getHeight());
+            }
         },
         updateChoropleth: function() {
             let _this = this;
             if (this.privateState.mapLoaded) {
-                let geoJSON =  _this.geoJSONMerge();
-
-                this.privateState.map.getSource('neighborhoods').setData(geoJSON);
-
                 this.styleNeighborhoods();
             }
         },
@@ -315,6 +276,115 @@ export default {
             });
 
             return bounds;
+        },
+        getOutlineColor: function() {
+            const stops = [];
+            let _this = this;
+
+            _this.sharedState.selected.forEach(id => {
+                stops.push([id, '#ba00e4']);
+            });
+
+            let outline = {
+                property: 'id',
+                default: 'rgba(0,0,0,1)',
+                type: 'categorical',
+                stops: stops
+            }
+
+            if (stops.length > 0) {
+                return outline;
+            } else {
+                return outline.default
+            }
+        },
+        getOutlineWidth: function() {
+            const stops = [];
+            let _this = this;
+
+            _this.sharedState.selected.forEach(id => {
+                stops.push([id, 4]);
+            });
+
+            let outlineSize = {
+                property: 'id',
+                default: 0.4,
+                type: 'categorical',
+                stops: stops
+            }
+
+            if (stops.length > 0) {
+                return outlineSize;
+            } else {
+                return outlineSize.default;
+            }
+
+            return stops;
+        },
+        getColors: function () {
+            const stops = [];
+            let _this = this;
+            let data = _this.sharedState.metric.data.map;
+            let breaks = this.sharedState.breaks;
+            let colors = this.sharedState.colors;
+
+            let color = function(val) {
+                if (val <= breaks[1]) {
+                    return colors[0];
+                } else if (val <= breaks[2]) {
+                    return colors[1];
+                }
+                 else if (val <= breaks[3]) {
+                    return colors[2];
+                }
+                 else if (val <= breaks[4]) {
+                    return colors[3];
+                }
+                 else if (val <= breaks[5]) {
+                    return colors[4];
+                }
+            };
+
+            Object.keys(data).forEach(id => {
+                const value = data[id][`y_${_this.sharedState.year}`];
+                
+                if (value !== null) {                                
+                    stops.push([id, color(value)]);
+                } 
+            });
+
+            let fillColor = {
+                property: 'id',
+                default: 'rgb(242,243,240)',
+                type: 'categorical',
+                stops: stops
+            };
+
+            return fillColor;
+        },
+        getHeight: function() {
+            let _this = this;
+            const stops = [];            
+            let data = _this.sharedState.metric.data.map;
+            let heightAdjust = scaleLog()
+                    .domain([_this.sharedState.breaks[0], _this.sharedState.breaks[this.sharedState.breaks.length - 1]])
+                    .range([0, 3000]);            
+
+            Object.keys(data).forEach(id => {
+                const value = data[id][`y_${_this.sharedState.year}`];                
+                if (value !== null) {
+                    stops.push([id, heightAdjust(value)]);
+                }
+            });
+
+            let height = {
+                property: 'id',
+                default: 0,
+                type: 'categorical',
+                stops: stops
+            }
+
+            return height;
         }
     },
     
