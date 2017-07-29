@@ -11,7 +11,7 @@ import axios from 'axios';
 import {prettyNumber} from '../modules/number_format';
 import getURLParameter from '../modules/geturlparams';
 import {replaceState} from '../modules/tracking';
-import {scaleLog} from 'd3-scale';
+import {scaleLinear} from 'd3-scale';
 
 export default {
     name: 'sc-map',
@@ -81,7 +81,7 @@ export default {
             });
 
             map.on('rotate', function(e) {
-                if (map.getPitch() >= 20) {
+                if (map.getPitch() >= 20) {                    
                     _this.privateState.isPitched3D = true;
                 } else {
                     _this.privateState.isPitched3D = false;
@@ -366,7 +366,8 @@ export default {
             let _this = this;
             const stops = [];            
             let data = _this.sharedState.metric.data.map;
-            let heightAdjust = scaleLog()
+            
+            let heightAdjust = scaleLinear()
                     .domain([_this.sharedState.breaks[0], _this.sharedState.breaks[this.sharedState.breaks.length - 1]])
                     .range([0, 3000]);            
 
@@ -383,6 +384,7 @@ export default {
                 type: 'categorical',
                 stops: stops
             }
+            
 
             return height;
         }
