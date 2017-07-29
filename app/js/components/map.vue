@@ -42,15 +42,15 @@ export default {
             // map.dragRotate.disable();
             map.touchZoomRotate.disableRotation();
 
-            map.on('rotate', function(e) {
-                if (map.getPitch() > 25) {
-                    map.setLayoutProperty('neighborhoods-fill-extrude', 'visibility', 'visible');
-                    map.setLayoutProperty('neighborhoods-fill-selected', 'visibility', 'visible');
-                } else {
-                    map.setLayoutProperty('neighborhoods-fill-extrude', 'visibility', 'none');
-                    map.setLayoutProperty('neighborhoods-fill-selected', 'visibility', 'none');
-                }
-            });
+            // map.on('rotate', function(e) {
+            //     if (map.getPitch() > 25) {
+            //         map.setLayoutProperty('neighborhoods-fill-extrude', 'visibility', 'visible');
+            //         map.setLayoutProperty('neighborhoods-fill-selected', 'visibility', 'visible');
+            //     } else {
+            //         map.setLayoutProperty('neighborhoods-fill-extrude', 'visibility', 'none');
+            //         map.setLayoutProperty('neighborhoods-fill-selected', 'visibility', 'none');
+            //     }
+            // });
 
             // after map initiated, grab geography and intiate/style neighborhoods
             map.on('style.load', function () {
@@ -85,7 +85,7 @@ export default {
 
             // on feature click add or remove from selected set
             map.on('click', function (e) {
-                var features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill'] });
+                var features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill-extrude'] });
                 if (!features.length) {
                     return;
                 }
@@ -105,7 +105,7 @@ export default {
             if (!iOS) {
                 // show feature info on mouse move
                 map.on('mousemove', function (e) {
-                    var features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill'] });
+                    var features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill-extrude'] });
                     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 
                     if (!features.length) {
@@ -114,10 +114,12 @@ export default {
                     }
 
                     let feature = features[0];
-                    let val = prettyNumber(feature.properties.choropleth, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);
+                    let id = feature.properties.id;
+                    let data = _this.sharedState.metric.data.map[id][`y_${_this.sharedState.year}`];
+                    let val = prettyNumber(data, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);                    
 
                     popup.setLngLat(map.unproject(e.point))
-                        .setHTML(`<div style="text-align: center; margin: 0; padding: 0;"><h3 style="font-size: 1.2em; margin: 0; padding: 0; line-height: 1em; font-weight: bold;">NPA ${feature.properties.id}</h1>${val}</div>`)
+                        .setHTML(`<div style="text-align: center; margin: 0; padding: 0;"><h3 style="font-size: 1.2em; margin: 0; padding: 0; line-height: 1em; font-weight: bold;">NPA ${feature.properties.id}</h3>${val}</div>`)
                         .addTo(map);
 
                 });
@@ -135,7 +137,7 @@ export default {
 
             // neighborhood boundaries
             map.addLayer({
-                'id': 'neighborhoods-line',
+                'id': 'neighborhoods',
                 'type': 'line',
                 'source': 'neighborhoods',
                 'layout': {},
@@ -143,70 +145,12 @@ export default {
                     'line-color': '#666',
                     'line-width': 0.8
                 }
-            }, 'building');
-
-            // neighborhood boundaries highlight
-            map.addLayer({
-                'id': 'neighborhoods-line-selected',
-                'type': 'line',
-                'source': 'neighborhoods',
-                'layout': {},
-                "filter": ["in", "id", "-999999"],
-                'paint': {
-                    'line-color': '#ba00e4',
-                    'line-width': {
-                        "base": 2,
-                        "stops": [
-                            [
-                                7,
-                                2
-                            ],
-                            [
-                                13,
-                                5
-                            ],
-                            [
-                                16,
-                                8
-                            ]
-                        ]
-                    }
-                }
-            }, 'water_label');
-            map.addLayer({
-                'id': 'neighborhoods-fill-selected',
-                'type': 'fill-extrusion',
-                'source': 'neighborhoods',
-                'layout': {
-                    'visibility': 'none'
-                },
-                "filter": ["in", "id", "-999999"],
-                'paint': {
-                    'fill-extrusion-color': '#ba00e4',
-                    'fill-extrusion-opacity': 0.7,
-                    'fill-extrusion-height': {
-                        'type': 'identity',
-                        'property': 'height'
-                    }
-                }
-            }, 'water_label');
-
-            map.addLayer({
-                'id': 'neighborhoods-fill',
-                'type': 'fill',
-                'source': 'neighborhoods',
-                'filter': ['!=', 'choropleth', 'null'],
-                'paint': {
-                }
-            }, 'neighborhoods-line');
+            }, 'building');            
 
             map.addLayer({
                 'id': 'neighborhoods-fill-extrude',
                 'type': 'fill-extrusion',
                 'source': 'neighborhoods',
-                'layout': {
-                    'visibility': 'none'
-                },
                 'filter': ['!=', 'choropleth', 'null'],
                 'paint': {
                     'fill-extrusion-opacity': 0.8,
@@ -215,7 +159,7 @@ export default {
                         'property': 'height'
                     }
                 }
-            }, 'neighborhoods-fill-selected');
+            }, 'neighborhoods');
 
             // markers layer		
              map.addSource("markers", {		
@@ -258,8 +202,8 @@ export default {
                 }
                 replaceState(linkMetric, this.sharedState.selected);
 
-                map.setFilter("neighborhoods-line-selected", filter);
-                map.setFilter("neighborhoods-fill-selected", filter);
+                //map.setFilter("neighborhoods-line-selected", filter);
+                //map.setFilter("neighborhoods-fill-selected", filter);
             }
         },
         styleNeighborhoods: function() {
@@ -277,7 +221,7 @@ export default {
                         [breaks[5], colors[4]]
                     ]
                 };
-                map.setPaintProperty("neighborhoods-fill", 'fill-color', fillColor);
+                //map.setPaintProperty("neighborhoods-fill", 'fill-color', fillColor);
                 map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-color', fillColor);
         },
         updateChoropleth: function() {
