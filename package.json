@@ -43,6 +43,7 @@
     "browserify-hmr": "^0.3.5",
     "cross-env": "^3.1.4",
     "csvtojson": "^1.1.2",
+    "d3-scale": "^1.0.6",
     "envify": "^4.0.0",
     "handlebars": "^4.0.6",
     "imagemin-cli": "^3.0.0",
