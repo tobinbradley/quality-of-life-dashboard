@@ -194,6 +194,7 @@ MapGL.data = function() {
             mapLoaded: false,
             metricId: null,
             geoJSON: null,
+            isPitched3D: false,
             locationPopup: null,
             neighborhoodsBefore: mapConfig.neighborhoodsBefore,
             neighborhoodsSelectedBefore: mapConfig.neighborhoodsSelectedBefore
