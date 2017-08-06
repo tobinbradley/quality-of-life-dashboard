@@ -54,11 +54,11 @@ export default {
         },
         trendIcon: function(num) {
             if (num === 0) {
-                return '<i class="material-icons">trending_flat</i>';
+                return '<svg class="icon"><use xlink:href="#icon-trending_flat"></use></svg>';
             } else if (num > 0) {
-                return '<i class="material-icons">trending_up</i>';
+                return '<svg class="icon"><use xlink:href="#icon-trending_up"></use></svg>';
             } else {
-                return '<i class="material-icons">trending_down</i>';
+                return '<svg class="icon"><use xlink:href="#icon-trending_down"></use></svg>';
             }
         },
         trend: function (n) {
@@ -129,7 +129,9 @@ export default {
 #datatable .tooltip {
     border-bottom: 1px dashed rgba(0,0,0,.54);
 }
-#datatable .material-icons {
+#datatable .icon {
     vertical-align: middle;
+    width: 24px;
+    height: 24px;
 }
 </style>

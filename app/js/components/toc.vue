@@ -3,7 +3,7 @@
         <div>
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=" class="background-print-img" alt="white background for printing">
             <div class="tocposition">                
-                <a href="javascript:void(0)" title="Move Table of Contents" v-on:click="position()"><i class="material-icons">zoom_out_map</i></a>
+                <a href="javascript:void(0)" title="Move Table of Contents" v-on:click="position()"><svg class="icon"><use xlink:href="#icon-zoom_out_map"></use></svg></a>
             </div>
             <h1 class="title">{{ sharedState.metric.config.title }}, {{ sharedState.year }}</h1>
             <h2 v-if="privateState.metaDesc" class="description">
@@ -187,8 +187,10 @@ export default {
 .tocposition a:hover {
     opacity: 0.8;
 }
-.tocposition .material-icons {
-    font-size: 14px;
+.tocposition .icon {
+    width: 14px;
+    height: 14px;
+    fill: #ccc;
 }
 
 .title, .description, .legend, .metricboxes {

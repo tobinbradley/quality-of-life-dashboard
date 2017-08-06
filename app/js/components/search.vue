@@ -12,21 +12,21 @@
                 <li v-on:click="selectNeighborhoods(n.select)">
                     <span class="search-result-type">{{privateState.neighborhoodDescriptor}}</span>
                     <span class="search-result-label">{{n.label}}</span>
-                    <i class="material-icons" role="presentation">chevron_right</i>
+                    <!-- <svg class="icon"><use xlink:href="#icon-keyboard_arrow_right"></use></svg> -->
                 </li>
             </ul>
             <ul v-for="n in privateState.results.zipcode">
                 <li v-on:click="selectNeighborhoods(n.select)">
                     <span class="search-result-type">ZIPCODE</span>
                     <span class="search-result-label">{{n.label}}</span>
-                    <i class="material-icons" role="presentation">chevron_right</i>
+                    <!-- <svg class="icon"><use xlink:href="#icon-keyboard_arrow_right"></use></svg> -->
                 </li>
             </ul>
             <ul v-for="n in privateState.results.address">
                 <li v-on:click="selectLocation(n.lng, n.lat, n.label)">
                     <span class="search-result-type">ADDRESS</span>
                     <span class="search-result-label">{{n.label | trimLabel}}</span>
-                    <i class="material-icons" role="presentation">chevron_right</i>
+                    <!-- <svg class="icon"><use xlink:href="#icon-keyboard_arrow_right"></use></svg> -->
                 </li>
             </ul>
         </div>
@@ -72,7 +72,7 @@ export default {
         searchZipcode: function(query) {
             if (query.length === 5 && isNumeric(query)) {
                 let _this = this;
-                axios.get('http://maps.co.mecklenburg.nc.us/api/intersect_feature/v1/zipcodes/neighborhoods', {
+                axios.get('https://mcmap.org/api/intersect_feature/v1/zipcodes/neighborhoods', {
                     params: {
                       'geom_column_from': 'the_geom',
                       'geom_column_to': 'the_geom',
@@ -107,7 +107,7 @@ export default {
         searchAddress: function(query) {
             if (query.length > 4 && !isNumeric(query)) {
                 let _this = this;
-                axios.get(`http://maps.co.mecklenburg.nc.us/api/search/v1/${query.toLowerCase()}`, {
+                axios.get(`https://mcmap.org/api/search/v1/${query.toLowerCase()}`, {
                     params: {
                       'limit': 5
                     }
@@ -132,7 +132,7 @@ export default {
         selectLocation: function(lng, lat, label) {
             this.clearResults();
             let _this = this;
-            axios.get(`http://maps.co.mecklenburg.nc.us/api/intersect_point/v1/neighborhoods/${lng},${lat}/4326`, {
+            axios.get(`https://mcmap.org/api/intersect_point/v1/neighborhoods/${lng},${lat}/4326`, {
                 params: {
                     'geom_column': 'the_geom',
                     'columns': 'id',
@@ -179,7 +179,7 @@ li {
     padding: 2px;
     border: 1px solid rgb(0,145,234);
     border-radius: 3px;
-    margin: 5px 0 5px 0;
+    margin: 0;
     display: inline-block;
     width: 100%;
     box-sizing: border-box;
@@ -187,6 +187,8 @@ li {
     transition: 0.2s ease all;
     color: rgb(0,145,234);
     font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
 }
 li:hover {
    background: rgb(0,145,234);
@@ -194,14 +196,14 @@ li:hover {
 }
 .search-result-label {
    text-decoration: none;
-   padding-left: 2px;
 }
 .search-results.i, search-results.span {
    pointer-events: none;
 }
-.material-icons {
-   display: inline-block;
+.icon {   
    float: right;
+   width: 24px;
+   height: 24px;
 }
 .search-result-type {
    background-color: rgb(0,145,234);

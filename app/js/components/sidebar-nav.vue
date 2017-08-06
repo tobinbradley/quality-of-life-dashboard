@@ -1,7 +1,7 @@
 <template lang="html">
     <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-900">
         <template v-if="privateState.filterVal">
-            <a class="mdl-navigation__link" v-on:click="changeFilter(null)" href="javascript:void(0)"><i class="mdl-color-text--blue-grey-400 material-icons navleft" role="presentation">chevron_left</i>Back</a>
+            <a class="mdl-navigation__link" v-on:click="changeFilter(null)" href="javascript:void(0)"><svg class="mdl-color-text--blue-grey-400 icon icon-keyboard_arrow_left navleft"><use xlink:href="#icon-keyboard_arrow_left"></use></svg>Back</a>
             <template  v-for="m in filterMetrics(privateState.data, privateState.filterVal)">
                 <a class="mdl-navigation__link mdl-navigation__link-end" v-on:click="changeMetric(m.metric)" href="javascript:void(0)">{{m.title}}</a>
             </template>
@@ -9,7 +9,7 @@
         <template v-else >
             <span class="sidebar-title">Explore the Data</span>
             <template v-for="category in filterCategories(privateState.data)">
-                <a class="mdl-navigation__link" v-on:click="changeFilter(category)" href="javascript:void(0)">{{category}}<i class="mdl-color-text--blue-grey-400 material-icons navright" role="presentation">chevron_right</i></a>
+                <a class="mdl-navigation__link" v-on:click="changeFilter(category)" href="javascript:void(0)">{{category}}<svg class="mdl-color-text--blue-grey-400 icon icon-keyboard_arrow_right navright"><use xlink:href="#icon-keyboard_arrow_right"></use></svg></a>
             </template>
             <a class="mdl-navigation__link" href="http://qol.charmeck.org/">About</a>
             <a class="mdl-navigation__link" href="downloads/qol-data.zip">Download Data</a>
@@ -87,8 +87,15 @@ export default {
     position: absolute;
     right: 0;
 }
+.navleft {
+    margin-right: 32px;
+}
 .sidebar-title {
     padding: 0 20px 8px;
+}
+.icon {
+    width: 24px;
+    height: 24px;
 }
 </style>
 

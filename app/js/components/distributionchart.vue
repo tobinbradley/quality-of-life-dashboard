@@ -2,8 +2,8 @@
     <div class="qol-chart mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
         <div class="scatterplot mdl-typography--text-center">
             <h1>Data Distribution, {{sharedState.year}}</h1>
-            <span v-show="sharedState.selected.length > 0"><i class="material-icons legend legend-selected">lens</i> Selected</span>
-            <span><i class="material-icons legend legend-median">more_horiz</i> Median {{privateState.median}}</span>
+            <span v-show="sharedState.selected.length > 0"><svg class="icon legend legend-selected"><use xlink:href="#icon-lens"></use></svg> Selected</span>
+            <span><svg class="icon legend legend-median"><use xlink:href="#icon-more_horiz"></use></svg> Median {{privateState.median}}</span>
             <div class="ct-distributionchart"></div>
         </div>
     </div>
@@ -216,10 +216,7 @@ export default {
     }
     span {
         font-size: 0.8em;
-    }
-    .material-icons {
-        vertical-align: sub;
-    }
+    }    
     .legend {
         font-size: 1.2em;
     }
@@ -227,7 +224,9 @@ export default {
         color: #ba00e4;
     }
     .legend-median {
-        color: #666;
+        fill: #666;
+        width: 14px;
+        height: 14px;
     }
 
 </style>
