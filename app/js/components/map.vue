@@ -103,6 +103,8 @@ export default {
                 } else {
                     _this.sharedState.selected.splice(featureIndex, 1);
                 }
+
+                replaceState(_this.sharedState.metricId, _this.sharedState.selected);
             });
 
             // fix for popup cancelling click event on iOS
