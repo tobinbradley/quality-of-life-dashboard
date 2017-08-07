@@ -1,9 +1,9 @@
 <template lang="html">
     <p class="text-muted">
-        <a href="javascript:void(0)" v-on:click="social('twitter')"><img src="img/icon_twitter.svg" alt="share on twitter" style="height: 22px;"></a>
-        <a href="javascript:void(0)" v-on:click="social('facebook')"><img src="img/icon_facebook.svg" alt="share on facebook" style="height: 22px;"></a>
-        <a href="javascript:void(0)" v-on:click="social('linkedin')"><img src="img/icon_linkedin.svg" alt="share on linkedin" style="height: 22px;"></a>
-        <a href="https://github.com/tobinbradley/quality-of-life-dashboard"><img src="img/icon_github.svg" alt="source code on github" style="height: 22px;"></a>
+        <a href="javascript:void(0)" aria-label="Share on Twitter" v-on:click="social('twitter')"><svg class="icon icon-twitter-with-circle"><use xlink:href="#icon-twitter-with-circle"></use></svg></a>
+        <a href="javascript:void(0)" aria-label="Share on Facebook" v-on:click="social('facebook')"><svg class="icon icon-facebook-with-circle"><use xlink:href="#icon-facebook-with-circle"></use></svg></a>
+        <a href="javascript:void(0)" aria-label="Share on LinkedIn" v-on:click="social('linkedin')"><svg class="icon icon-linkedin-with-circle"><use xlink:href="#icon-linkedin-with-circle"></use></svg></a>
+        <a href="https://github.com/tobinbradley/quality-of-life-dashboard" aria-label="View project on Github"><svg class="icon icon-brand-github"><use xlink:href="#icon-brand-github"></use></svg></a>
     </p>    
 </template>
 
@@ -30,3 +30,22 @@ export default {
     }
 }
 </script>
+
+<style lang="css" scoped>
+    .icon {
+        width: 24px;
+        height: 24px;
+    }
+    .icon-twitter-with-circle {
+        fill: #1DA1F2;
+    }
+    .icon-facebook-with-circle {
+        fill: #4E71A8;
+    }
+    .icon-linkedin-with-circle {
+        fill: #1686B0;
+    }
+    .icon-brand-github {
+        fill: #0F0F0F;
+    }
+</style>
