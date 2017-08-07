@@ -38,6 +38,9 @@
 <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+            <div aria-label="sidebar menu" aria-expanded="false" role="button" tabindex="0" class="mdl-layout__drawer-button">
+				<svg class="icon icon-menu"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-menu"></use></svg>
+			</div>
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title">{{ siteConfig.title }}</span>
             </div>
@@ -143,6 +146,10 @@
     <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="SVG Icons">
         <defs>
+            <symbol id="icon-menu" viewBox="0 0 32 32">
+                <title>menu</title>
+                <path d="M4 8h24v2.688h-24v-2.688zM4 17.313v-2.625h24v2.625h-24zM4 24v-2.688h24v2.688h-24z"></path>
+            </symbol>
             <symbol id="icon-keyboard_arrow_left" viewBox="0 0 32 32">
                 <path d="M20.563 21.438l-1.875 1.875-8-8 8-8 1.875 1.875-6.125 6.125z"></path>
             </symbol>
