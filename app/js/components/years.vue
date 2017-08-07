@@ -37,7 +37,7 @@ li:hover {
     text-shadow: 1px 0px 20px #ff4081;
 }
 .selected {
-    color: #ff4081;
+    color: rgb(211, 45, 101);
     font-weight: bold;
 }
 .clearer {
