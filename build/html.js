@@ -31,7 +31,7 @@ handlebars.registerHelper('ifEither', function(v1, v2, options) {
     return options.inverse(this);
 });
 
-handlebars.registerHelper('whatsnew', function(id, options) {
+handlebars.registerHelper('whatsnew', function(id) {
     return new handlebars.SafeString(dataConfig[`m${id}`].title);
 });
 

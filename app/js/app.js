@@ -36,7 +36,13 @@ import Search from './components/search.vue';
 import EmbedCode from './components/embedcode.vue';
 import Footer from './components/footer.vue';
 import Social from './components/social.vue';
+import Offline from './components/offline.vue';
 
+
+// register service worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js');
+}
 
 // the shared state between components
 let appState = {
@@ -259,6 +265,11 @@ new Vue({
 new Vue({
     el: 'sc-social',
     render: h => h(Social)
+});
+// offline message
+new Vue({
+    el: 'sc-offline',
+    render: h => h(Offline)
 });
 
 

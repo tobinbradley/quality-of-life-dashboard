@@ -10,6 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ siteConfig.title }}</title>
 
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
     <!-- chrome theme color -->
     <meta name="theme-color" content="#1676D2">
 
@@ -53,6 +56,7 @@
         </div>
         <div class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid">
+                <sc-offline></sc-offline>
                 <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
                     <div class="map-container" style="position: relative">
                         <sc-map></sc-map>
