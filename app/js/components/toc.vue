@@ -2,9 +2,6 @@
     <div id="toc" v-if="sharedState.metric.config" class="top left">
         <div>
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=" class="background-print-img" alt="white background for printing">
-            <div class="tocposition">                
-                <a href="javascript:void(0)" title="Move Table of Contents" v-on:click="position()"><svg class="icon"><use xlink:href="#icon-zoom_out_map"></use></svg></a>
-            </div>
             <h1 class="title">{{ sharedState.metric.config.title }}, {{ sharedState.year }}</h1>
             <h2 v-if="privateState.metaDesc" class="description">
                 <span v-html="privateState.metaDesc"></span>
@@ -18,7 +15,7 @@
                         <span>or</span>
                         <span class="metricvalue metricraw">{{privateState.selectedRaw}}</span>
                         <span v-html="sharedState.metric.config.raw_label.toLowerCase()" class="metriclabel"></span>
-                    </span>                    
+                    </span>
                 </div>
                 <div class="metricbox">
                     <span class="metrictype">COUNTY</span>
@@ -28,9 +25,9 @@
                         <span>or</span>
                         <span class="metricvalue metricraw">{{privateState.areaRaw}}</span>
                         <span v-html="sharedState.metric.config.raw_label.toLowerCase()" class="metriclabel"></span>
-                    </span>                     
+                    </span>
                 </div>
-            </div>            
+            </div>
             <div class="legend">
                 <svg  v-if="sharedState.breaks" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 248.4 39.2"id="maplegend" role="img" aria-labelledby="svgTitle">
                     <title id="svgTitle">Choropleth legend</title>
@@ -125,29 +122,7 @@ export default {
         processYear: function() {
             this.processArea();
             this.processSelected();
-        },
-        position: function() {
-            let el = document.querySelector("#toc");
-
-            // move to top left from bottom right
-            if (el.classList.contains("right")) {
-                el.classList.remove('bottom');
-                el.classList.remove('right');
-                el.classList.add('top');                
-                el.classList.add('left');
-            } 
-            // move to bottom right from bottom left
-            else if (el.classList.contains("bottom")) {
-                el.classList.remove('left');
-                el.classList.add('right'); 
-            } 
-            // move to bottom left from top left
-            else if (el.classList.contains("top")) {
-                el.classList.remove('top');
-                el.classList.add('bottom');
-            }
-            
-        }        
+        }
     }
 }
 </script>
@@ -202,7 +177,7 @@ export default {
     padding: 3px 0 10px;
     text-align: center;
     display: flex;
-    flex-flow: row nowrap; 
+    flex-flow: row nowrap;
 }
 .metricbox {
     width: 50%;
