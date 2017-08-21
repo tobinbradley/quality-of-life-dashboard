@@ -55,8 +55,10 @@ a {
 }
 .flexcontainer .flex-item {
   flex-grow: 1;
-  width: 50%;
   padding: 10px;
+}
+.flexcontainer .flex-item:first-child {
+  max-width: 35%;
 }
 
 .undermap-controls button {
