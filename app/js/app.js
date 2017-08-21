@@ -11,7 +11,7 @@
 //
 
 require('es6-promise').polyfill(); // Fix for axios on IE11
-require('material-design-lite');
+//require('material-design-lite');
 
 import Vue from 'vue/dist/vue.js';
 import axios from 'axios';
@@ -37,7 +37,11 @@ import EmbedCode from './components/embedcode.vue';
 import Footer from './components/footer.vue';
 import Social from './components/social.vue';
 import Offline from './components/offline.vue';
+import toggleSidebar from './modules/sidebar-hamburger';
 
+
+// enabe sidebar hamburger menu
+toggleSidebar();
 
 // register service worker
 if ('serviceWorker' in navigator) {
@@ -210,11 +214,11 @@ MapGL.data = function() {
 
 
 // pass newly created mdl elements through mdl
-Vue.directive('mdl', {
-    bind: function(el) {
-        componentHandler.upgradeElement(el);
-    }
-});
+//Vue.directive('mdl', {
+//    bind: function(el) {
+//        componentHandler.upgradeElement(el);
+//    }
+//});
 
 
 // initialize components

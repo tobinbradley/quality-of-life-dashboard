@@ -5,7 +5,7 @@
                 <h3>Why This is Important</h3>
                 <div v-html="important(sharedState.metadata)"></div>
                 <h4>Additional Resources</h4>
-                <div v-html="resources(sharedState.metadata)" v-mdl></div>
+                <div v-html="resources(sharedState.metadata)"></div>
             </div>
             <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing meta-side">
                 <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop meta">

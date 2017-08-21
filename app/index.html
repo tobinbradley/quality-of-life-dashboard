@@ -108,11 +108,11 @@
                 {{#if siteConfig.contactForm}}
                 <div class="mdl-typography--text-center mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet comment-container">
                     <div class="comment-form">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-focused">
                             <input class="mdl-textfield__input" type="email" id="contact-email" required autocomplete="off">
                             <label class="mdl-textfield__label" for="contact-email">Email Address</label>
                         </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-focused">
                             <textarea class="mdl-textfield__input" type="text" rows="3" id="contact-message" required autocomplete="off"></textarea>
                             <label class="mdl-textfield__label" for="contact-message">Message</label>
                         </div>
@@ -145,6 +145,7 @@
             <sc-footer></sc-footer>
         </div>
     </div>
+    <div class="mdl-layout__obfuscator"></div>
 
     <!-- svg icons -->
     <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg"

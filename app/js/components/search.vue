@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop search-container">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-focused">
             <input class="mdl-textfield__input" type="text" id="sample3" v-model="privateState.query" v-on:focus="search()" autocomplete="off">
             <label class="mdl-textfield__label" for="sample3">Search...</label>
         </div>
@@ -200,7 +200,7 @@ li:hover {
 .search-results.i, search-results.span {
    pointer-events: none;
 }
-.icon {   
+.icon {
    float: right;
    width: 24px;
    height: 24px;

@@ -71,3 +71,7 @@ a {
   stroke: currentColor;
   fill: currentColor;
 }
+
+input, textarea {
+  outline: none;
+}
