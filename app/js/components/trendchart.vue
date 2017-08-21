@@ -12,7 +12,7 @@
 <script>
     import Chartist from 'chartist';
     require('../modules/chartist.axis.title.js');
-    require('../modules/chartist.tooltip.js');
+    //require('../modules/chartist.tooltip.js');
     import {calcValue} from '../modules/metric_calculations';
     import {abbrNum, round, prettyNumber} from '../modules/number_format';
 
@@ -54,11 +54,6 @@
                             }
                         },
                         plugins: [
-                            Chartist.plugins.tooltip({
-                                transformTooltipTextFnc: function(value) {
-                                    return prettyNumber(value, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);
-                                }
-                            })
                         ]
                     };
                     // axis labels
