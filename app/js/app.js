@@ -292,7 +292,7 @@ window.changeMetric = function(m) {
 
 
 // select groups if present
-let selectGroups = document.querySelectorAll('li[data-selectGroup]');
+let selectGroups = document.querySelectorAll('a[data-selectGroup]');
 Array.from(selectGroups).forEach(link => {
     link.addEventListener('click', function() {
         let selectList = link.getAttribute('data-selectGroup').split(",");

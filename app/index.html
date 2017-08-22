@@ -68,23 +68,25 @@
                         </div>
                         <div class="flex-item mdl-typography--text-right undermap-controls">
                             <p style="margin-top: 0;">
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect selected-clear">
+                                <button class="mdl-button selected-clear">
                                     Clear Selected
                                 </button> {{#ifEither siteConfig.qolembedURL siteConfig.qolreportURL}}
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-fullreport>
+                                <button class="mdl-button" data-fullreport>
                                     Report
                                 </button>
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-printmap>
+                                <button class="mdl-button" data-printmap>
                                     Print Map
                                 </button> {{/ifEither}}
                             </p>
-                            {{#if selectgroups}} Select Approximate: {{#each selectgroups}}
-                            <a href="javascript:void(0)" id="selectgroup-{{@index}}" class="selectgroup-link">{{@key}}</a>
-                            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="selectgroup-{{@index}}">
-                                {{#each this}}
-                                <li class="mdl-menu__item" data-selectgroup="{{this}}">{{@key}}</li>
-                                {{/each}}
-                            </ul>
+                            {{#if selectgroups}}{{#each selectgroups}}
+                            <div class="dropdown">
+                               <button class="dropdown-button">{{@key}} &#x25BC</button>
+                               <div class="dropdown-content no-print">
+                                   {{#each this}}
+                                   <a href="javascript:void(0)" data-selectgroup="{{this}}">{{@key}}</a>
+                                   {{/each}}
+                                </div>
+                            </div>
                             {{/each}} {{/if}}
                         </div>
                     </div>
@@ -117,7 +119,7 @@
                             <label class="mdl-textfield__label" for="contact-message">Message</label>
                         </div>
                         <p>
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="display: inline"
+                            <button class="mdl-button" style="display: inline"
                                 id="contact-submit">
                                   Contact Us
                             </button>
