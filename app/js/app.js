@@ -39,7 +39,6 @@ import Social from './components/social.vue';
 import Offline from './components/offline.vue';
 import toggleSidebar from './modules/sidebar-hamburger';
 
-
 // enabe sidebar hamburger menu
 toggleSidebar();
 
@@ -53,15 +52,15 @@ let appState = {
     metric: {
         config: null,
         years: [],
-        data: null
+        data: null,
     },
     colors: colors.breaksGnBu5,
-    breaks: [0,0,0,0,0,0],
+    breaks: [0, 0, 0, 0, 0, 0],
     selected: [],
     year: null,
     metadata: null,
     marker: null,
-    zoomNeighborhoods: []
+    zoomNeighborhoods: [],
 };
 
 // for debugging
@@ -70,30 +69,29 @@ window.appState = appState;
 // get random metric if none provided and validate if metric is provided
 let keys = Object.keys(dataConfig);
 let metricId = keys[Math.floor(Math.random() * keys.length)].replace('m', '');
-if (getURLParameter("m")) {
-    let passedMetric = getURLParameter("m").replace('m', '');
+if (getURLParameter('m')) {
+    let passedMetric = getURLParameter('m').replace('m', '');
     if (keys.indexOf(`m${passedMetric}`) !== -1) {
         metricId = passedMetric;
     }
 }
 
 // set selected if provided
-if (getURLParameter("s")) {
-    appState.selected = getURLParameter("s").split(',');
+if (getURLParameter('s')) {
+    appState.selected = getURLParameter('s').split(',');
 }
 
 // grab initial data
 fetchData(appState, metricId);
-
 
 // Component data setup
 Sidenav.data = function() {
     return {
         privateState: {
             data: dataConfig,
-            filterVal: null
+            filterVal: null,
         },
-        sharedState: appState
+        sharedState: appState,
     };
 };
 Search.data = function() {
@@ -103,23 +101,23 @@ Search.data = function() {
             results: {
                 neighborhood: [],
                 zipcode: [],
-                address: []
+                address: [],
             },
             neighborhoodDescriptor: siteConfig.neighborhoodDescriptor,
-            neighborhoodDefinition: siteConfig.neighborhoodDefinition
+            neighborhoodDefinition: siteConfig.neighborhoodDefinition,
         },
-        sharedState: appState
+        sharedState: appState,
     };
 };
 Metadata.data = function() {
     return {
-        sharedState: appState
+        sharedState: appState,
     };
 };
 
 YearControl.data = function() {
     return {
-        sharedState: appState
+        sharedState: appState,
     };
 };
 EmbedCode.data = function() {
@@ -127,8 +125,8 @@ EmbedCode.data = function() {
         sharedState: appState,
         privateState: {
             title: null,
-            qolembedURL: siteConfig.qolembedURL
-        }
+            qolembedURL: siteConfig.qolembedURL,
+        },
     };
 };
 DataTable.data = function() {
@@ -136,32 +134,32 @@ DataTable.data = function() {
         sharedState: appState,
         privateState: {
             neighborhoodDescriptor: siteConfig.neighborhoodDescriptor,
-            neighborhoodDefinition: siteConfig.neighborhoodDefinition
-        }
+            neighborhoodDefinition: siteConfig.neighborhoodDefinition,
+        },
     };
 };
 TrendChart.data = function() {
     return {
         sharedState: appState,
         privateState: {
-            chart: null
-        }
+            chart: null,
+        },
     };
 };
 Footer.data = function() {
     return {
         sharedState: appState,
         privateState: {
-            links: siteConfig.links
-        }
+            links: siteConfig.links,
+        },
     };
 };
 Social.data = function() {
     return {
         sharedState: appState,
         privateState: {
-            links: siteConfig.links
-        }
+            links: siteConfig.links,
+        },
     };
 };
 DistributionChart.data = function() {
@@ -170,8 +168,8 @@ DistributionChart.data = function() {
         privateState: {
             chart: null,
             chartData: null,
-            median: null
-        }
+            median: null,
+        },
     };
 };
 ToC.data = function() {
@@ -182,8 +180,8 @@ ToC.data = function() {
             selected: null,
             area: null,
             selectedRaw: null,
-            areaRaw: null
-        }
+            areaRaw: null,
+        },
     };
 };
 MapGL.data = function() {
@@ -199,7 +197,7 @@ MapGL.data = function() {
                 center: mapConfig.center,
                 maxBounds: mapConfig.maxBounds,
                 minZoom: mapConfig.minZoom,
-                preserveDrawingBuffer: mapConfig.preserveDrawingBuffer
+                preserveDrawingBuffer: mapConfig.preserveDrawingBuffer,
             },
             mapLoaded: false,
             metricId: null,
@@ -207,75 +205,65 @@ MapGL.data = function() {
             isPitched3D: false,
             locationPopup: null,
             neighborhoodsBefore: mapConfig.neighborhoodsBefore,
-            neighborhoodsSelectedBefore: mapConfig.neighborhoodsSelectedBefore
-        }
+            neighborhoodsSelectedBefore: mapConfig.neighborhoodsSelectedBefore,
+        },
     };
 };
-
-
-// pass newly created mdl elements through mdl
-//Vue.directive('mdl', {
-//    bind: function(el) {
-//        componentHandler.upgradeElement(el);
-//    }
-//});
-
 
 // initialize components
 new Vue({
     el: 'sc-search',
-    render: h => h(Search)
+    render: h => h(Search),
 });
 new Vue({
     el: 'sc-sidenav',
-    render: h => h(Sidenav)
+    render: h => h(Sidenav),
 });
 new Vue({
     el: 'sc-metadata',
-    render: h => h(Metadata)
+    render: h => h(Metadata),
 });
 new Vue({
     el: 'sc-years',
-    render: h => h(YearControl)
+    render: h => h(YearControl),
 });
 new Vue({
     el: 'sc-datatable',
-    render: h => h(DataTable)
+    render: h => h(DataTable),
 });
 new Vue({
     el: 'sc-distributionchart',
-    render: h => h(DistributionChart)
+    render: h => h(DistributionChart),
 });
 new Vue({
     el: 'sc-trendchart',
-    render: h => h(TrendChart)
+    render: h => h(TrendChart),
 });
 new Vue({
     el: 'sc-toc',
-    render: h => h(ToC)
+    render: h => h(ToC),
 });
 new Vue({
     el: 'sc-embedcode',
-    render: h => h(EmbedCode)
+    render: h => h(EmbedCode),
 });
 new Vue({
     el: 'sc-map',
-    render: h => h(MapGL)
+    render: h => h(MapGL),
 });
 new Vue({
     el: 'sc-footer',
-    render: h => h(Footer)
+    render: h => h(Footer),
 });
 new Vue({
     el: 'sc-social',
-    render: h => h(Social)
+    render: h => h(Social),
 });
 // offline message
 new Vue({
     el: 'sc-offline',
-    render: h => h(Offline)
+    render: h => h(Offline),
 });
-
 
 ////////////////////////////////////////////////////////////////////////////
 // General non-component page interactions
@@ -285,17 +273,20 @@ new Vue({
 window.changeMetric = function(m) {
     let metric = m.replace('m', '');
     replaceState(metric, appState.selected);
-    gaEvent('metric', dataConfig[`m${metric}`].title.trim(), dataConfig[`m${metric}`].category.trim());
+    gaEvent(
+        'metric',
+        dataConfig[`m${metric}`].title.trim(),
+        dataConfig[`m${metric}`].category.trim(),
+    );
     fetchData(appState, metric);
-    scrollTo(document.querySelector(".mdl-layout__content"), 0, 600);
+    scrollTo(document.querySelector('.mdl-layout__content'), 0, 600);
 };
-
 
 // select groups if present
 let selectGroups = document.querySelectorAll('a[data-selectGroup]');
 Array.from(selectGroups).forEach(link => {
     link.addEventListener('click', function() {
-        let selectList = link.getAttribute('data-selectGroup').split(",");
+        let selectList = link.getAttribute('data-selectGroup').split(',');
         appState.selected = selectList;
         appState.zoomNeighborhoods = selectList.slice(0);
     });
@@ -307,19 +298,27 @@ Array.from(whatsnew).forEach(link => {
     link.addEventListener('click', function() {
         let metric = link.getAttribute('data-whatsnew');
         replaceState(metric, appState.selected);
-        gaEvent('metric', dataConfig[`m${metric}`].title.trim(), dataConfig[`m${metric}`].category.trim());
+        gaEvent(
+            'metric',
+            dataConfig[`m${metric}`].title.trim(),
+            dataConfig[`m${metric}`].category.trim(),
+        );
         fetchData(appState, metric);
-        scrollTo(document.querySelector(".mdl-layout__content"), 0, 600);
+        scrollTo(document.querySelector('.mdl-layout__content'), 0, 600);
     });
 });
 
 // clear selected button
 let clearselected = document.querySelector('.selected-clear');
 if (clearselected) {
-    clearselected.addEventListener('click', function() {
-        appState.selected = [];
-        replaceState(appState.metricId, []);
-    }, false);
+    clearselected.addEventListener(
+        'click',
+        function() {
+            appState.selected = [];
+            replaceState(appState.metricId, []);
+        },
+        false,
+    );
 }
 
 // Reports
@@ -327,12 +326,18 @@ let reportEmbed = document.querySelector('button[data-printmap]');
 let reportFull = document.querySelector('button[data-fullreport]');
 if (reportEmbed) {
     reportEmbed.addEventListener('click', function() {
-        window.open(`${siteConfig.qolembedURL}?m=${appState.metricId}&y=${appState.year}&s=${appState.selected.join(',')}`);
+        window.open(
+            `${siteConfig.qolembedURL}?m=${appState.metricId}&y=${appState.year}&s=${appState.selected.join(
+                ',',
+            )}`,
+        );
     });
 }
 if (reportFull) {
     reportFull.addEventListener('click', function() {
-        window.open(`${siteConfig.qolreportURL}?s=${appState.selected.join(',')}`);
+        window.open(
+            `${siteConfig.qolreportURL}?s=${appState.selected.join(',')}`,
+        );
     });
 }
 
@@ -344,23 +349,28 @@ if (contactForm) {
         let email = document.querySelector('#contact-email');
 
         if (message.checkValidity() && email.checkValidity()) {
-            axios.post(siteConfig.contactForm,
-                querystring.stringify({
-                    email: email.value,
-                    url: window.location.href,
-                    agent: navigator.userAgent,
-                    subject: "Quality of Life Dashboard Feedback",
-                    to: "tobin.bradley@gmail.com",
-                    message: message.value
-                }),
-                {
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    }
-                })
+            axios
+                .post(
+                    siteConfig.contactForm,
+                    querystring.stringify({
+                        email: email.value,
+                        url: window.location.href,
+                        agent: navigator.userAgent,
+                        subject: 'Quality of Life Dashboard Feedback',
+                        to: 'tobin.bradley@gmail.com',
+                        message: message.value,
+                    }),
+                    {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                    },
+                )
                 .then(function() {
-                    document.querySelector('.comment-form').style.display = 'none';
-                    document.querySelector('.comment-complete').style.display = 'block';
+                    document.querySelector('.comment-form').style.display =
+                        'none';
+                    document.querySelector('.comment-complete').style.display =
+                        'block';
                 });
         }
     });
