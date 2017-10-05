@@ -1,19 +1,90 @@
-////////////////////////////////////////////////
-// data processing
-////////////////////////////////////////////////
-
 var fs = require('fs');
 var path = require('path');
 var dataConfig = require('../data/config/data.js');
 const csv = require('csvtojson');
 const _ = require('lodash');
 var dest = "./public/data/metric";
+var marked = require('marked');
+var shell = require('shelljs');
+
+
+///////////////////////////////////////////////////
+// Create destination folders
+///////////////////////////////////////////////////
+shell.mkdir('-p', 'public/data/meta');
+shell.mkdir('-p', 'public/data/metric');
+
+
 
 
 // return true if convertable to number
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
+
+
+
+////////////////////////////////////////////////
+// Markdown
+////////////////////////////////////////////////
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false
+});
+
+var src = "./data/meta";
+
+var _getAllFilesFromFolder = function(dir) {
+    var filesystem = require("fs");
+    var results = [];
+
+    filesystem.readdirSync(dir).forEach(function(file) {
+        file = path.join(dir, file);
+        var stat = filesystem.statSync(file);
+        if (stat && stat.isDirectory() && path.extname(file) === ".md") {
+            results = results.concat(_getAllFilesFromFolder(file));
+        } else results.push(file);
+    });
+    return results;
+};
+
+
+let files = _getAllFilesFromFolder(src);
+
+for (let i = 0; i < files.length; i++) {
+    fs.readFile(files[i], 'utf-8', (err, data) => {
+        if (err) {
+            return console.log(err);
+        }
+        let outFile = path.join('public/data/meta', path.basename(files[i]).split('.')[0]) + '.html';
+
+        marked(data, function(err, content){
+            if (err) {
+                return console.log(err);
+            }
+            fs.writeFileSync(outFile, content);
+        });
+    });
+}
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////
+// CSVtoJSON
+///////////////////////////////////////////////
 
 // transform csv2json array to id: {y_2012: value} object format
 function jsonTransform(jsonArray) {
@@ -132,4 +203,7 @@ _.each(dataConfig, function(m) {
             });                
     }
 });
+
+
+
 

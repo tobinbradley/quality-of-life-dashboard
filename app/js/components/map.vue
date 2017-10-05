@@ -81,7 +81,7 @@ export default {
             });
 
             map.on('rotate', function(e) {
-                if (map.getPitch() >= 20) {                    
+                if (map.getPitch() >= 20) {
                     _this.privateState.isPitched3D = true;
                 } else {
                     _this.privateState.isPitched3D = false;
@@ -123,7 +123,7 @@ export default {
                     let feature = features[0];
                     let id = feature.properties.id;
                     let data = _this.sharedState.metric.data.map[id][`y_${_this.sharedState.year}`];
-                    let val = prettyNumber(data, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);                    
+                    let val = prettyNumber(data, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);
 
                     popup.setLngLat(map.unproject(e.point))
                         .setHTML(`<div style="text-align: center; margin: 0; padding: 0;"><h3 style="font-size: 1.2em; margin: 0; padding: 0; line-height: 1em; font-weight: bold;">NPA ${feature.properties.id}</h3>${val}</div>`)
@@ -149,7 +149,7 @@ export default {
                 'source': 'neighborhoods',
                 'layout': {},
                 'paint': {}
-            }, 'building');            
+            }, 'building');
 
             map.addLayer({
                 'id': 'neighborhoods-fill-extrude',
@@ -161,13 +161,13 @@ export default {
                 }
             }, 'neighborhoods');
 
-            // markers layer		
-             map.addSource("markers", {		
-                 "type": "geojson",		
-                 "data": {		
-                     "type": "FeatureCollection",		
-                     "features": []		
-                 }		
+            // markers layer
+             map.addSource("markers", {
+                 "type": "geojson",
+                 "data": {
+                     "type": "FeatureCollection",
+                     "features": []
+                 }
              });
              map.addLayer({
                  "id": "markers",
@@ -175,14 +175,14 @@ export default {
                  "source": "markers",
                  "layout": {
                      "icon-image": "star-11",
-                     "icon-size": 1.7 
+                     "icon-size": 1.7
                  }
             });
 
         },
         styleNeighborhoods: function() {
             let map = this.privateState.map;
-            let _this = this;   
+            let _this = this;
 
             map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-color', _this.getColors());
             map.setPaintProperty("neighborhoods", 'line-color', _this.getOutlineColor());
@@ -227,7 +227,7 @@ export default {
 
             this.privateState.map.fitBounds(bounds, {padding: 100});
         },
-        
+
         createMarker: function() {
             let map = this.privateState.map;
 
@@ -349,10 +349,10 @@ export default {
 
             Object.keys(data).forEach(id => {
                 const value = data[id][`y_${_this.sharedState.year}`];
-                
-                if (value !== null) {                                
+
+                if (value !== null) {
                     stops.push([id, color(value)]);
-                } 
+                }
             });
 
             let fillColor = {
@@ -366,15 +366,15 @@ export default {
         },
         getHeight: function() {
             let _this = this;
-            const stops = [];            
+            const stops = [];
             let data = _this.sharedState.metric.data.map;
-            
+
             let heightAdjust = scaleLinear()
                     .domain([_this.sharedState.breaks[0], _this.sharedState.breaks[this.sharedState.breaks.length - 1]])
-                    .range([0, 3000]);            
+                    .range([0, 3000]);
 
             Object.keys(data).forEach(id => {
-                const value = data[id][`y_${_this.sharedState.year}`];                
+                const value = data[id][`y_${_this.sharedState.year}`];
                 if (value !== null) {
                     stops.push([id, heightAdjust(value)]);
                 }
@@ -386,12 +386,12 @@ export default {
                 type: 'categorical',
                 stops: stops
             }
-            
+
 
             return height;
         }
     },
-    
+
     mounted: function () {
         this.initMap();
     }
