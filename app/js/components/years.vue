@@ -2,9 +2,10 @@
     <div id="years">
         <div class="flex-container">
             <div v-if="sharedState.metric.years.length > 1" class="flex-left">
-                <div class="play-button" v-on:click="play">
-                    <div class="play-button__triangle"></div>
-                </div>
+                <div class="playpause">
+                   <input type="checkbox" value="None" id="playpause" name="check" v-on:change="play" checked />
+                   <label for="playpause"></label>
+                 </div>
             </div>
             <div v-if="sharedState.metric.years.length > 1" class="flex-center">
                 <input id="yearslider" type="range" v-bind:min="sharedState.metric.years[0]"
@@ -36,15 +37,29 @@ export default {
                 return (Math.abs(curr - val) < Math.abs(prev - val) ? curr : prev);
             });
         },
-        play: function() {
+        play: function($event) {
             let _this = this;
-            this.sharedState.metric.years.forEach(function(item, index, array) {
-                setTimeout( (function( index ) {
-                    return function() {
-                        _this.sharedState.year = array[index];
-                    };
-                }( index )), (2000 * index) );
-            });
+            const checked = $event.target.checked;
+
+            if (!checked) {
+              // set current index and advance one
+              let i = _this.sharedState.metric.years.indexOf(_this.sharedState.year) + 1;
+              i >= _this.sharedState.metric.years.length ? i = 0 : null;
+              _this.sharedState.year = _this.sharedState.metric.years[i];
+
+              _this.privateState.playToggle = setInterval(function() {
+                // begin the loop
+                i++;
+                if (i >= _this.sharedState.metric.years.length) {
+                  i = 0;
+                }
+                _this.sharedState.year = _this.sharedState.metric.years[i];
+              }, 1500);
+            } else {
+              // end loop
+              clearInterval(_this.privateState.playToggle);
+            }
+
         }
     }
 }
@@ -75,33 +90,27 @@ h3 {
     margin: 0;
     font-size: 1.1em;
 }
-.play-button {
-  position: relative;
-  height: 1.4em;
-  width: 1.4em;
-  box-shadow: 0 0 0 2px rgb(210, 210, 210);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: 0.6s;
-}
-.play-button:hover {
-    box-shadow: 0 0 0 3px #176ADF;
-}
-.play-button__triangle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-40%, -50%);
-  z-index: 0;
-  border: solid rgb(210, 210, 210);
-  border-right-width: 0;
-  border-left-width: 12px;
-  border-top-width: 7px;
-  border-bottom-width: 8px;
-  border-top-color: transparent;
-  border-bottom-color: transparent;
-  height: 0;
+
+.playpause label {
+  display: block;
+  box-sizing: border-box;
   width: 0;
-  transition: 0.6s;
+  height: 34px;
+  border-color: transparent transparent transparent rgb(158, 158, 158);
+  transition: 180ms all ease;
+  cursor: pointer;
+  border-style: double;
+  border-width: 0px 0 0px 25px;
 }
+.playpause label:hover {
+  border-color: transparent transparent transparent #ff4081;
+}
+.playpause input[type="checkbox"] {
+  display: none;
+}
+.playpause input[type="checkbox"]:checked + label {
+  border-style: solid;
+  border-width: 17px 0 17px 25px;
+}
+
 </style>

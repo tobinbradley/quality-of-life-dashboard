@@ -124,6 +124,9 @@ Metadata.data = function() {
 YearControl.data = function() {
   return {
     sharedState: appState,
+    privateState: {
+      playToggle: null,
+    },
   };
 };
 EmbedCode.data = function() {
