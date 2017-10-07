@@ -6,11 +6,8 @@
   "author": "Tobin Bradley",
   "license": "MIT",
   "scripts": {
-    "datagen:markdown": "mkdirp public/data/meta && node build/markdown.js",
-    "datagen:csv": "mkdirp public/data/metric && node build/csv.js",
-    "datagen": "npm-run-all --parallel datagen:*",
     "start": "brunch watch --server --network --port 3000",
-    "build": "brunch build --production"
+    "build": "node ./build/datagen.js && brunch build --production"
   },
   "dependencies": {
     "axios": "^0.16.2",
