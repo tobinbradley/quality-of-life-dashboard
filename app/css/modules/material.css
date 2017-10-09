@@ -87,7 +87,7 @@
   justify-content: flex-end;
   padding: 16px 16px 5px;
   height: 151px;
-  background: url(../img/logo.svg) center center;
+  background: url(img/logo.svg) center center;
 }
 
 .demo-avatar-dropdown {

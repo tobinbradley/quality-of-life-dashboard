@@ -20,8 +20,12 @@ import mapConfig from '../../data/config/map';
 import siteConfig from '../../data/config/site';
 import colors from './modules/breaks';
 import fetchData from './modules/fetch';
-import {replaceState, gaEvent} from './modules/tracking';
-import getURLParameter from './modules/geturlparams';
+import {
+  replaceState,
+  gaEvent,
+  getHash,
+  urlArgsToHash,
+} from './modules/tracking';
 import scrollTo from './modules/scrollto';
 import querystring from 'querystring';
 import Sidenav from './components/sidebar-nav.vue';
@@ -72,19 +76,22 @@ let appState = {
 // for debugging
 window.appState = appState;
 
+// reset old GET args to hash
+urlArgsToHash();
+
 // get random metric if none provided and validate if metric is provided
 let keys = Object.keys(dataConfig);
 let metricId = keys[Math.floor(Math.random() * keys.length)].replace('m', '');
-if (getURLParameter('m')) {
-  let passedMetric = getURLParameter('m').replace('m', '');
+if (getHash(0)) {
+  let passedMetric = getHash(0).replace('m', '');
   if (keys.indexOf(`m${passedMetric}`) !== -1) {
     metricId = passedMetric;
   }
 }
 
 // set selected if provided
-if (getURLParameter('s')) {
-  appState.selected = getURLParameter('s').split(',');
+if (getHash(1)) {
+  appState.selected = getHash(1);
 }
 
 // grab initial data
@@ -108,6 +115,7 @@ Search.data = function() {
         neighborhood: [],
         zipcode: [],
         address: [],
+        NSA: [],
       },
       neighborhoodDescriptor: siteConfig.neighborhoodDescriptor,
       neighborhoodDefinition: siteConfig.neighborhoodDefinition,

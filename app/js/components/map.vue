@@ -5,11 +5,9 @@
 </template>
 
 <script>
-//import mapboxgl from 'mapbox-gl';
 import mapboxgl from 'mapbox-gl';
 import axios from 'axios';
 import {prettyNumber} from '../modules/number_format';
-import getURLParameter from '../modules/geturlparams';
 import {replaceState} from '../modules/tracking';
 import {scaleLinear} from 'd3-scale';
 
@@ -67,7 +65,7 @@ export default {
                 map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-height', _this.getHeight());
             } else {
                 map.setLayoutProperty('neighborhoods', 'visibility', 'visible');
-                map.moveLayer('neighborhoods-fill-extrude', 'neighborhoods');
+                map.moveLayer('neighborhoods-fill-extrude', 'building');
                 map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-height', 0);
             }
         },
@@ -149,7 +147,7 @@ export default {
                 'source': 'neighborhoods',
                 'layout': {},
                 'paint': {}
-            }, 'building');
+            }, 'place_other');
 
             map.addLayer({
                 'id': 'neighborhoods-fill-extrude',
@@ -159,7 +157,7 @@ export default {
                 'paint': {
                     'fill-extrusion-opacity': 1
                 }
-            }, 'neighborhoods');
+            }, 'building');
 
             // markers layer
              map.addSource("markers", {

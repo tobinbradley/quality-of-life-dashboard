@@ -4,7 +4,7 @@
             <input class="mdl-textfield__input" type="text" id="sample3" v-model="privateState.query" v-on:focus="search()" autocomplete="off">
             <label class="mdl-textfield__label" for="sample3">Search...</label>
         </div>
-        <div class="search-instructions" v-if=" privateState.results.neighborhood.length === 0 &&  privateState.results.zipcode.length === 0 && privateState.results.address.length === 0">
+        <div class="search-instructions" v-if="privateState.results.NSA.length === 0 &&  privateState.results.neighborhood.length === 0 &&  privateState.results.zipcode.length === 0 && privateState.results.address.length === 0">
             Enter a <span class="tooltip" v-bind:title="privateState.neighborhoodDefinition">{{ privateState.neighborhoodDescriptor }}</span>, address, or zip code.
         </div>
         <div class="search-results">
@@ -14,6 +14,13 @@
                     <span class="search-result-label">{{n.label}}</span>
                     <!-- <svg class="icon"><use xlink:href="#icon-keyboard_arrow_right"></use></svg> -->
                 </li>
+            </ul>
+            <ul v-for="n in privateState.results.NSA">
+              <li v-on:click="selectNeighborhoods(n.select)">
+                <span class="search-result-type">NSA</span>
+                <span class="search-result-label">{{n.label}}</span>
+                <!-- <svg class="icon"><use xlink:href="#icon-keyboard_arrow_right"></use></svg> -->
+              </li>
             </ul>
             <ul v-for="n in privateState.results.zipcode">
                 <li v-on:click="selectNeighborhoods(n.select)">
@@ -60,6 +67,7 @@ export default {
                 _this.searchNeighborhood(query);
                 _this.searchAddress(query);
                 _this.searchZipcode(query);
+                _this.searchNSA(query);
             }, 250);
             debounceSearch();
         },
@@ -69,6 +77,32 @@ export default {
                 this.privateState.results[keys[i]] = [];
             }
         },
+      searchNSA: function(query) {
+        if (query.length >= 3 && !isNumeric(query)) {
+          let _this = this;
+          axios.get('https://mcmap.org/api/intersect_feature/v1/neighborhood_statistical_areas/neighborhoods', {
+            params: {
+              'geom_column_from': 'the_geom',
+              'geom_column_to': 'the_geom',
+              'columns': 'f.nsa_name, t.id',
+              'filter': `nsa_name ilike '${query}%'`
+            }
+          })
+            .then(function (response) {
+              _this.privateState.results.NSA = [];
+              if (response.data.length > 0) {
+                const nsas = [...new Set(response.data.map(item => item.nsa_name))];
+                nsas.forEach(function(nsa) {
+                  let npa_items = response.data.filter(item => item.nsa_name === nsa);
+                  let npas = [...new Set(npa_items.map(item => item.id))];
+                  _this.privateState.results.NSA.push({'label': nsa, 'select': npas.map(String)});
+                });
+              }
+            });
+        } else {
+          this.privateState.results.NSA = [];
+        }
+      },
         searchZipcode: function(query) {
             if (query.length === 5 && isNumeric(query)) {
                 let _this = this;
