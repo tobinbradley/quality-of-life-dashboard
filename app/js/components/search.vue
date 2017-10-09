@@ -4,7 +4,7 @@
             <input class="mdl-textfield__input" type="text" id="sample3" v-model="privateState.query" v-on:focus="search()" autocomplete="off">
             <label class="mdl-textfield__label" for="sample3">Search...</label>
         </div>
-        <div class="search-instructions" v-if="privateState.results.NSA.length === 0 &&  privateState.results.neighborhood.length === 0 &&  privateState.results.zipcode.length === 0 && privateState.results.address.length === 0">
+        <div class="search-instructions" v-if="privateState.results.metric.length === 0 && privateState.results.NSA.length === 0 &&  privateState.results.neighborhood.length === 0 &&  privateState.results.zipcode.length === 0 && privateState.results.address.length === 0">
             Enter a <span class="tooltip" v-bind:title="privateState.neighborhoodDefinition">{{ privateState.neighborhoodDescriptor }}</span>, address, or zip code.
         </div>
         <div class="search-results">
@@ -14,6 +14,13 @@
                     <span class="search-result-label">{{n.label}}</span>
                     <!-- <svg class="icon"><use xlink:href="#icon-keyboard_arrow_right"></use></svg> -->
                 </li>
+            </ul>
+            <ul v-for="n in privateState.results.metric">
+              <li v-on:click="selectMetric(n.select)">
+                <span class="search-result-type">METRIC</span>
+                <span class="search-result-label">{{n.label}}</span>
+                <!-- <svg class="icon"><use xlink:href="#icon-keyboard_arrow_right"></use></svg> -->
+              </li>
             </ul>
             <ul v-for="n in privateState.results.NSA">
               <li v-on:click="selectNeighborhoods(n.select)">
@@ -44,6 +51,9 @@
 import axios from 'axios';
 import debounce from 'lodash.debounce';
 import isNumeric from '../modules/isnumeric';
+import dataConfig from '../../../data/config/data.js';
+import {replaceState, gaEvent} from '../modules/tracking';
+import fetchData from '../modules/fetch';
 
 export default {
     name: 'sc-search',
@@ -68,6 +78,7 @@ export default {
                 _this.searchAddress(query);
                 _this.searchZipcode(query);
                 _this.searchNSA(query);
+                _this.searchMetric(query);
             }, 250);
             debounceSearch();
         },
@@ -77,6 +88,20 @@ export default {
                 this.privateState.results[keys[i]] = [];
             }
         },
+      searchMetric: function(query) {
+        if (query.length >= 3 && !isNumeric(query)) {
+          this.privateState.results.metric = [];
+          let _this = this;
+          let k;
+          for (k in dataConfig) {
+            if (dataConfig[k].title.toUpperCase().indexOf(query.toUpperCase()) !== -1) {
+              _this.privateState.results.metric.push({'label': dataConfig[k].title, 'select': dataConfig[k].metric})
+            }
+          }
+        } else {
+          this.privateState.results.metric = [];
+        }
+      },
       searchNSA: function(query) {
         if (query.length >= 3 && !isNumeric(query)) {
           let _this = this;
@@ -157,6 +182,11 @@ export default {
             } else {
                 this.privateState.results.address = [];
             }
+        },
+        selectMetric: function(metric) {
+          replaceState(metric, this.sharedState.selected);
+          gaEvent('metric', dataConfig[`m${metric}`].title.trim(), dataConfig[`m${metric}`].category.trim());
+          fetchData(this.sharedState, metric);
         },
         selectNeighborhoods: function(n) {
             this.clearResults();

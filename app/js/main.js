@@ -116,6 +116,7 @@ Search.data = function() {
         zipcode: [],
         address: [],
         NSA: [],
+        metric: [],
       },
       neighborhoodDescriptor: siteConfig.neighborhoodDescriptor,
       neighborhoodDefinition: siteConfig.neighborhoodDefinition,
