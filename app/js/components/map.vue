@@ -10,6 +10,7 @@ import axios from 'axios';
 import {prettyNumber} from '../modules/number_format';
 import {replaceState} from '../modules/tracking';
 import {scaleLinear} from 'd3-scale';
+import FullExtent from '../modules/map-fullextent.js';
 
 export default {
     name: 'sc-map',
@@ -36,6 +37,9 @@ export default {
             // add nav control
             var nav = new mapboxgl.NavigationControl();
             map.addControl(nav, 'top-right');
+
+            // add full extent button
+            map.addControl(new FullExtent({}), 'top-right');
 
             // disable map rotation until 3D support added
             // map.dragRotate.disable();
