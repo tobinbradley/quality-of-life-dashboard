@@ -20,7 +20,6 @@ cd dashboard
 git clone https://github.com/tobinbradley/mecklenburg-quality-of-life-data.git data
 npm install
 npm run build
-npm run datagen
 npm start
 ```
 
