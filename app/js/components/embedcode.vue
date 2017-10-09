@@ -25,13 +25,13 @@ export default {
             this.privateState.title = this.sharedState.metric.config.title;
         },
         createIframe: function() {
-            let iframe = `<iframe src="${this.privateState.qolembedURL}/embed.html?m=${this.sharedState.metricId}&y=${this.sharedState.year}&s=${this.sharedState.selected.join(',')}&t=${encodeURIComponent(this.privateState.title)}" style="width: 500px; height: 500px; border: 1px solid #595959"></iframe>`;
+            let iframe = `<iframe src="${this.privateState.qolembedURL}embed.html?m=${this.sharedState.metricId}&y=${this.sharedState.year}&s=${this.sharedState.selected.join(',')}&t=${encodeURIComponent(this.privateState.title)}" style="width: 500px; height: 500px; border: 1px solid #595959"></iframe>`;
             return iframe;
         }
     },
     filters: {
         createIframe: function() {
-            let iframe = `<iframe src="${this.privateState.qolembedURL}/embed.html?m=${this.sharedState.metricId}&y=${this.sharedState.year}&s=${this.sharedState.selected.join(',')}&t=${encodeURIComponent(this.privateState.title)}" style="width: 500px; height: 500px; border: 1px solid #595959"></iframe>`;
+            let iframe = `<iframe src="${this.privateState.qolembedURL}embed.html?m=${this.sharedState.metricId}&y=${this.sharedState.year}&s=${this.sharedState.selected.join(',')}&t=${encodeURIComponent(this.privateState.title)}" style="width: 500px; height: 500px; border: 1px solid #595959"></iframe>`;
             return iframe;
         }
     }
