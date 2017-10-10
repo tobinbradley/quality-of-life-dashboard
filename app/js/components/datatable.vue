@@ -15,7 +15,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="n in sharedState.selected">
+                    <tr v-for="n in sharedState.selected" v-on:mouseover="highlight([n])" v-on:mouseout="highlight([])">
                         <td class="mdl-data-table__cell--non-numeric">{{n}}</td>
                         <td>{{ formatVal(getVal(n)) }}</td>
                         <td v-if="sharedState.metric.config.accuracy"> &#177; {{ formatVal(getAccuracy(n)) }}</td>
@@ -42,6 +42,9 @@ import isNumeric from '../modules/isnumeric';
 export default {
     name: 'sc-datatable',
     methods: {
+      highlight: function(n){
+        this.sharedState.highlight = n;
+      },
         downloadTable: function(theTable) {
             let csvData = table2csv(theTable);
             // i hate you ie

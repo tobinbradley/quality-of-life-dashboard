@@ -16,6 +16,7 @@ export default {
     name: 'sc-map',
     watch: {
         'sharedState.selected': 'styleNeighborhoods',
+        'sharedState.highlight': 'styleNeighborhoods',
         'sharedState.breaks': 'updateBreaks',
         'sharedState.year': 'updateYear',
         'sharedState.marker': 'createMarker',
@@ -352,7 +353,9 @@ export default {
             Object.keys(data).forEach(id => {
                 const value = data[id][`y_${_this.sharedState.year}`];
 
-                if (value !== null) {
+                if (_this.sharedState.highlight.indexOf(id) !== -1) {
+                  stops.push([id, '#F7E55B']);
+                } else if (value !== null) {
                     stops.push([id, color(value)]);
                 }
             });

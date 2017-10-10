@@ -2,7 +2,7 @@
     <div id="toc" v-if="sharedState.metric.config" class="top left">
         <div>
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=" class="background-print-img" alt="white background for printing">
-            <div class="tocposition">                
+            <div class="tocposition">
                 <a href="javascript:void(0)" title="Move Table of Contents" v-on:click="position()"><svg class="icon"><use xlink:href="#icon-zoom_out_map"></use></svg></a>
             </div>
             <h1 class="title">{{ sharedState.metric.config.title }}, {{ sharedState.year }}</h1>
@@ -18,7 +18,7 @@
                         <span>or</span>
                         <span class="metricvalue metricraw">{{privateState.selectedRaw}}</span>
                         <span v-html="sharedState.metric.config.raw_label.toLowerCase()" class="metriclabel"></span>
-                    </span>                    
+                    </span>
                 </div>
                 <div class="metricbox">
                     <span class="metrictype">COUNTY</span>
@@ -28,18 +28,18 @@
                         <span>or</span>
                         <span class="metricvalue metricraw">{{privateState.areaRaw}}</span>
                         <span v-html="sharedState.metric.config.raw_label.toLowerCase()" class="metriclabel"></span>
-                    </span>                     
+                    </span>
                 </div>
-            </div>            
+            </div>
             <div class="legend">
                 <svg  v-if="sharedState.breaks" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 248.4 39.2"id="maplegend" role="img" aria-labelledby="svgTitle">
                     <title id="svgTitle">Choropleth legend</title>
                     <g transform="translate(20.714293 -851.75475)">
-                        <rect y="865.9" x="-20.7" height="25" width="50" v-bind:style="{fill: this.sharedState.colors[0]}"/>
-                        <rect width="50" height="25" x="28.9" y="865.9" v-bind:style="{fill: this.sharedState.colors[1]}"/>
-                        <rect width="50" height="25" x="78.5" y="865.9" v-bind:style="{fill: this.sharedState.colors[2]}"/>
-                        <rect y="865.9" x="128.1" height="25" width="50" v-bind:style="{fill: this.sharedState.colors[3]}"/>
-                        <rect width="50" height="25" x="177.6" y="865.9" v-bind:style="{fill: this.sharedState.colors[4]}"/>
+                        <rect y="865.9" x="-20.7" height="25" width="50" v-bind:style="{fill: this.sharedState.colors[0]}" v-on:click="selectBreak(0)" v-on:mouseover="highlight(0)" v-on:mouseout="highlight(-1)"  />
+                        <rect width="50" height="25" x="28.9" y="865.9" v-bind:style="{fill: this.sharedState.colors[1]}" v-on:click="selectBreak(1)" v-on:mouseover="highlight(1)" v-on:mouseout="highlight(-1)" />
+                        <rect width="50" height="25" x="78.5" y="865.9" v-bind:style="{fill: this.sharedState.colors[2]}" v-on:click="selectBreak(2)" v-on:mouseover="highlight(2)" v-on:mouseout="highlight(-1)" />
+                        <rect y="865.9" x="128.1" height="25" width="50" v-bind:style="{fill: this.sharedState.colors[3]}" v-on:click="selectBreak(3)" v-on:mouseover="highlight(3)" v-on:mouseout="highlight(-1)" />
+                        <rect width="50" height="25" x="177.6" y="865.9" v-bind:style="{fill: this.sharedState.colors[4]}" v-on:click="selectBreak(4)" v-on:mouseover="highlight(4)" v-on:mouseout="highlight(-1)" />
                         <text x="-19.5" y="864.3" class="legendText">
                           <tspan x="-19.5" y="864.3">{{ abbrNumber(sharedState.breaks[0]) }}</tspan>
                         </text>
@@ -81,7 +81,35 @@ export default {
         'sharedState.year': 'processYear'
     },
     methods: {
-        abbrNumber: function (value) {
+      highlight: function(n) {
+        if (n === -1) {
+          this.sharedState.highlight = [];
+        } else {
+          this.sharedState.highlight = this.getBreakIds(n);
+        }
+      },
+      selectBreak: function(n) {
+        this.sharedState.selected = this.getBreakIds(n);
+      },
+      getBreakIds: function(n) {
+        let _this = this;
+        let data = _this.sharedState.metric.data.map;
+        let breaks = _this.sharedState.breaks;
+        let ids = [];
+
+        // loop through data to get id's
+        Object.keys(data).forEach(id => {
+          const value = data[id][`y_${_this.sharedState.year}`];
+
+          if (value !== null && value >= breaks[n] && value <= breaks[n + 1]) {
+            ids.push(id.toString());
+          }
+        });
+
+        return ids;
+      },
+
+      abbrNumber: function (value) {
             let num = abbrNum(value, 1);
             if (isNumeric(num)) {
                 return round(num, this.sharedState.metric.config.decimals);
@@ -133,43 +161,43 @@ export default {
             if (el.classList.contains("right")) {
                 el.classList.remove('bottom');
                 el.classList.remove('right');
-                el.classList.add('top');                
+                el.classList.add('top');
                 el.classList.add('left');
-            } 
+            }
             // move to bottom right from bottom left
             else if (el.classList.contains("bottom")) {
                 el.classList.remove('left');
-                el.classList.add('right'); 
-            } 
+                el.classList.add('right');
+            }
             // move to bottom left from top left
             else if (el.classList.contains("top")) {
                 el.classList.remove('top');
                 el.classList.add('bottom');
             }
-            
-        }        
+
+        }
     }
 }
 </script>
 
 <style lang="css" scoped>
 #toc.top {
-    top: 3px;
+    top: -1px;
 }
 #toc.bottom {
-    bottom: 3px;
+    bottom: -1px;
 }
 #toc.left {
-    left: 3px;
+    left: -1px;
 }
 #toc.right {
-    right: 3px;
+    right: -1px;
 }
 #toc {
     position: absolute;
     width: 260px;
     background: white;
-    box-shadow: 0 1px 3px #666, 0 6px 5px -5px #666;
+    /*box-shadow: 0 1px 3px #666, 0 6px 5px -5px #666;*/
 }
 
 .tocposition {
@@ -202,7 +230,7 @@ export default {
     padding: 3px 0 10px;
     text-align: center;
     display: flex;
-    flex-flow: row nowrap; 
+    flex-flow: row nowrap;
 }
 .metricbox {
     width: 50%;
@@ -262,7 +290,7 @@ svg {
     width: 100%;
     height: auto;
     max-height: 41px;
-    pointer-events: none; /* fix for ie11 click making legend disappear */
+    /*pointer-events: none;*/ /* fix for ie11 click making legend disappear */
 }
 
 .legendText {

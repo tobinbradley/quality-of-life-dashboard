@@ -67,6 +67,7 @@ let appState = {
   colors: colors.breaksGnBu5,
   breaks: [0, 0, 0, 0, 0, 0],
   selected: [],
+  highlight: [],
   year: null,
   metadata: null,
   marker: null,
