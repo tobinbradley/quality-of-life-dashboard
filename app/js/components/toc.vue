@@ -70,7 +70,7 @@ import {abbrNum, round, prettyNumber} from '../modules/number_format';
 import {metaDescription} from '../modules/meta';
 import isNumeric from '../modules/isnumeric';
 import {calcValue, wValsToArray, sum} from '../modules/metric_calculations';
-
+import {replaceState} from '../modules/tracking';
 
 export default {
     name: 'sc-toc',
@@ -90,6 +90,7 @@ export default {
       },
       selectBreak: function(n) {
         this.sharedState.selected = this.getBreakIds(n);
+        replaceState(this.sharedState.metricId, this.sharedState.selected);
       },
       getBreakIds: function(n) {
         let _this = this;
