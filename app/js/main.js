@@ -11,6 +11,7 @@
 //
 
 require('es6-promise').polyfill(); // Fix for axios on IE11
+require('./modules/ie-polyfill-array-from.js'); // fix for array from on IE11
 require('material-design-lite');
 
 import Vue from 'vue/dist/vue.js';
@@ -42,6 +43,7 @@ import Footer from './components/footer.vue';
 import Social from './components/social.vue';
 import Offline from './components/offline.vue';
 import Tabs from './components/tabs.vue';
+import ieSVGFixes from './modules/ie-svg-bugs.js';
 
 import 'vueify/lib/insert-css'; // required for .vue file <style> tags
 
@@ -56,6 +58,9 @@ Vue.config.productionTip = false;
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
 }
+
+// fix ie SVG bugs
+ieSVGFixes();
 
 // the shared state between components
 let appState = {
@@ -323,7 +328,8 @@ window.changeMetric = function(m) {
 
 // select groups if present
 let selectGroups = document.querySelectorAll('li[data-selectGroup]');
-Array.from(selectGroups).forEach(link => {
+let selectGroups_array = [...selectGroups];
+selectGroups_array.forEach(link => {
   link.addEventListener('click', function() {
     let selectList = link.getAttribute('data-selectGroup').split(',');
     appState.selected = selectList;
@@ -333,7 +339,8 @@ Array.from(selectGroups).forEach(link => {
 
 // what's new links
 let whatsnew = document.querySelectorAll('span[data-whatsnew]');
-Array.from(whatsnew).forEach(link => {
+let whatsnew_array = [...whatsnew];
+whatsnew_array.forEach(link => {
   link.addEventListener('click', function() {
     let metric = link.getAttribute('data-whatsnew');
     replaceState(metric, appState.selected);
