@@ -3,7 +3,7 @@
         <div v-if="sharedState.metric.config" class="embedcode">
             <h3>Embed This Map</h3>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-focused" id="embed-title">
-                <input class="mdl-textfield__input" type="text" id="embedTitle" v-bind:value="sharedState.metric.config.title" v-model="privateState.title" autocomplete="off">
+                <input class="mdl-textfield__input" type="text" id="embedTitle" v-model="privateState.title" autocomplete="off">
                 <label class="mdl-textfield__label" for="embedTitle">Map Title</label>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-focused" id="embed-textarea">
