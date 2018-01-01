@@ -52,7 +52,7 @@
               <div class="header-nav" style="height: 54px;">
                    <nav class="mdl-navigation">
                      <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" href="http://charlottenc.gov/HNS/CE/CommunityInfo/Pages/QOL.aspx">About</a>
-                      <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" onclick="ga('send', 'event', 'download', 'metric zip file download')" href="downloads/qol-data.zip">Download Data</a>
+                     <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" onclick="ga('send', 'event', 'download', 'metric zip file download')" href="downloads/qol-data.zip">Download Data</a>
                  </nav>
               </div>
             </div>
@@ -65,6 +65,26 @@
         </div>
         <div class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid">
+                <div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-color--white intro">
+                    <h3>{{ siteConfig.jurisdiction }}</h3>
+                    <h1>{{ siteConfig.title }}</h1>
+                    <div id="dQw4w9WgXcQ" data-params="controls=0&showinfo=0&rel=0" data-background="img/youtube-bg.svg"
+							         class="youtube" style="background-image: url('img/youtube-bg.svg');"></div>
+                   <p>
+                       Exploring neighborhood character, economics, education, engagement, environment, health, housing, safety and transportation.
+                   </p>
+                   <p>
+                       <button class="mdl-button mdl-button--raised mdl-button--accent intro-hide">OK, I Got It</button>
+                       <button class="mdl-button mdl-button--raised mdl-button--accent feedback">Contact Us</button>
+                   </p>
+                   <!--<p style="display: inline-block">
+                     <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+                       <input type="checkbox" id="switch-1" class="mdl-switch__input">
+                       <span class="mdl-switch__label">Don't show this again</span>
+                     </label>
+                 </p>-->
+
+                </div>
                 <sc-offline></sc-offline>
                 <sc-tabs></sc-tabs>
                 <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
