@@ -12,22 +12,22 @@ module.exports = {
     javascripts: {
       joinTo: {
         'vendor.js': /^(?!app)/,
-        'app.js': /^app/,
-      },
+        'app.js': /^app/
+      }
     },
     stylesheets: {
       joinTo: {
         'vendor.css': /^(?!app)/,
-        'app.css': /^app/,
-      },
-    },
+        'app.css': /^app/
+      }
+    }
   },
   npm: {
     styles: {
       'material-design-lite': ['dist/material.min.css'],
       'mapbox-gl': ['dist/mapbox-gl.css'],
-      chartist: ['dist/chartist.css'],
-    },
+      chartist: ['dist/chartist.css']
+    }
   },
   plugins: {
     babel: {
@@ -36,24 +36,24 @@ module.exports = {
           'env',
           {
             targets: {
-              browsers: ['last 2 versions', 'safari >= 8'],
-            },
-          },
-        ],
+              browsers: ['last 2 versions', 'safari >= 8']
+            }
+          }
+        ]
       ],
-      ignore: [/node_modules/],
+      ignore: [/node_modules/]
     },
     postcss: {
-      processors: [require('postcss-cssnext')({browsers: ['last 2 versions']})],
+      processors: [require('postcss-cssnext')({browsers: ['last 2 versions']})]
     },
     handlebars: {
       locals: {
         siteConfig: siteConfig,
         dataConfig: dataConfig,
         selectgroups: require('./data/config/selectgroups.js'),
-        whatsnew: whatsnew,
+        whatsnew: whatsnew
       },
-      include: {enabled: false},
+      include: {enabled: false}
     },
     swPrecache: {
       options: {
@@ -62,10 +62,10 @@ module.exports = {
           'public/index.html',
           'public/manifest.json',
           'public/data/geography.geojson.json',
-          'public/style/positron-mecklenburg.json',
+          'public/style/positron-mecklenburg.json'
         ],
-        stripPrefix: 'public/',
-      },
-    },
-  },
+        stripPrefix: 'public/'
+      }
+    }
+  }
 };
