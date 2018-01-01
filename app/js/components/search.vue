@@ -5,7 +5,7 @@
             <label class="mdl-textfield__label" for="sample3">Search...</label>
         </div>
         <div class="search-instructions" v-if="privateState.results.metric.length === 0 && privateState.results.NSA.length === 0 &&  privateState.results.neighborhood.length === 0 &&  privateState.results.zipcode.length === 0 && privateState.results.address.length === 0">
-            Enter a <span class="tooltip" v-bind:title="privateState.neighborhoodDefinition">{{ privateState.neighborhoodDescriptor }}</span>, address, or zip code.
+            Enter a <span class="tooltip" v-bind:title="privateState.neighborhoodDefinition">{{ privateState.neighborhoodDescriptor }}</span>, address, NSA or zip code.
         </div>
         <div class="search-results">
             <ul v-for="n in privateState.results.neighborhood">
