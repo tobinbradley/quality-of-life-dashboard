@@ -18,11 +18,16 @@
 </template>
 
 <script>
-import axios from 'axios';
+//import axios from 'axios';
+import scrollTo from '../modules/scrollto';
 import {metaAbout, metaImportant, metaResources} from '../modules/meta.js';
+import fetchData from '../modules/fetch.js';
 
 export default {
     name: 'sc-metadata',
+    watch: {
+      'privateState.model.metricId': 'fetch'
+    },
     methods: {
         important: function(data) {
             return metaImportant(data);
@@ -32,6 +37,10 @@ export default {
         },
         resources: function(data) {
             return metaResources(data);
+        },
+        fetch: function() {
+            fetchData(this.sharedState, this.privateState.model.metricId.replace('m', ''));
+            scrollTo(document.querySelector('.mdl-layout__content'), 0, 600);
         }
     }
 };

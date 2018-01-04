@@ -126,11 +126,8 @@ let appState = {
 //window.appState = appState;
 
 // fix meta links
-//window.model = {
-//  metricId: function(id) {
-//    fetchData(appState, id);
-//  }
-//};
+let model = {metricId: ''};
+window.model = model;
 
 // reset old GET args to hash
 urlArgsToHash();
@@ -182,7 +179,10 @@ Search.data = function() {
 };
 Metadata.data = function() {
   return {
-    sharedState: appState
+    sharedState: appState,
+    privateState: {
+      model: model
+    }
   };
 };
 
