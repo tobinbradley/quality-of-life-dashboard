@@ -11,6 +11,19 @@
   margin: 10px auto;
 }
 
+.not-youtube {
+/* continer (responsive) */
+position: relative;
+cursor: pointer;
+background: no-repeat center center / cover;
+background-size: 100% 100%;
+width: 500px;
+height: 315px;
+max-width: 100%;
+display: inline-block;
+margin: 05px auto;
+}
+
 .youtube::before {
   /* play bubble */
   content: '';

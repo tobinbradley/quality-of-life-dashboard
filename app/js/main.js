@@ -72,21 +72,21 @@ ieSVGFixes();
 //}
 
 // youtube video
-document.querySelector('.youtube').addEventListener('click', function() {
-  let theElem = document.querySelector('.youtube');
-  let id = theElem.getAttribute('id');
+// document.querySelector('.youtube').addEventListener('click', function() {
+//   let theElem = document.querySelector('.youtube');
+//   let id = theElem.getAttribute('id');
 
-  // create iframe
-  var iframe = document.createElement('iframe');
-  var url = `https://www.youtube.com/embed/${
-    id
-  }?autoplay=1&autohide=1&${theElem.getAttribute('data-params')}`;
-  iframe.src = url;
-  iframe.setAttribute('allowfullscreen', 'allowfullscreen');
-  iframe.setAttribute('frameborder', '0');
-  iframe.setAttribute('aria-label', 'GeoPortal video tutorial');
-  theElem.appendChild(iframe);
-});
+//   // create iframe
+//   var iframe = document.createElement('iframe');
+//   var url = `https://www.youtube.com/embed/${
+//     id
+//   }?autoplay=1&autohide=1&${theElem.getAttribute('data-params')}`;
+//   iframe.src = url;
+//   iframe.setAttribute('allowfullscreen', 'allowfullscreen');
+//   iframe.setAttribute('frameborder', '0');
+//   iframe.setAttribute('aria-label', 'GeoPortal video tutorial');
+//   theElem.appendChild(iframe);
+// });
 
 // scroll to feedback
 document.querySelector('.feedback').addEventListener('click', function() {
