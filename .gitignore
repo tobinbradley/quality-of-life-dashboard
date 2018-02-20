@@ -10,3 +10,5 @@ TODO.md
 .vscode
 yarn.lock
 package-lock.json
+.idea
+.DS_Store
