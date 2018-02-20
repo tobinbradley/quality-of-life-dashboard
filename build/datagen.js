@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var dataConfig = require('../data/config/data.js');
+var siteConfig = require('../data/config/site.js');
 const csv = require('csvtojson');
 const _ = require('lodash');
 var dest = './public/data/metric';
@@ -12,12 +13,22 @@ var shell = require('shelljs');
 ///////////////////////////////////////////////////
 shell.mkdir('-p', 'public/data/meta');
 shell.mkdir('-p', 'public/data/metric');
+_.each(siteConfig.geographies, function(geography) {
+  shell.mkdir('-p', 'public/data/metric/' + geography.id);
+});
 shell.mkdir('-p', 'public/downloads');
 
 //////////////////////////////////////////////////
 // Copy download, geography, style
 //////////////////////////////////////////////////
-shell.cp('data/geography.geojson.json', 'public/data/');
+if (siteConfig.geographies) {
+  _.each(siteConfig.geographies, function(geography) {
+    shell.cp(`data/${geography.id}.geojson.json`, 'public/data/');
+  });
+}
+else {
+  shell.cp('data/geography.geojson.json', 'public/data/');
+}
 shell.cp('data/download/qol-data.zip', 'public/downloads/');
 
 // return true if convertable to number
@@ -97,125 +108,141 @@ function jsonTransform(jsonArray) {
   return jsonOut;
 }
 
-// loop through the variables
-_.each(dataConfig, function(m) {
-  if (m.type === 'sum') {
-    csv()
-      .fromFile('data/metric/r' + m.metric + '.csv')
-      .on('end_parsed', jsonObj => {
-        let outJSON = {};
-        outJSON['map'] = jsonTransform(jsonObj);
+function csvToJson(geography, metric) {
+  let basePath = path.join('data/metric', geography);
+  let destPath = path.join(dest, geography);
 
-        if (m.accuracy) {
-          csv()
-            .fromFile('data/metric/m' + m.metric + '-accuracy.csv')
-            .on('end_parsed', jsonObj => {
-              outJSON['a'] = jsonTransform(jsonObj);
-              fs.writeFileSync(
-                path.join(dest, `m${m.metric}.json`),
-                JSON.stringify(outJSON, null, '  '),
-              );
-            })
-            .on('done', error => {
-              if (error) console.log(error);
-            });
-        } else {
-          fs.writeFileSync(
-            path.join(dest, `m${m.metric}.json`),
-            JSON.stringify(outJSON, null, '  '),
-          );
-        }
-      })
-      .on('done', error => {
-        if (error) console.log(error);
-      });
-  }
-  if (m.type === 'mean') {
+  if (metric.type === 'sum') {
     csv()
-      .fromFile('data/metric/n' + m.metric + '.csv')
-      .on('end_parsed', jsonObj => {
-        let outJSON = {};
-        outJSON['map'] = jsonTransform(jsonObj);
+    .fromFile(path.join(basePath, `r${metric.metric}.csv`))
+    .on('end_parsed', jsonObj => {
+      let outJSON = {};
+      outJSON['map'] = jsonTransform(jsonObj);
 
-        if (m.accuracy) {
-          csv()
-            .fromFile('data/metric/m' + m.metric + '-accuracy.csv')
-            .on('end_parsed', jsonObj => {
-              outJSON['a'] = jsonTransform(jsonObj);
-              fs.writeFileSync(
-                path.join(dest, `m${m.metric}.json`),
-                JSON.stringify(outJSON, null, '  '),
-              );
-            })
-            .on('done', error => {
-              if (error) console.log(error);
-            });
-        } else {
-          fs.writeFileSync(
-            path.join(dest, `m${m.metric}.json`),
-            JSON.stringify(outJSON, null, '  '),
-          );
-        }
-      })
-      .on('done', error => {
-        if (error) console.log(error);
-      });
-  }
-  if (m.type === 'weighted') {
-    csv()
-      .fromFile('data/metric/r' + m.metric + '.csv')
-      .on('end_parsed', jsonObj => {
-        let outJSON = {};
-        let jsonArrayR = jsonTransform(jsonObj);
-
+      if (metric.accuracy) {
         csv()
-          .fromFile('data/metric/d' + m.metric + '.csv')
-          .on('end_parsed', jsonObj => {
-            var jsonArrayD = jsonTransform(jsonObj);
-            let key, key2;
-            for (key in jsonArrayR) {
-              for (key2 in jsonArrayR[key]) {
-                if (
-                  isNumeric(jsonArrayR[key][key2]) &&
-                  isNumeric(jsonArrayD[key][key2])
-                ) {
-                  jsonArrayR[key][key2] =
-                    Math.round(
+        .fromFile(path.join(basePath, `m${metric.metric}-accuracy.csv`))
+        .on('end_parsed', jsonObj => {
+          outJSON['a'] = jsonTransform(jsonObj);
+          fs.writeFileSync(
+              path.join(destPath, `m${metric.metric}.json`),
+              JSON.stringify(outJSON, null, '  '),
+          );
+        })
+        .on('done', error => {
+          if (error) console.log(error);
+        });
+      } else {
+        fs.writeFileSync(
+            path.join(destPath, `m${metric.metric}.json`),
+            JSON.stringify(outJSON, null, '  '),
+        );
+      }
+    })
+    .on('done', error => {
+      if (error) console.log(error);
+    });
+  }
+  if (metric.type === 'mean') {
+    csv()
+    .fromFile(path.join(basePath, `n${metric.metric}.csv`))
+    .on('end_parsed', jsonObj => {
+      let outJSON = {};
+      outJSON['map'] = jsonTransform(jsonObj);
+
+      if (metric.accuracy) {
+        csv()
+        .fromFile(path.join(basePath, `m${metric.metric}-accuracy.csv`))
+        .on('end_parsed', jsonObj => {
+          outJSON['a'] = jsonTransform(jsonObj);
+          fs.writeFileSync(
+              path.join(destPath, `m${metric.metric}.json`),
+              JSON.stringify(outJSON, null, '  '),
+          );
+        })
+        .on('done', error => {
+          if (error) console.log(error);
+        });
+      } else {
+        fs.writeFileSync(
+            path.join(destPath, `m${metric.metric}.json`),
+            JSON.stringify(outJSON, null, '  '),
+        );
+      }
+    })
+    .on('done', error => {
+      if (error) console.log(error);
+    });
+  }
+  if (metric.type === 'weighted') {
+    csv()
+    .fromFile(path.join(basePath,`r${metric.metric}.csv`))
+    .on('end_parsed', jsonObj => {
+      let outJSON = {};
+      let jsonArrayR = jsonTransform(jsonObj);
+
+      csv()
+      .fromFile(path.join(basePath,`d${metric.metric}.csv`))
+      .on('end_parsed', jsonObj => {
+        var jsonArrayD = jsonTransform(jsonObj);
+        let key, key2;
+        for (key in jsonArrayR) {
+          for (key2 in jsonArrayR[key]) {
+            if (
+                isNumeric(jsonArrayR[key][key2]) &&
+                isNumeric(jsonArrayD[key][key2])
+            ) {
+              jsonArrayR[key][key2] =
+                  Math.round(
                       jsonArrayR[key][key2] / jsonArrayD[key][key2] * 1000,
-                    ) / 1000;
-                } else {
-                  jsonArrayR[key][key2] = null;
-                }
-              }
-            }
-            outJSON['w'] = jsonArrayD;
-            outJSON['map'] = jsonArrayR;
-            if (m.accuracy) {
-              csv()
-                .fromFile('data/metric/m' + m.metric + '-accuracy.csv')
-                .on('end_parsed', jsonObj => {
-                  outJSON['a'] = jsonTransform(jsonObj);
-                  fs.writeFileSync(
-                    path.join(dest, `m${m.metric}.json`),
-                    JSON.stringify(outJSON, null, '  '),
-                  );
-                })
-                .on('done', error => {
-                  if (error) console.log(error);
-                });
+                  ) / 1000;
             } else {
-              fs.writeFileSync(
-                path.join(dest, `m${m.metric}.json`),
-                JSON.stringify(outJSON, null, '  '),
-              );
+              jsonArrayR[key][key2] = null;
             }
+          }
+        }
+        outJSON['w'] = jsonArrayD;
+        outJSON['map'] = jsonArrayR;
+        if (metric.accuracy) {
+          csv()
+          .fromFile(path.join(basePath,`m${metric.metric}-accuracy.csv`))
+          .on('end_parsed', jsonObj => {
+            outJSON['a'] = jsonTransform(jsonObj);
+            fs.writeFileSync(
+                path.join(destPath, `m${metric.metric}.json`),
+                JSON.stringify(outJSON, null, '  '),
+            );
           })
           .on('done', error => {
             if (error) console.log(error);
           });
+        } else {
+          fs.writeFileSync(
+              path.join(destPath, `m${metric.metric}.json`),
+              JSON.stringify(outJSON, null, '  '),
+          );
+        }
       })
       .on('done', error => {
         if (error) console.log(error);
       });
+    })
+    .on('done', error => {
+      if (error) console.log(error);
+    });
+  }
+}
+
+
+
+// Loop through geographies & variables.
+_.each(dataConfig, function(metric) {
+  if (metric.geographies) {
+    _.each(metric.geographies, function(geography) {
+      csvToJson(geography, metric);
+    });
+  }
+  else {
+    csvToJson('', metric);
   }
 });
