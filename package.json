@@ -31,6 +31,7 @@
     "csvtojson": "^1.1.8",
     "handlebars-brunch": "^2.10.0",
     "imagemin-brunch": "^1.1.0",
+    "jsonminify": "^0.4.1",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "postcss-brunch": "^2.1.0",

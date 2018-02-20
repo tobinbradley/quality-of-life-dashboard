@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var jsonminify = require("jsonminify");
 var dataConfig = require('../data/config/data.js');
 var siteConfig = require('../data/config/site.js');
 const csv = require('csvtojson');
@@ -22,12 +23,17 @@ shell.mkdir('-p', 'public/downloads');
 // Copy download, geography, style
 //////////////////////////////////////////////////
 if (siteConfig.geographies) {
-  _.each(siteConfig.geographies, function(geography) {
-    shell.cp(`data/${geography.id}.geojson.json`, 'public/data/');
+  // Either loop through the geography IDs, or just copy geography.geojson.json.
+  _.each(siteConfig.geographies || ['geography',], function(geography) {
+    fs.readFile(`data/${geography.id}.geojson.json`, 'utf8', (err,data) => {
+      if (err) throw err;
+      fs.writeFile(`public/data/${geography.id}.geojson.json`, jsonminify(data), (err) => {
+        if (err) throw err;
+        console.log(`Saved and minified geojson for ${geography.label}`);
+      });
+      }
+    );
   });
-}
-else {
-  shell.cp('data/geography.geojson.json', 'public/data/');
 }
 shell.cp('data/download/qol-data.zip', 'public/downloads/');
 
@@ -108,10 +114,9 @@ function jsonTransform(jsonArray) {
   return jsonOut;
 }
 
-function csvToJson(geography, metric) {
+function convertMetricCsvToJson(geography, metric) {
   let basePath = path.join('data/metric', geography);
   let destPath = path.join(dest, geography);
-
   if (metric.type === 'sum') {
     csv()
     .fromFile(path.join(basePath, `r${metric.metric}.csv`))
@@ -126,7 +131,7 @@ function csvToJson(geography, metric) {
           outJSON['a'] = jsonTransform(jsonObj);
           fs.writeFileSync(
               path.join(destPath, `m${metric.metric}.json`),
-              JSON.stringify(outJSON, null, '  '),
+              jsonminify(JSON.stringify(outJSON, null, '  ')),
           );
         })
         .on('done', error => {
@@ -135,7 +140,7 @@ function csvToJson(geography, metric) {
       } else {
         fs.writeFileSync(
             path.join(destPath, `m${metric.metric}.json`),
-            JSON.stringify(outJSON, null, '  '),
+            jsonminify(JSON.stringify(outJSON, null, '  ')),
         );
       }
     })
@@ -157,7 +162,7 @@ function csvToJson(geography, metric) {
           outJSON['a'] = jsonTransform(jsonObj);
           fs.writeFileSync(
               path.join(destPath, `m${metric.metric}.json`),
-              JSON.stringify(outJSON, null, '  '),
+              jsonminify(JSON.stringify(outJSON, null, '  ')),
           );
         })
         .on('done', error => {
@@ -166,7 +171,7 @@ function csvToJson(geography, metric) {
       } else {
         fs.writeFileSync(
             path.join(destPath, `m${metric.metric}.json`),
-            JSON.stringify(outJSON, null, '  '),
+            jsonminify(JSON.stringify(outJSON, null, '  ')),
         );
       }
     })
@@ -210,7 +215,7 @@ function csvToJson(geography, metric) {
             outJSON['a'] = jsonTransform(jsonObj);
             fs.writeFileSync(
                 path.join(destPath, `m${metric.metric}.json`),
-                JSON.stringify(outJSON, null, '  '),
+                jsonminify(JSON.stringify(outJSON, null, '  ')),
             );
           })
           .on('done', error => {
@@ -219,7 +224,7 @@ function csvToJson(geography, metric) {
         } else {
           fs.writeFileSync(
               path.join(destPath, `m${metric.metric}.json`),
-              JSON.stringify(outJSON, null, '  '),
+              jsonminify(JSON.stringify(outJSON, null, '  ')),
           );
         }
       })
@@ -239,10 +244,12 @@ function csvToJson(geography, metric) {
 _.each(dataConfig, function(metric) {
   if (metric.geographies) {
     _.each(metric.geographies, function(geography) {
-      csvToJson(geography, metric);
+      console.log("Processing " + metric.metric + " for " + geography);
+      convertMetricCsvToJson(geography, metric);
+      console.log("Done");
     });
   }
-  else {
-    csvToJson('', metric);
+  else if (metric) {
+    convertMetricCsvToJson('', metric);
   }
 });
