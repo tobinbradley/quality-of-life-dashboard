@@ -21,7 +21,8 @@ export default {
         'sharedState.year': 'updateYear',
         'sharedState.marker': 'createMarker',
         'sharedState.zoomNeighborhoods': 'zoomNeighborhoods',
-        'privateState.isPitched3D': 'toggle3D'
+        'sharedState.geographyId': 'updateGeography',
+        'privateState.isPitched3D': 'toggle3D',
     },
     methods: {
         initMap: function() {
@@ -48,7 +49,7 @@ export default {
 
             // after map initiated, grab geography and intiate/style neighborhoods
             map.on('style.load', function () {
-                axios.get('data/geography.geojson.json')
+                axios.get(`data/${_this.sharedState.geographyId}.geojson.json`)
                     .then(function(response) {
                         _this.privateState.mapLoaded = true;
                         _this.privateState.geoJSON = response.data;
@@ -207,6 +208,29 @@ export default {
         updateYear: function() {
             if (this.sharedState.metricId === this.privateState.metricId) {
                 this.updateChoropleth();
+            }
+        },
+        updateGeography: function() {
+          let _this = this;
+          this.privateState.geographyId = this.sharedState.geographyId;
+            if (this.privateState.mapLoaded) {
+              axios.get(`data/${_this.sharedState.geographyId}.geojson.json`)
+                .then(function(response) {
+                    let map = _this.privateState.map;
+                    try {
+                      map.removeLayer('neighborhoods-fill-extrude');
+                      // map.removeLayer('neighborhoods');
+                      map.removeSource('neighborhoods');
+                      map.removeLayer('markers');
+                      map.removeSource('markers');
+                    }
+                    catch (err) {
+                      throw (err);
+                    }
+                    // TODO: handle exception
+                    _this.privateState.geoJSON = response.data;
+                    _this.initNeighborhoods();
+                });
             }
         },
         geoJSONMerge: function() {

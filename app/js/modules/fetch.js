@@ -2,11 +2,24 @@ import dataConfig from '../../../data/config/data';
 import axios from 'axios';
 import jenksBreaks from './jenksbreaks';
 
-export default function fetchData(appState, metric) {
-  appState.metricId = metric;
+export default function fetchData(appState, metric=null, geography=null) {
+  if (metric) {
+    appState.metricId = metric;
+  }
+  else {
+    metric = appState.metricId;
+  }
+  if (geography) {
+    appState.geographyId = geography;
+  }
+
+  // Check that data exists for this metric & geography, otherwise switch geography.
+  if (dataConfig[`m${appState.metricId}`].geographies.indexOf(appState.geographyId) === -1) {
+    appState.geographyId = dataConfig[`m${appState.metricId}`].geographies[0];
+  }
 
   // fetch data
-  axios.get(`data/metric/m${appState.metricId}.json`).then(function(data) {
+  axios.get(`data/metric/${appState.geographyId}/m${appState.metricId}.json`).then(function(data) {
     let nKeys = Object.keys(data.data.map);
     let yKeys = Object.keys(data.data.map[nKeys[0]]);
     let years = yKeys.map(function(el) {
@@ -20,7 +33,6 @@ export default function fetchData(appState, metric) {
         appState.selected.splice(pos, 1);
       }
     }
-
     appState.metric = {
       config: dataConfig[`m${metric}`],
       years: years,

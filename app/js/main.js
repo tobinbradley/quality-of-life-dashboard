@@ -44,6 +44,7 @@ import Footer from './components/footer.vue';
 import Social from './components/social.vue';
 import Offline from './components/offline.vue';
 import Tabs from './components/tabs.vue';
+import GeographySwitcher from './components/geography-switcher.vue';
 import ieSVGFixes from './modules/ie-svg-bugs.js';
 
 import 'vueify/lib/insert-css'; // required for .vue file <style> tags
@@ -119,7 +120,8 @@ let appState = {
   year: null,
   metadata: null,
   marker: null,
-  zoomNeighborhoods: []
+  zoomNeighborhoods: [],
+  geographyId: 'blockgroup',
 };
 
 // for debugging
@@ -147,8 +149,8 @@ if (getHash(1)) {
   appState.selected = getHash(1);
 }
 
-// grab initial data
-fetchData(appState, metricId);
+// grab initial data and use the first available geography for this metric.
+fetchData(appState, metricId, dataConfig[`m${metricId}`].geographies[0].id);
 
 // Component data setup
 Sidenav.data = function() {
@@ -293,6 +295,16 @@ MapGL.data = function() {
   };
 };
 
+GeographySwitcher.data = function() {
+  return {
+      sharedState: appState,
+      privateState: {
+        data: dataConfig,
+        geographies: siteConfig.geographies,
+      }
+  }
+};
+
 // pass newly created mdl elements through mdl
 //Vue.directive('mdl', {
 //    bind: function(el) {
@@ -357,6 +369,12 @@ new Vue({
 new Vue({
   el: 'sc-offline',
   render: h => h(Offline)
+});
+
+// Geography switcher
+new Vue({
+    el: 'sc-geography-switcher',
+    render: h => h(GeographySwitcher)
 });
 
 ////////////////////////////////////////////////////////////////////////////
