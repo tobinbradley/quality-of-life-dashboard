@@ -149,6 +149,11 @@ if (getHash(1)) {
   appState.selected = getHash(1);
 }
 
+// set geography if provided
+if (getHash(2)) {
+  appState.geographyId = getHash(2);
+}
+
 // grab initial data and use the first available geography for this metric.
 fetchData(appState, metricId, dataConfig[`m${metricId}`].geographies[0]);
 
@@ -386,7 +391,7 @@ new Vue({
 // change metric from meta links
 window.changeMetric = function(m) {
   let metric = m.replace('m', '');
-  replaceState(metric, appState.selected);
+  replaceState(metric, appState.selected, appState.geographyId);
   gaEvent(
     'metric',
     dataConfig[`m${metric}`].title.trim(),
@@ -413,7 +418,7 @@ let whatsnew_array = [...whatsnew];
 whatsnew_array.forEach(link => {
   link.addEventListener('click', function() {
     let metric = link.getAttribute('data-whatsnew');
-    replaceState(metric, appState.selected);
+    replaceState(metric, appState.selected, appState.geographyId);
     gaEvent(
       'metric',
       dataConfig[`m${metric}`].title.trim(),
@@ -431,7 +436,7 @@ if (clearselected) {
     'click',
     function() {
       appState.selected = [];
-      replaceState(appState.metricId, []);
+      replaceState(appState.metricId, [], appState.geographyId);
     },
     false
   );

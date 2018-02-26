@@ -1,23 +1,23 @@
 # Quality of Life Dashboard v3
 
-A dashboard for community data and health. See our [demo site](http://mcmap.org/qol-dev).
+A dashboard for community data and health. Forked from Tobin Bradley's work on Mecklenburg QoL dashboard. See their [demo site](http://mcmap.org/qol-dev).
 
-The original repository with old versions of the Dashboard is [here](https://github.com/tobinbradley/Mecklenburg-County-Quality-of-Life-Dashboard).
+The original Mecklenburg repository with old versions of the Dashboard is [here](https://github.com/tobinbradley/Mecklenburg-County-Quality-of-Life-Dashboard).
 
 ## Related Projects
 
 *   [quality-of-life-embed](https://github.com/tobinbradley/quality-of-life-embed)
 *   [quality-of-life-report](https://github.com/tobinbradley/quality-of-life-report)
-*   [quality-of-life-data](https://github.com/tobinbradley/mecklenburg-quality-of-life-data)
+*   [quality-of-life-data](https://github.com/DataWorks-NC/durham-quality-of-life-data)
 
 ## Get Started
 
 This project requires [NodeJS](https://nodejs.org).
 
 ``` bash
-git clone https://github.com/tobinbradley/quality-of-life-dashboard.git dashboard
+git clone https://github.com/DataWorks-NC/quality-of-life-dashboard.git dashboard
 cd dashboard
-git clone https://github.com/tobinbradley/mecklenburg-quality-of-life-data.git data
+git clone https://github.com/DataWorks-NC/durham-quality-of-life-data data
 npm install
 npm run build
 npm start

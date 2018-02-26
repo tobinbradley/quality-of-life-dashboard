@@ -90,7 +90,7 @@ export default {
       },
       selectBreak: function(n) {
         this.sharedState.selected = this.getBreakIds(n);
-        replaceState(this.sharedState.metricId, this.sharedState.selected);
+        replaceState(this.sharedState.metricId, this.sharedState.selected, this.sharedState.geographyId);
       },
       getBreakIds: function(n) {
         let _this = this;
