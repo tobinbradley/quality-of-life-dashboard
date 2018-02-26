@@ -37,7 +37,7 @@ export default {
             });
 
             // add nav control
-            var nav = new mapboxgl.NavigationControl();
+            let nav = new mapboxgl.NavigationControl();
             map.addControl(nav, 'top-right');
 
             // add full extent button
@@ -116,7 +116,7 @@ export default {
             if (!iOS) {
                 // show feature info on mouse move
                 map.on('mousemove', function (e) {
-                    var features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill-extrude'] });
+                    let features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill-extrude'] });
                     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 
                     if (!features.length) {
@@ -147,13 +147,14 @@ export default {
             });
 
             // neighborhood boundaries
+            // TODO: Is `building` the right layer for this to be before?
             map.addLayer({
                 'id': 'neighborhoods',
                 'type': 'line',
                 'source': 'neighborhoods',
                 'layout': {},
                 'paint': {}
-            }, 'place_other');
+            }, 'building');
 
             map.addLayer({
                 'id': 'neighborhoods-fill-extrude',
@@ -162,15 +163,7 @@ export default {
                 'paint': {
                     'fill-extrusion-opacity': 1
                 }
-            }, 'building');
-
-          function onSourceData(e) {
-            if (e.isSourceLoaded) {
-              map.off('sourcedata', onSourceData);
-              _this.styleNeighborhoods();
-            }
-          }
-          map.on('sourcedata', onSourceData);
+            }, 'neighborhoods');
         },
         initMarkers: function() {
           let map = this.privateState.map;
