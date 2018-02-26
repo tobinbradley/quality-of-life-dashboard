@@ -1,7 +1,7 @@
 <template lang="html">
     <div id="geography-switcher" v-if="geographies" class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop geography-switcher">
         <template v-for="geography in geographies">
-            <button type="button" v-bind:class="['mdl-chip', geography.id === sharedState.geographyId ? 'is-active' : '', geography.isAvailable ? '' : 'is-disabled']" v-on:click="changeGeography(geography.id)">
+            <button type="button" v-bind:class="['mdl-chip', geography.id === sharedState.geography.id ? 'is-active' : '', geography.isAvailable ? '' : 'is-disabled']" v-on:click="changeGeography(geography.id)">
                 <span class="mdl-chip__text">{{geography.name}}</span>
             </button>
         </template>

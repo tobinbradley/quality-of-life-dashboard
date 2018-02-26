@@ -185,7 +185,7 @@ export default {
         },
         selectMetric: function(metric) {
           this.clearResults();
-          replaceState(metric, this.sharedState.selected, this.sharedState.geographyId);
+          replaceState(metric, this.sharedState.selected, this.sharedState.geography.id);
           gaEvent('metric', dataConfig[`m${metric}`].title.trim(), dataConfig[`m${metric}`].category.trim());
           fetchData(this.sharedState, metric);
         },

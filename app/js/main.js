@@ -104,7 +104,7 @@ let appState = {
   metadata: null,
   marker: null,
   zoomNeighborhoods: [],
-  geographyId: 'blockgroup',
+  geography: siteConfig.geographies[0],
 };
 
 // for debugging
@@ -134,7 +134,7 @@ if (getHash(1)) {
 
 // set geography if provided
 if (getHash(2)) {
-  appState.geographyId = getHash(2);
+  appState.geography = siteConfig.geographies.find((g) => (g.id === getHash(2)));
 }
 
 // grab initial data and use the first available geography for this metric.
@@ -374,7 +374,7 @@ new Vue({
 // change metric from meta links
 window.changeMetric = function(m) {
   let metric = m.replace('m', '');
-  replaceState(metric, appState.selected, appState.geographyId);
+  replaceState(metric, appState.selected, appState.geography.id);
   gaEvent(
     'metric',
     dataConfig[`m${metric}`].title.trim(),
@@ -401,7 +401,7 @@ let whatsnew_array = [...whatsnew];
 whatsnew_array.forEach(link => {
   link.addEventListener('click', function() {
     let metric = link.getAttribute('data-whatsnew');
-    replaceState(metric, appState.selected, appState.geographyId);
+    replaceState(metric, appState.selected, appState.geography.id);
     gaEvent(
       'metric',
       dataConfig[`m${metric}`].title.trim(),
@@ -419,7 +419,7 @@ if (clearselected) {
     'click',
     function() {
       appState.selected = [];
-      replaceState(appState.metricId, [], appState.geographyId);
+      replaceState(appState.metricId, [], appState.geography.id);
     },
     false
   );

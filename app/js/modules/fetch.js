@@ -11,7 +11,7 @@ export default function fetchData(appState, metric=null, geography=null) {
     metric = appState.metricId;
   }
   if (!geography) {
-    geography = appState.geographyId;
+    geography = appState.geography.id;
   }
 
   // Check that data exists for this metric & geography, otherwise switch geography.
@@ -43,11 +43,9 @@ export default function fetchData(appState, metric=null, geography=null) {
     appState.breaks = jenksBreaks(data.data.map, years, nKeys, 5);
 
     // Switch geographies.
-    if (geography && appState.geographyId !== geography) {
-      appState.geographyId = geography;
+    if (geography && appState.geography.id !== geography) {
+      appState.geography = siteConfig.geographies.find((g) => (g.id === geography));
     }
-
-    appState.geographyLabel = siteConfig.geographies.find((g) => (g.id === appState.geographyId)).label;
   });
 
   // fetch metadata

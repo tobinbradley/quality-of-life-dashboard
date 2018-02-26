@@ -21,7 +21,7 @@ export default {
         'sharedState.year': 'updateYear',
         'sharedState.marker': 'createMarker',
         'sharedState.zoomNeighborhoods': 'zoomNeighborhoods',
-        'sharedState.geographyId': 'updateGeography',
+        'sharedState.geography': 'updateGeography',
         'privateState.isPitched3D': 'toggle3D',
     },
     methods: {
@@ -49,7 +49,7 @@ export default {
 
             // after map initiated, grab geography and initiate/style neighborhoods
             map.once('style.load', function () {
-                axios.get(`data/${_this.sharedState.geographyId}.geojson.json`)
+                axios.get(`data/${_this.sharedState.geography.id}.geojson.json`)
                     .then(function(response) {
                         _this.privateState.mapLoaded = true;
                         _this.privateState.geoJSON = response.data;
@@ -108,7 +108,7 @@ export default {
                     _this.sharedState.selected.splice(featureIndex, 1);
                 }
 
-                replaceState(_this.sharedState.metricId, _this.sharedState.selected, _this.sharedState.geographyId);
+                replaceState(_this.sharedState.metricId, _this.sharedState.selected, _this.sharedState.geography.id);
             });
 
             // fix for popup cancelling click event on iOS
@@ -127,7 +127,7 @@ export default {
                     let feature = features[0];
                     let id = feature.properties.id;
                     let data = _this.sharedState.metric.data.map[id][`y_${_this.sharedState.year}`];
-                    let geographyLabel = _this.sharedState.geographyLabel(id);
+                    let geographyLabel = _this.sharedState.geography.label(id);
                     let val = prettyNumber(data, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);
                     popup.setLngLat(map.unproject(e.point))
                         .setHTML(`<div style="text-align: center; margin: 0; padding: 0;"><h3 style="font-size: 1.2em; margin: 0; padding: 0; line-height: 1em; font-weight: bold;">${geographyLabel}</h3>${val}</div>`)
@@ -217,8 +217,8 @@ export default {
         },
         updateGeography: function() {
           let _this = this;
-          this.privateState.geographyId = this.sharedState.geographyId;
-          axios.get(`data/${_this.sharedState.geographyId}.geojson.json`)
+          this.privateState.geographyId = this.sharedState.geography.id;
+          axios.get(`data/${_this.sharedState.geography.id}.geojson.json`)
             .then(function(response) {
             _this.privateState.map.getSource('neighborhoods').setData(response.data);
             _this.styleNeighborhoods();
