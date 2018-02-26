@@ -1,4 +1,5 @@
 import dataConfig from '../../../data/config/data';
+import siteConfig from '../../../data/config/site';
 import axios from 'axios';
 import jenksBreaks from './jenksbreaks';
 
@@ -9,17 +10,12 @@ export default function fetchData(appState, metric=null, geography=null) {
   else {
     metric = appState.metricId;
   }
-  if (geography) {
-    appState.geographyId = geography;
-  }
 
-  // Check that data exists for this metric & geography, otherwise switch geography.
-  if (dataConfig[`m${appState.metricId}`].geographies.indexOf(appState.geographyId) === -1) {
-    appState.geographyId = dataConfig[`m${appState.metricId}`].geographies[0];
-  }
-
+  console.log("fetch data");
   // fetch data
   axios.get(`data/metric/${appState.geographyId}/m${appState.metricId}.json`).then(function(data) {
+    console.log("fetch data callback");
+
     let nKeys = Object.keys(data.data.map);
     let yKeys = Object.keys(data.data.map[nKeys[0]]);
     let years = yKeys.map(function(el) {
@@ -41,6 +37,17 @@ export default function fetchData(appState, metric=null, geography=null) {
     appState.year = years[years.length - 1];
     appState.breaks = jenksBreaks(data.data.map, years, nKeys, 5);
   });
+
+  // Switch geographies.
+  if (geography) {
+    appState.geographyId = geography;
+    appState.geographyLabel = siteConfig.geographies.find((g) => (g.id === appState.geographyId)).label;
+  }
+
+  // Check that data exists for this metric & geography, otherwise switch geography.
+  if (dataConfig[`m${appState.metricId}`].geographies.indexOf(appState.geographyId) === -1) {
+    appState.geographyId = dataConfig[`m${appState.metricId}`].geographies[0];
+  }
 
   // fetch metadata
   axios.get(`./data/meta/m${metric}.html`).then(function(response) {

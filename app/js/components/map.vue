@@ -94,7 +94,7 @@ export default {
 
             // on feature click add or remove from selected set
             map.on('click', function (e) {
-                var features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill-extrude'] });
+                let features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill-extrude'] });
                 if (!features.length) {
                     return;
                 }
@@ -127,10 +127,10 @@ export default {
                     let feature = features[0];
                     let id = feature.properties.id;
                     let data = _this.sharedState.metric.data.map[id][`y_${_this.sharedState.year}`];
+                    let geographyLabel = _this.sharedState.geographyLabel(id);
                     let val = prettyNumber(data, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);
-
                     popup.setLngLat(map.unproject(e.point))
-                        .setHTML(`<div style="text-align: center; margin: 0; padding: 0;"><h3 style="font-size: 1.2em; margin: 0; padding: 0; line-height: 1em; font-weight: bold;">NPA ${feature.properties.id}</h3>${val}</div>`)
+                        .setHTML(`<div style="text-align: center; margin: 0; padding: 0;"><h3 style="font-size: 1.2em; margin: 0; padding: 0; line-height: 1em; font-weight: bold;">${geographyLabel}</h3>${val}</div>`)
                         .addTo(map);
 
                 });
@@ -159,41 +159,55 @@ export default {
                 'id': 'neighborhoods-fill-extrude',
                 'type': 'fill-extrusion',
                 'source': 'neighborhoods',
-                //'filter': ['!=', 'choropleth', 'null'],
                 'paint': {
                     'fill-extrusion-opacity': 1
                 }
             }, 'building');
 
-            // markers layer
-             map.addSource("markers", {
-                 "type": "geojson",
-                 "data": {
-                     "type": "FeatureCollection",
-                     "features": []
-                 }
-             });
-             map.addLayer({
-                 "id": "markers",
-                 "type": "symbol",
-                 "source": "markers",
-                 "layout": {
-                     "icon-image": "star-11",
-                     "icon-size": 1.7
-                 }
-            });
+          function onSourceData(e) {
+            if (e.isSourceLoaded) {
+              console.log("on sourcedata");
+              map.off('sourcedata', onSourceData);
+              _this.styleNeighborhoods();
+            }
+          }
+          map.on('sourcedata', onSourceData);
+        },
+        initMarkers: function() {
+          let map = this.privateState.map;
 
+          // markers layer
+          map.addSource("markers", {
+            "type": "geojson",
+            "data": {
+              "type": "FeatureCollection",
+              "features": []
+            }
+          });
+          map.addLayer({
+            "id": "markers",
+            "type": "symbol",
+            "source": "markers",
+            "layout": {
+              "icon-image": "star-11",
+              "icon-size": 1.7
+            }
+          });
         },
         styleNeighborhoods: function() {
-            let map = this.privateState.map;
-            let _this = this;
+          console.log("style neighborhoods");
+          let map = this.privateState.map, _this = this;
+          if (map.getLayer('neighborhoods')) {
+            map.setPaintProperty('neighborhoods', 'line-color', _this.getOutlineColor());
+            map.setPaintProperty('neighborhoods', 'line-width', _this.getOutlineWidth());
+          }
+          if (map.getLayer('neighborhoods-fill-extrude')) {
+            map.setPaintProperty('neighborhoods-fill-extrude', 'fill-extrusion-color', _this.getColors());
 
-            map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-color', _this.getColors());
-            map.setPaintProperty("neighborhoods", 'line-color', _this.getOutlineColor());
-            map.setPaintProperty("neighborhoods", 'line-width', _this.getOutlineWidth());
             if (_this.privateState.isPitched3D) {
-                map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-height', _this.getHeight());
+              map.setPaintProperty('neighborhoods-fill-extrude', 'fill-extrusion-height', _this.getHeight());
             }
+          }
         },
         updateChoropleth: function() {
             let _this = this;
@@ -347,8 +361,6 @@ export default {
             } else {
                 return outlineSize.default;
             }
-
-            return stops;
         },
         getColors: function () {
             const stops = [];
@@ -384,14 +396,12 @@ export default {
                 }
             });
 
-            let fillColor = {
-                property: 'id',
-                default: 'rgb(242,243,240)',
-                type: 'categorical',
-                stops: stops
+            return {
+              property: 'id',
+              default: 'rgb(242,243,240)',
+              type: 'categorical',
+              stops: stops
             };
-
-            return fillColor;
         },
         getHeight: function() {
             let _this = this;
@@ -409,15 +419,12 @@ export default {
                 }
             });
 
-            let height = {
-                property: 'id',
-                default: 0,
-                type: 'categorical',
-                stops: stops
-            }
-
-
-            return height;
+            return {
+              property: 'id',
+              default: 0,
+              type: 'categorical',
+              stops: stops
+            };
         }
     },
 

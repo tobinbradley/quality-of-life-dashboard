@@ -150,7 +150,7 @@ if (getHash(1)) {
 }
 
 // grab initial data and use the first available geography for this metric.
-fetchData(appState, metricId, dataConfig[`m${metricId}`].geographies[0].id);
+fetchData(appState, metricId, dataConfig[`m${metricId}`].geographies[0]);
 
 // Component data setup
 Sidenav.data = function() {
@@ -290,7 +290,9 @@ MapGL.data = function() {
       isPitched3D: false,
       locationPopup: null,
       neighborhoodsBefore: mapConfig.neighborhoodsBefore,
-      neighborhoodsSelectedBefore: mapConfig.neighborhoodsSelectedBefore
+      neighborhoodsSelectedBefore: mapConfig.neighborhoodsSelectedBefore,
+      mapGeographyId: null,
+      geographies: siteConfig.geographies,
     }
   };
 };

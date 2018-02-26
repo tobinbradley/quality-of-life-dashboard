@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "brunch watch --server --network --port 3000",
-    "build": "node ./build/datagen.js && brunch build --production"
+    "build": "node $NODE_DEBUG_OPTION ./build/datagen.js && brunch build --production"
   },
   "dependencies": {
     "axios": "^0.16.2",
