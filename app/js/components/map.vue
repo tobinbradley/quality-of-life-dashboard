@@ -47,8 +47,8 @@ export default {
             // map.dragRotate.disable();
             map.touchZoomRotate.disableRotation();
 
-            // after map initiated, grab geography and intiate/style neighborhoods
-            map.on('style.load', function () {
+            // after map initiated, grab geography and initiate/style neighborhoods
+            map.once('style.load', function () {
                 axios.get(`data/${_this.sharedState.geographyId}.geojson.json`)
                     .then(function(response) {
                         _this.privateState.mapLoaded = true;
@@ -166,7 +166,6 @@ export default {
 
           function onSourceData(e) {
             if (e.isSourceLoaded) {
-              console.log("on sourcedata");
               map.off('sourcedata', onSourceData);
               _this.styleNeighborhoods();
             }
@@ -195,7 +194,6 @@ export default {
           });
         },
         styleNeighborhoods: function() {
-          console.log("style neighborhoods");
           let map = this.privateState.map, _this = this;
           if (map.getLayer('neighborhoods')) {
             map.setPaintProperty('neighborhoods', 'line-color', _this.getOutlineColor());
@@ -227,25 +225,12 @@ export default {
         updateGeography: function() {
           let _this = this;
           this.privateState.geographyId = this.sharedState.geographyId;
-            if (this.privateState.mapLoaded) {
-              axios.get(`data/${_this.sharedState.geographyId}.geojson.json`)
-                .then(function(response) {
-                    let map = _this.privateState.map;
-                    try {
-                      map.removeLayer('neighborhoods-fill-extrude');
-                      // map.removeLayer('neighborhoods');
-                      map.removeSource('neighborhoods');
-                      map.removeLayer('markers');
-                      map.removeSource('markers');
-                    }
-                    catch (err) {
-                      throw (err);
-                    }
-                    // TODO: handle exception
-                    _this.privateState.geoJSON = response.data;
-                    _this.initNeighborhoods();
-                });
-            }
+          axios.get(`data/${_this.sharedState.geographyId}.geojson.json`)
+            .then(function(response) {
+            _this.privateState.map.getSource('neighborhoods').setData(response.data);
+            _this.styleNeighborhoods();
+            _this.initMapEvents();
+          });
         },
         geoJSONMerge: function() {
             let _this = this;
