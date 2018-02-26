@@ -89,23 +89,6 @@ ieSVGFixes();
 //   theElem.appendChild(iframe);
 // });
 
-// scroll to feedback
-document.querySelector('.feedback').addEventListener('click', function() {
-  document
-    .querySelector('.comment-container')
-    .scrollIntoView({behavior: 'smooth'});
-  document.querySelector('#contact-email').focus();
-});
-
-// hide intro area
-document.querySelector('.intro-hide').addEventListener('click', function() {
-  if (document.querySelector('.youtube iframe')) {
-    document.querySelector('.youtube iframe').src = '';
-  }
-  document.querySelector('.intro').style.display = 'none';
-  window.scrollTo(0, 0);
-});
-
 // the shared state between components
 let appState = {
   metric: {

@@ -1,15 +1,13 @@
 <template lang="html">
     <footer class="mdl-grid">
         <div class="mdl-typography--text-center mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet">
-            <p>
-                <img src="img/seals.png" width="177" height="36" alt="City and County Seals">
-            </p>
             <p class="site-links" v-if="privateState.links" >
                 <a v-for="link in privateState.links" v-bind:href="link.href" target="_blank">{{link.text}}</a>
             </p>
             
             <p class="text-muted">
-                Created by <a href="http://charmeck.org/mecklenburg/county/Pages/Default.aspx">Mecklenburg County</a>, the <a href="http://charmeck.org/city/charlotte/Pages/default.aspx">City of Charlotte</a>, and <a href="http://www.uncc.edu/">UNC Charlotte</a>
+                View the Neighborhood Compass code <a href="https://github.com/DataWorks-NC/quality-of-life-dashboard">on Github</a>.<br>
+                Based on code created by <a href="http://charmeck.org/mecklenburg/county/Pages/Default.aspx">Mecklenburg County</a>, the <a href="http://charmeck.org/city/charlotte/Pages/default.aspx">City of Charlotte</a>, and <a href="http://www.uncc.edu/">UNC Charlotte</a>
                 with much &#9829; for the projects that make this site possible:
                 <br>
                 <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>,
@@ -18,7 +16,6 @@
                 <a href="http://vuejs.org/" target="_blank">Vue.js</a>, and
                 <a href="http://getmdl.io/" target="_blank">Material Design Lite</a>.
             </p>
-            <social></social>
         </div>
     </footer>
 </template>

@@ -3,7 +3,7 @@
         <a href="javascript:void(0)" aria-label="Share on Twitter" v-on:click="social('twitter')"><svg class="icon icon-twitter-with-circle"><use xlink:href="#icon-twitter-with-circle"></use></svg></a>
         <a href="javascript:void(0)" aria-label="Share on Facebook" v-on:click="social('facebook')"><svg class="icon icon-facebook-with-circle"><use xlink:href="#icon-facebook-with-circle"></use></svg></a>
         <a href="javascript:void(0)" aria-label="Share on LinkedIn" v-on:click="social('linkedin')"><svg class="icon icon-linkedin-with-circle"><use xlink:href="#icon-linkedin-with-circle"></use></svg></a>
-        <a href="https://github.com/tobinbradley/quality-of-life-dashboard" aria-label="View project on Github"><svg class="icon icon-brand-github"><use xlink:href="#icon-brand-github"></use></svg></a>
+        <a href="https://github.com/DataWorks-NC/quality-of-life-dashboard" aria-label="View project on Github"><svg class="icon icon-brand-github"><use xlink:href="#icon-brand-github"></use></svg></a>
     </p>    
 </template>
 
