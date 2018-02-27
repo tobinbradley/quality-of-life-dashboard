@@ -179,6 +179,9 @@ function convertMetricCsvToJson(geography, metric) {
                     Math.round(
                         jsonArrayR[key][key2] / jsonArrayD[key][key2] * 1000,
                     ) / 1000;
+                if (metric.suffix === '%') {
+                  jsonArrayR[key][key2] *= 100;
+                }
               } else {
                 jsonArrayR[key][key2] = null;
               }

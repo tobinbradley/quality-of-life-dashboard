@@ -20,6 +20,7 @@ import axios from 'axios';
 import dataConfig from '../../data/config/data';
 import mapConfig from '../../data/config/map';
 import siteConfig from '../../data/config/site';
+import privateConfig from '../../data/config/private';
 import colors from './modules/breaks';
 import fetchData from './modules/fetch';
 import {
@@ -38,7 +39,6 @@ import TrendChart from './components/trendchart.vue';
 import DistributionChart from './components/distributionchart.vue';
 import ToC from './components/toc.vue';
 import MapGL from './components/map.vue';
-import Search from './components/search.vue';
 import EmbedCode from './components/embedcode.vue';
 import Footer from './components/footer.vue';
 import Social from './components/social.vue';
@@ -50,7 +50,8 @@ import ieSVGFixes from './modules/ie-svg-bugs.js';
 import 'vueify/lib/insert-css'; // required for .vue file <style> tags
 
 // to fix vue not including modules bug
-import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl';
+import '@mapbox/mapbox-gl-geocoder';
 import {scaleLinear} from 'd3-scale';
 import debounce from 'lodash.debounce';
 
@@ -102,7 +103,6 @@ let appState = {
   highlight: [],
   year: null,
   metadata: null,
-  marker: null,
   zoomNeighborhoods: [],
   geography: siteConfig.geographies[0],
 };
@@ -146,23 +146,6 @@ Sidenav.data = function() {
     privateState: {
       data: dataConfig,
       filterVal: null
-    },
-    sharedState: appState
-  };
-};
-Search.data = function() {
-  return {
-    privateState: {
-      query: '',
-      results: {
-        neighborhood: [],
-        zipcode: [],
-        address: [],
-        NSA: [],
-        metric: []
-      },
-      neighborhoodDescriptor: siteConfig.neighborhoodDescriptor,
-      neighborhoodDefinition: siteConfig.neighborhoodDefinition
     },
     sharedState: appState
   };
@@ -262,6 +245,7 @@ MapGL.data = function() {
     sharedState: appState,
     privateState: {
       locate: null,
+      mapboxAccessToken: privateConfig.mapboxAccessToken,
       mapOptions: {
         container: 'map',
         style: mapConfig.style,
@@ -303,10 +287,6 @@ GeographySwitcher.data = function() {
 //});
 
 // initialize components
-new Vue({
-  el: 'sc-search',
-  render: h => h(Search)
-});
 new Vue({
   el: 'sc-tabs',
   render: h => h(Tabs)

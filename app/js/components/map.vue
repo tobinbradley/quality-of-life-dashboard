@@ -6,6 +6,7 @@
 
 <script>
 import mapboxgl from 'mapbox-gl';
+import MapboxGlGeocoder from '@mapbox/mapbox-gl-geocoder';
 import axios from 'axios';
 import {prettyNumber} from '../modules/number_format';
 import {replaceState} from '../modules/tracking';
@@ -19,7 +20,6 @@ export default {
         'sharedState.highlight': 'styleNeighborhoods',
         'sharedState.breaks': 'updateBreaks',
         'sharedState.year': 'updateYear',
-        'sharedState.marker': 'createMarker',
         'sharedState.zoomNeighborhoods': 'zoomNeighborhoods',
         'sharedState.geography': 'updateGeography',
         'privateState.isPitched3D': 'toggle3D',
@@ -30,6 +30,7 @@ export default {
             _this.privateState.map = new mapboxgl.Map(_this.privateState.mapOptions);
 
             let map = _this.privateState.map;
+            mapboxgl.accessToken = this.privateState.mapboxAccessToken;
 
             this.privateState.locationPopup = new mapboxgl.Popup({
                 closeButton: true,
@@ -42,6 +43,51 @@ export default {
 
             // add full extent button
             map.addControl(new FullExtent({}), 'top-right');
+            map.addControl(new mapboxgl.GeolocateControl, 'top-right');
+
+            map.addControl(new MapboxGlGeocoder({
+              accessToken: this.privateState.mapboxAccessToken,
+              country: 'us',
+              bbox: [-79.01, 35.87, -78.7, 36.15],
+              placeholder: 'Search for an address',
+              zoom: 14,
+            }).on('result', (e) => {
+              if (e.result) {
+                // create the marker
+                const markers = {
+                  "type": "FeatureCollection",
+                  "features": [{
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": e.result.center
+                    },
+                    "properties": {
+                      "description": e.result.text,
+                      "type": "address"
+                    }
+                  }]
+                };
+
+                if (map.getLayer("point")) {
+                  map.getLayer("point").getSource().setData(markers);
+                }
+                else {
+                  map.addLayer({
+                    "id": "point",
+                    "type": "symbol",
+                    "source": {
+                      "type": "geojson",
+                      "data": markers
+                    },
+                    "layout": {
+                      "icon-image": "marker-11",
+                      "icon-size": 10,
+                    }
+                  });
+                }
+              }
+            }), 'bottom-right');
 
             // disable map rotation until 3D support added
             // map.dragRotate.disable();
@@ -56,7 +102,7 @@ export default {
                         _this.initNeighborhoods();
                         _this.styleNeighborhoods();
                         _this.initMapEvents();
-                    });
+                });
             });
 
         },
@@ -154,7 +200,7 @@ export default {
                 'source': 'neighborhoods',
                 'layout': {},
                 'paint': {}
-            }, 'building');
+            }, 'waterway_river');
 
             map.addLayer({
                 'id': 'neighborhoods-fill-extrude',
@@ -164,27 +210,6 @@ export default {
                     'fill-extrusion-opacity': 1
                 }
             }, 'neighborhoods');
-        },
-        initMarkers: function() {
-          let map = this.privateState.map;
-
-          // markers layer
-          map.addSource("markers", {
-            "type": "geojson",
-            "data": {
-              "type": "FeatureCollection",
-              "features": []
-            }
-          });
-          map.addLayer({
-            "id": "markers",
-            "type": "symbol",
-            "source": "markers",
-            "layout": {
-              "icon-image": "star-11",
-              "icon-size": 1.7
-            }
-          });
         },
         styleNeighborhoods: function() {
           let map = this.privateState.map, _this = this;
@@ -245,28 +270,6 @@ export default {
             });
 
             this.privateState.map.fitBounds(bounds, {padding: 100});
-        },
-
-        createMarker: function() {
-            let map = this.privateState.map;
-
-            // create the marker
-            let theLabel = `${this.sharedState.marker.label.replace(',', '<br />')}`;
-            let markers = {
-                   "type": "FeatureCollection",
-                   "features": [{
-                       "type": "Feature",
-                       "geometry": {
-                           "type": "Point",
-                           "coordinates": [this.sharedState.marker.lng, this.sharedState.marker.lat]
-                       },
-                       "properties": {
-                           "description": theLabel,
-                           "type": "address"
-                       }
-                   }]
-            };
-            map.getSource("markers").setData(markers);
         },
         getFullBounds: function() {
             let bounds = new mapboxgl.LngLatBounds();
