@@ -44,7 +44,7 @@ export default {
         changeMetric: function(metric) {
             this.hideOverlay();
             if (this.sharedState.metricId !== metric) {
-                replaceState(metric, this.sharedState.selected);
+                replaceState(metric, this.sharedState.selected, this.sharedState.geography.id);
                 gaEvent('metric', this.privateState.data[`m${metric}`].title.trim(), this.privateState.data[`m${metric}`].category.trim());
                 fetchData(this.sharedState, metric);
             }

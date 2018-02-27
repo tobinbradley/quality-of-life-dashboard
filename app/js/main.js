@@ -20,6 +20,7 @@ import axios from 'axios';
 import dataConfig from '../../data/config/data';
 import mapConfig from '../../data/config/map';
 import siteConfig from '../../data/config/site';
+import privateConfig from '../../data/config/private';
 import colors from './modules/breaks';
 import fetchData from './modules/fetch';
 import {
@@ -38,18 +39,19 @@ import TrendChart from './components/trendchart.vue';
 import DistributionChart from './components/distributionchart.vue';
 import ToC from './components/toc.vue';
 import MapGL from './components/map.vue';
-import Search from './components/search.vue';
 import EmbedCode from './components/embedcode.vue';
 import Footer from './components/footer.vue';
 import Social from './components/social.vue';
 import Offline from './components/offline.vue';
 import Tabs from './components/tabs.vue';
+import GeographySwitcher from './components/geography-switcher.vue';
 import ieSVGFixes from './modules/ie-svg-bugs.js';
 
 import 'vueify/lib/insert-css'; // required for .vue file <style> tags
 
 // to fix vue not including modules bug
-import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl';
+import '@mapbox/mapbox-gl-geocoder';
 import {scaleLinear} from 'd3-scale';
 import debounce from 'lodash.debounce';
 
@@ -88,23 +90,6 @@ ieSVGFixes();
 //   theElem.appendChild(iframe);
 // });
 
-// scroll to feedback
-document.querySelector('.feedback').addEventListener('click', function() {
-  document
-    .querySelector('.comment-container')
-    .scrollIntoView({behavior: 'smooth'});
-  document.querySelector('#contact-email').focus();
-});
-
-// hide intro area
-document.querySelector('.intro-hide').addEventListener('click', function() {
-  if (document.querySelector('.youtube iframe')) {
-    document.querySelector('.youtube iframe').src = '';
-  }
-  document.querySelector('.intro').style.display = 'none';
-  window.scrollTo(0, 0);
-});
-
 // the shared state between components
 let appState = {
   metric: {
@@ -118,8 +103,8 @@ let appState = {
   highlight: [],
   year: null,
   metadata: null,
-  marker: null,
-  zoomNeighborhoods: []
+  zoomNeighborhoods: [],
+  geography: siteConfig.geographies[0],
 };
 
 // for debugging
@@ -147,8 +132,13 @@ if (getHash(1)) {
   appState.selected = getHash(1);
 }
 
-// grab initial data
-fetchData(appState, metricId);
+// set geography if provided
+if (getHash(2)) {
+  appState.geography = siteConfig.geographies.find((g) => (g.id === getHash(2)));
+}
+
+// grab initial data and use the first available geography for this metric.
+fetchData(appState, metricId, null);
 
 // Component data setup
 Sidenav.data = function() {
@@ -156,23 +146,6 @@ Sidenav.data = function() {
     privateState: {
       data: dataConfig,
       filterVal: null
-    },
-    sharedState: appState
-  };
-};
-Search.data = function() {
-  return {
-    privateState: {
-      query: '',
-      results: {
-        neighborhood: [],
-        zipcode: [],
-        address: [],
-        NSA: [],
-        metric: []
-      },
-      neighborhoodDescriptor: siteConfig.neighborhoodDescriptor,
-      neighborhoodDefinition: siteConfig.neighborhoodDefinition
     },
     sharedState: appState
   };
@@ -272,6 +245,7 @@ MapGL.data = function() {
     sharedState: appState,
     privateState: {
       locate: null,
+      mapboxAccessToken: privateConfig.mapboxAccessToken,
       mapOptions: {
         container: 'map',
         style: mapConfig.style,
@@ -288,9 +262,21 @@ MapGL.data = function() {
       isPitched3D: false,
       locationPopup: null,
       neighborhoodsBefore: mapConfig.neighborhoodsBefore,
-      neighborhoodsSelectedBefore: mapConfig.neighborhoodsSelectedBefore
+      neighborhoodsSelectedBefore: mapConfig.neighborhoodsSelectedBefore,
+      mapGeographyId: null,
+      geographies: siteConfig.geographies,
     }
   };
+};
+
+GeographySwitcher.data = function() {
+  return {
+      sharedState: appState,
+      privateState: {
+        data: dataConfig,
+        geographies: siteConfig.geographies,
+      }
+  }
 };
 
 // pass newly created mdl elements through mdl
@@ -301,10 +287,6 @@ MapGL.data = function() {
 //});
 
 // initialize components
-new Vue({
-  el: 'sc-search',
-  render: h => h(Search)
-});
 new Vue({
   el: 'sc-tabs',
   render: h => h(Tabs)
@@ -359,6 +341,12 @@ new Vue({
   render: h => h(Offline)
 });
 
+// Geography switcher
+new Vue({
+    el: 'sc-geography-switcher',
+    render: h => h(GeographySwitcher)
+});
+
 ////////////////////////////////////////////////////////////////////////////
 // General non-component page interactions
 ///////////////////////////////////////////////////////////////////////////
@@ -366,7 +354,7 @@ new Vue({
 // change metric from meta links
 window.changeMetric = function(m) {
   let metric = m.replace('m', '');
-  replaceState(metric, appState.selected);
+  replaceState(metric, appState.selected, appState.geography.id);
   gaEvent(
     'metric',
     dataConfig[`m${metric}`].title.trim(),
@@ -393,7 +381,7 @@ let whatsnew_array = [...whatsnew];
 whatsnew_array.forEach(link => {
   link.addEventListener('click', function() {
     let metric = link.getAttribute('data-whatsnew');
-    replaceState(metric, appState.selected);
+    replaceState(metric, appState.selected, appState.geography.id);
     gaEvent(
       'metric',
       dataConfig[`m${metric}`].title.trim(),
@@ -411,7 +399,7 @@ if (clearselected) {
     'click',
     function() {
       appState.selected = [];
-      replaceState(appState.metricId, []);
+      replaceState(appState.metricId, [], appState.geography.id);
     },
     false
   );

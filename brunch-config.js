@@ -26,7 +26,8 @@ module.exports = {
     styles: {
       'material-design-lite': ['dist/material.min.css'],
       'mapbox-gl': ['dist/mapbox-gl.css'],
-      chartist: ['dist/chartist.css']
+      '@mapbox/mapbox-gl-geocoder': ['dist/mapbox-gl-geocoder.css'],
+      'chartist': ['dist/chartist.css'],
     }
   },
   plugins: {

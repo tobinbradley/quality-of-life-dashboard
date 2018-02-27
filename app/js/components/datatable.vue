@@ -5,7 +5,7 @@
                 <thead>
                     <tr>
                         <th class="mdl-data-table__cell--non-numeric">
-                            <span class="tooltip" v-bind:title="privateState.neighborhoodDefinition">{{ privateState.neighborhoodDescriptor }}</span>
+                            <span class="tooltip" v-bind:title="sharedState.geography.description">{{ sharedState.geography.name }}</span>
                         </th>
                         <th>{{sharedState.year}} Value</th>
                         <th v-if="sharedState.metric.data.a">Accuracy</th>
@@ -16,7 +16,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="n in sharedState.selected" v-on:mouseover="highlight([n])" v-on:mouseout="highlight([])">
-                        <td class="mdl-data-table__cell--non-numeric">{{n}}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{sharedState.geography.label(n)}}</td>
                         <td>{{ formatVal(getVal(n)) }}</td>
                         <td v-if="sharedState.metric.config.accuracy"> &#177; {{ formatVal(getAccuracy(n)) }}</td>
                         <td v-if="sharedState.metric.years.length > 1" v-html="trend(n)"></td>

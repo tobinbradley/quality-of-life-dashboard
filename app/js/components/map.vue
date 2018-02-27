@@ -6,6 +6,7 @@
 
 <script>
 import mapboxgl from 'mapbox-gl';
+import MapboxGlGeocoder from '@mapbox/mapbox-gl-geocoder';
 import axios from 'axios';
 import {prettyNumber} from '../modules/number_format';
 import {replaceState} from '../modules/tracking';
@@ -19,9 +20,9 @@ export default {
         'sharedState.highlight': 'styleNeighborhoods',
         'sharedState.breaks': 'updateBreaks',
         'sharedState.year': 'updateYear',
-        'sharedState.marker': 'createMarker',
         'sharedState.zoomNeighborhoods': 'zoomNeighborhoods',
-        'privateState.isPitched3D': 'toggle3D'
+        'sharedState.geography': 'updateGeography',
+        'privateState.isPitched3D': 'toggle3D',
     },
     methods: {
         initMap: function() {
@@ -29,6 +30,7 @@ export default {
             _this.privateState.map = new mapboxgl.Map(_this.privateState.mapOptions);
 
             let map = _this.privateState.map;
+            mapboxgl.accessToken = this.privateState.mapboxAccessToken;
 
             this.privateState.locationPopup = new mapboxgl.Popup({
                 closeButton: true,
@@ -36,26 +38,69 @@ export default {
             });
 
             // add nav control
-            var nav = new mapboxgl.NavigationControl();
+            let nav = new mapboxgl.NavigationControl();
             map.addControl(nav, 'top-right');
 
             // add full extent button
             map.addControl(new FullExtent({}), 'top-right');
+            map.addControl(new mapboxgl.GeolocateControl, 'top-right');
+
+            map.addControl(new MapboxGlGeocoder({
+              accessToken: this.privateState.mapboxAccessToken,
+              country: 'us',
+              bbox: [-79.01, 35.87, -78.7, 36.15],
+              placeholder: 'Search for an address',
+              zoom: 14,
+            }).on('result', (e) => {
+              if (e.result) {
+                // create the marker
+                const markers = {
+                  "type": "FeatureCollection",
+                  "features": [
+                    {
+                      "type": "Feature",
+                      "geometry": {
+                        "type": "Point",
+                        "coordinates": e.result.center
+                      },
+                    }]
+                };
+
+                if (map.getLayer("point")) {
+                  map.getSource("point").setData(markers);
+                }
+                else {
+                  map.addLayer({
+                    "id": "point",
+                    "type": "symbol",
+                    "source": {
+                      "type": "geojson",
+                      "data": markers
+                    },
+                    "layout": {
+                      "icon-image": "star_15",
+                      "icon-size": 2,
+                    }
+                  });
+                }
+              }
+
+            }), 'bottom-right');
 
             // disable map rotation until 3D support added
             // map.dragRotate.disable();
             map.touchZoomRotate.disableRotation();
 
-            // after map initiated, grab geography and intiate/style neighborhoods
-            map.on('style.load', function () {
-                axios.get('data/geography.geojson.json')
+            // after map initiated, grab geography and initiate/style neighborhoods
+            map.once('style.load', function () {
+                axios.get(`data/${_this.sharedState.geography.id}.geojson.json`)
                     .then(function(response) {
                         _this.privateState.mapLoaded = true;
                         _this.privateState.geoJSON = response.data;
                         _this.initNeighborhoods();
                         _this.styleNeighborhoods();
                         _this.initMapEvents();
-                    });
+                });
             });
 
         },
@@ -93,7 +138,7 @@ export default {
 
             // on feature click add or remove from selected set
             map.on('click', function (e) {
-                var features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill-extrude'] });
+                let features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill-extrude'] });
                 if (!features.length) {
                     return;
                 }
@@ -107,7 +152,7 @@ export default {
                     _this.sharedState.selected.splice(featureIndex, 1);
                 }
 
-                replaceState(_this.sharedState.metricId, _this.sharedState.selected);
+                replaceState(_this.sharedState.metricId, _this.sharedState.selected, _this.sharedState.geography.id);
             });
 
             // fix for popup cancelling click event on iOS
@@ -115,7 +160,7 @@ export default {
             if (!iOS) {
                 // show feature info on mouse move
                 map.on('mousemove', function (e) {
-                    var features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill-extrude'] });
+                    let features = map.queryRenderedFeatures(e.point, { layers: ['neighborhoods-fill-extrude'] });
                     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 
                     if (!features.length) {
@@ -126,10 +171,10 @@ export default {
                     let feature = features[0];
                     let id = feature.properties.id;
                     let data = _this.sharedState.metric.data.map[id][`y_${_this.sharedState.year}`];
+                    let geographyLabel = _this.sharedState.geography.label(id);
                     let val = prettyNumber(data, _this.sharedState.metric.config.decimals, _this.sharedState.metric.config.prefix, _this.sharedState.metric.config.suffix);
-
                     popup.setLngLat(map.unproject(e.point))
-                        .setHTML(`<div style="text-align: center; margin: 0; padding: 0;"><h3 style="font-size: 1.2em; margin: 0; padding: 0; line-height: 1em; font-weight: bold;">NPA ${feature.properties.id}</h3>${val}</div>`)
+                        .setHTML(`<div style="text-align: center; margin: 0; padding: 0;"><h3 style="font-size: 1.2em; margin: 0; padding: 0; line-height: 1em; font-weight: bold;">${geographyLabel}</h3>${val}</div>`)
                         .addTo(map);
 
                 });
@@ -146,53 +191,37 @@ export default {
             });
 
             // neighborhood boundaries
+            // TODO: Is `building` the right layer for this to be before?
             map.addLayer({
                 'id': 'neighborhoods',
                 'type': 'line',
                 'source': 'neighborhoods',
                 'layout': {},
                 'paint': {}
-            }, 'place_other');
+            }, 'tunnel_motorway_link_casing');
 
             map.addLayer({
                 'id': 'neighborhoods-fill-extrude',
                 'type': 'fill-extrusion',
                 'source': 'neighborhoods',
-                //'filter': ['!=', 'choropleth', 'null'],
                 'paint': {
                     'fill-extrusion-opacity': 1
                 }
-            }, 'building');
-
-            // markers layer
-             map.addSource("markers", {
-                 "type": "geojson",
-                 "data": {
-                     "type": "FeatureCollection",
-                     "features": []
-                 }
-             });
-             map.addLayer({
-                 "id": "markers",
-                 "type": "symbol",
-                 "source": "markers",
-                 "layout": {
-                     "icon-image": "star-11",
-                     "icon-size": 1.7
-                 }
-            });
-
+            }, 'waterway_river');
         },
         styleNeighborhoods: function() {
-            let map = this.privateState.map;
-            let _this = this;
+          let map = this.privateState.map, _this = this;
+          if (map.getLayer('neighborhoods')) {
+            map.setPaintProperty('neighborhoods', 'line-color', _this.getOutlineColor());
+            map.setPaintProperty('neighborhoods', 'line-width', _this.getOutlineWidth());
+          }
+          if (map.getLayer('neighborhoods-fill-extrude')) {
+            map.setPaintProperty('neighborhoods-fill-extrude', 'fill-extrusion-color', _this.getColors());
 
-            map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-color', _this.getColors());
-            map.setPaintProperty("neighborhoods", 'line-color', _this.getOutlineColor());
-            map.setPaintProperty("neighborhoods", 'line-width', _this.getOutlineWidth());
             if (_this.privateState.isPitched3D) {
-                map.setPaintProperty("neighborhoods-fill-extrude", 'fill-extrusion-height', _this.getHeight());
+              map.setPaintProperty('neighborhoods-fill-extrude', 'fill-extrusion-height', _this.getHeight());
             }
+          }
         },
         updateChoropleth: function() {
             let _this = this;
@@ -208,6 +237,15 @@ export default {
             if (this.sharedState.metricId === this.privateState.metricId) {
                 this.updateChoropleth();
             }
+        },
+        updateGeography: function() {
+          let _this = this;
+          this.privateState.geographyId = this.sharedState.geography.id;
+          axios.get(`data/${_this.sharedState.geography.id}.geojson.json`)
+            .then(function(response) {
+            _this.privateState.map.getSource('neighborhoods').setData(response.data);
+            _this.styleNeighborhoods();
+          });
         },
         geoJSONMerge: function() {
             let _this = this;
@@ -229,28 +267,6 @@ export default {
             });
 
             this.privateState.map.fitBounds(bounds, {padding: 100});
-        },
-
-        createMarker: function() {
-            let map = this.privateState.map;
-
-            // create the marker
-            let theLabel = `${this.sharedState.marker.label.replace(',', '<br />')}`;
-            let markers = {
-                   "type": "FeatureCollection",
-                   "features": [{
-                       "type": "Feature",
-                       "geometry": {
-                           "type": "Point",
-                           "coordinates": [this.sharedState.marker.lng, this.sharedState.marker.lat]
-                       },
-                       "properties": {
-                           "description": theLabel,
-                           "type": "address"
-                       }
-                   }]
-            };
-            map.getSource("markers").setData(markers);
         },
         getFullBounds: function() {
             let bounds = new mapboxgl.LngLatBounds();
@@ -323,8 +339,6 @@ export default {
             } else {
                 return outlineSize.default;
             }
-
-            return stops;
         },
         getColors: function () {
             const stops = [];
@@ -360,14 +374,12 @@ export default {
                 }
             });
 
-            let fillColor = {
-                property: 'id',
-                default: 'rgb(242,243,240)',
-                type: 'categorical',
-                stops: stops
+            return {
+              property: 'id',
+              default: 'rgb(242,243,240)',
+              type: 'categorical',
+              stops: stops
             };
-
-            return fillColor;
         },
         getHeight: function() {
             let _this = this;
@@ -385,15 +397,12 @@ export default {
                 }
             });
 
-            let height = {
-                property: 'id',
-                default: 0,
-                type: 'categorical',
-                stops: stops
-            }
-
-
-            return height;
+            return {
+              property: 'id',
+              default: 0,
+              type: 'categorical',
+              stops: stops
+            };
         }
     },
 

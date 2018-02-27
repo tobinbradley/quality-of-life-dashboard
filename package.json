@@ -2,14 +2,15 @@
   "name": "qol-dashboard",
   "version": "1.0.0",
   "description": "",
-  "main": "gulpfile.js",
+  "main": "app/main.js",
   "author": "Tobin Bradley",
   "license": "MIT",
   "scripts": {
-    "start": "brunch watch --server --network --port 3000",
-    "build": "node ./build/datagen.js && brunch build --production"
+    "start": "brunch watch --server --network --port 3000 --debug",
+    "build": "node $NODE_DEBUG_OPTION ./build/datagen.js && brunch build --production --debug"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^2.2.0",
     "axios": "^0.16.2",
     "chartist": "^0.11.0",
     "chartist-plugin-axistitle": "^0.0.1",
@@ -31,8 +32,9 @@
     "csvtojson": "^1.1.8",
     "handlebars-brunch": "^2.10.0",
     "imagemin-brunch": "^1.1.0",
+    "jsonminify": "^0.4.1",
     "lodash": "^4.17.4",
-    "marked": "^0.3.6",
+    "marked": "^0.3.17",
     "postcss-brunch": "^2.1.0",
     "postcss-cssnext": "^3.0.2",
     "shelljs": "^0.7.8",
