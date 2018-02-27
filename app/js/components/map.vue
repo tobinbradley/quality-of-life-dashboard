@@ -56,21 +56,18 @@ export default {
                 // create the marker
                 const markers = {
                   "type": "FeatureCollection",
-                  "features": [{
-                    "type": "Feature",
-                    "geometry": {
-                      "type": "Point",
-                      "coordinates": e.result.center
-                    },
-                    "properties": {
-                      "description": e.result.text,
-                      "type": "address"
-                    }
-                  }]
+                  "features": [
+                    {
+                      "type": "Feature",
+                      "geometry": {
+                        "type": "Point",
+                        "coordinates": e.result.center
+                      },
+                    }]
                 };
 
                 if (map.getLayer("point")) {
-                  map.getLayer("point").getSource().setData(markers);
+                  map.getSource("point").setData(markers);
                 }
                 else {
                   map.addLayer({
@@ -81,12 +78,13 @@ export default {
                       "data": markers
                     },
                     "layout": {
-                      "icon-image": "marker-11",
-                      "icon-size": 10,
+                      "icon-image": "star_15",
+                      "icon-size": 2,
                     }
                   });
                 }
               }
+
             }), 'bottom-right');
 
             // disable map rotation until 3D support added
@@ -200,7 +198,7 @@ export default {
                 'source': 'neighborhoods',
                 'layout': {},
                 'paint': {}
-            }, 'waterway_river');
+            }, 'tunnel_motorway_link_casing');
 
             map.addLayer({
                 'id': 'neighborhoods-fill-extrude',
@@ -209,7 +207,7 @@ export default {
                 'paint': {
                     'fill-extrusion-opacity': 1
                 }
-            }, 'neighborhoods');
+            }, 'waterway_river');
         },
         styleNeighborhoods: function() {
           let map = this.privateState.map, _this = this;
