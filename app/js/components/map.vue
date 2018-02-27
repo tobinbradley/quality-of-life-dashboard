@@ -245,7 +245,6 @@ export default {
             .then(function(response) {
             _this.privateState.map.getSource('neighborhoods').setData(response.data);
             _this.styleNeighborhoods();
-            _this.initMapEvents();
           });
         },
         geoJSONMerge: function() {

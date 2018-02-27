@@ -17,6 +17,7 @@ export default {
   name: 'sc-geography-switcher',
   methods: {
     changeGeography: function(id) {
+      this.sharedState.selected = [];
       fetchData(this.sharedState, null, id);
       gaEvent('geography', this.privateState.geographies.find((g) => (g.id === id)).name);
       replaceState(this.sharedState.metricId, [], id)

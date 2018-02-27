@@ -5,7 +5,7 @@
                 <thead>
                     <tr>
                         <th class="mdl-data-table__cell--non-numeric">
-                            <span class="tooltip" v-bind:title="sharedState.geography.name">{{ sharedState.geography.description }}</span>
+                            <span class="tooltip" v-bind:title="sharedState.geography.description">{{ sharedState.geography.name }}</span>
                         </th>
                         <th>{{sharedState.year}} Value</th>
                         <th v-if="sharedState.metric.data.a">Accuracy</th>
