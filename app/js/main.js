@@ -138,7 +138,7 @@ if (getHash(2)) {
 }
 
 // grab initial data and use the first available geography for this metric.
-fetchData(appState, metricId, dataConfig[`m${metricId}`].geographies[0]);
+fetchData(appState, metricId, null);
 
 // Component data setup
 Sidenav.data = function() {

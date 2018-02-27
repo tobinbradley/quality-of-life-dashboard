@@ -30,7 +30,7 @@ function urlArgsToHash() {
 }
 
 function getHash(pos = 0) {
-  let hash = location.hash.split('/');
+  let hash = decodeURI(location.hash).split('/');
   if (hash[pos] && hash[pos].length > 0) {
     hash[pos] = hash[pos].toString().replace('#', '');
     if (pos === 1) {
