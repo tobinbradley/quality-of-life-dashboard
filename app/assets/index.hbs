@@ -30,7 +30,7 @@
     <link rel="preload" as="script" href="vendor.js">
     <link rel="preload" as="script" href="app.js">
     <link rel="preload" href="img/logo.svg" as="image">
-    <link rel="preload" href="img/youtube-bg.svg" as="image">
+    <!--<link rel="preload" href="img/youtube-bg.svg" as="image"> -->
 
     <!-- favicon -->
     <link rel="shortcut icon" href="img/favicon.png">
@@ -45,17 +45,21 @@
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
             <div aria-label="sidebar menu" aria-expanded="false" role="button" tabindex="0" class="mdl-layout__drawer-button">
-				<svg class="icon icon-menu mdl-color-text--blue-grey-50"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-menu"></use></svg>
-			</div>
+                <svg class="icon icon-menu mdl-color-text--blue-grey-50">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-menu"></use>
+                </svg>
+            </div>
             <div class="mdl-layout__header-row">
-              <span class="mdl-layout-title"><span class="phoneHide">{{siteConfig.jurisdiction}} </span>{{ siteConfig.title }}</span>
-              <div class="mdl-layout-spacer"></div>
-              <div class="header-nav" style="height: 54px;">
-                   <nav class="mdl-navigation">
-                     <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" href="http://charlottenc.gov/HNS/CE/CommunityInfo/Pages/QOL.aspx">About</a>
-                     <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" onclick="ga('send', 'event', 'download', 'metric zip file download')" href="downloads/qol-data.zip">Download Data</a>
-                 </nav>
-              </div>
+                <span class="mdl-layout-title">
+                    <span class="phoneHide">{{siteConfig.jurisdiction}} </span>{{ siteConfig.title }}</span>
+                <div class="mdl-layout-spacer"></div>
+                <div class="header-nav" style="height: 54px;">
+                    <nav class="mdl-navigation">
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" href="http://charlottenc.gov/HNS/CE/CommunityInfo/Pages/QOL.aspx">About</a>
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" onclick="ga('send', 'event', 'download', 'metric zip file download')"
+                            href="downloads/qol-data.zip">Download Data</a>
+                    </nav>
+                </div>
             </div>
         </header>
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
@@ -66,27 +70,8 @@
         </div>
         <div class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid">
-                <div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-color--white intro">
-                    <h3>{{ siteConfig.jurisdiction }}</h3>
-                    <h1>{{ siteConfig.title }}</h1>
-                    <div id="dQw4w9WgXcQ" data-params="controls=0&showinfo=0&rel=0" data-background="img/youtube-bg.svg"
-							         class="not-youtube" style="background-image: url('img/youtube-bg.svg');"></div>
-                   <p>
-                       Exploring neighborhood character, economics, education, engagement, environment, health, housing, safety and transportation.
-                   </p>
-                   <p>
-                       <button class="mdl-button mdl-button--raised mdl-button--accent intro-hide">OK, I Got It</button>
-                       <button class="mdl-button mdl-button--raised mdl-button--accent feedback">Contact Us</button>
-                   </p>
-                   <!--<p style="display: inline-block">
-                     <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
-                       <input type="checkbox" id="switch-1" class="mdl-switch__input">
-                       <span class="mdl-switch__label">Don't show this again</span>
-                     </label>
-                 </p>-->
-
-                </div>
                 <sc-offline></sc-offline>
+                <sc-intro></sc-intro>
                 <sc-tabs></sc-tabs>
                 <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
                     <div class="map-container" style="position: relative">
@@ -105,8 +90,7 @@
                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-fullreport>
                                     Report
                                 </button>
-                                {{/if}}
-                                {{#if siteConfig.qolembedURL}}
+                                {{/if}} {{#if siteConfig.qolembedURL}}
                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-printmap>
                                     Print Map
                                 </button> {{/if}}
@@ -152,13 +136,14 @@
                         <p>
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="display: inline"
                                 id="contact-submit">
-                                  Contact Us
+                                Contact Us
                             </button>
                         </p>
                     </div>
                     <div class="comment-complete">
                         <p>
-                            <i class="material-icons">thumb_up</i><br> Thanks!
+                            <i class="material-icons">thumb_up</i>
+                            <br> Thanks!
                         </p>
                     </div>
                 </div>
