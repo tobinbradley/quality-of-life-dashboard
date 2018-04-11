@@ -128,7 +128,7 @@ export default {
         /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
       if (!iOS) {
         // show feature info on mouse move
-        map.on("mousemove", function(e) {
+        map.on("mousemove", "neighborhoods-fill-extrude", function(e) {
           var features = map.queryRenderedFeatures(e.point, {
             layers: ["neighborhoods-fill-extrude"]
           });
@@ -160,6 +160,11 @@ export default {
               }</h3>${val}</div>`
             )
             .addTo(map);
+        });
+
+        map.on("mouseleave", "neighborhoods-fill-extrude", function() {
+          map.getCanvas().style.cursor = "";
+          popup.remove();
         });
       }
     },
