@@ -3,7 +3,7 @@ const siteConfig = require('./data/config/site.js');
 const dataConfig = require('./data/config/data.js');
 
 // whatsnew handlebars data
-let whatsnew = _.filter(dataConfig, function(el) {
+let whatsnew = _.filter(dataConfig, function (el) {
   return siteConfig.whatsnew.indexOf(el.metric) !== -1;
 });
 
@@ -44,7 +44,9 @@ module.exports = {
       ignore: [/node_modules/]
     },
     postcss: {
-      processors: [require('postcss-cssnext')({browsers: ['last 2 versions']})]
+      processors: [require('postcss-cssnext')({
+        browsers: ['last 2 versions']
+      })]
     },
     handlebars: {
       locals: {
@@ -53,7 +55,9 @@ module.exports = {
         selectgroups: require('./data/config/selectgroups.js'),
         whatsnew: whatsnew
       },
-      include: {enabled: false}
+      include: {
+        enabled: false
+      }
     },
     swPrecache: {
       options: {
