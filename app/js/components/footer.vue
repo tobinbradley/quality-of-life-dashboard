@@ -2,7 +2,7 @@
     <footer class="mdl-grid">
         <div class="mdl-typography--text-center mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet">
             <p>
-                <img src="img/seals.png" width="177" height="36" alt="City and County Seals">
+                <img src="img/seals.png" height="36" alt="City and County Seals">
             </p>
             <p class="site-links" v-if="privateState.links" >
                 <a v-for="link in privateState.links" v-bind:href="link.href" target="_blank">{{link.text}}</a>
