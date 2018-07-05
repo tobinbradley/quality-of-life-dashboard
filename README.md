@@ -12,7 +12,7 @@ The original repository with old versions of the Dashboard is [here](https://git
 
 ## Get Started
 
-This project requires [NodeJS](https://nodejs.org).
+This project requires [git](https://git-scm.com/) and [NodeJS](https://nodejs.org).
 
 ``` bash
 git clone https://github.com/tobinbradley/quality-of-life-dashboard.git dashboard
