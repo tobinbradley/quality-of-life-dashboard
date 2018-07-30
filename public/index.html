@@ -9,7 +9,8 @@
     <meta name="author" content="<%= VUE_APP_author %>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>
-        <%= VUE_APP_title %>
+        <%= VUE_APP_jurisdiction %>
+            <%= VUE_APP_title %>
     </title>
 
     <!-- polyfill for fetch -->
@@ -29,14 +30,15 @@
             </div>
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title">
-                    <span class="phoneHide">{{siteConfig.jurisdiction}} </span>{{ siteConfig.title }}</span>
+                    <span class="phoneHide">
+                        <%= VUE_APP_jurisdiction %>
+                    </span>
+                    <%= VUE_APP_title %>
+                </span>
                 <div class="mdl-layout-spacer"></div>
                 <div class="header-nav" style="height: 54px;">
                     <nav class="mdl-navigation">
-                        {{!--
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" href="http://charlottenc.gov/HNS/CE/CommunityInfo/Pages/QOL.aspx">About</a> --}}
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" href="downloads/qol-overview.pdf"
-                            target="_blank">About</a>
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" href="http://charlottenc.gov/HNS/CE/CommunityInfo/Pages/QOL.aspx">About</a>
                         <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" onclick="ga('send', 'event', 'download', 'metric zip file download')"
                             href="downloads/qol-data.zip">Download Data</a>
                     </nav>
@@ -45,7 +47,9 @@
         </header>
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
             <header class="demo-drawer-header">
-                <a href="./">{{ siteConfig.title }}</a>
+                <a href="./">
+                    <%= VUE_APP_title %>
+                </a>
             </header>
             <sc-sidenav></sc-sidenav>
         </div>
@@ -67,23 +71,19 @@
                             <p style="margin-top: 0;">
                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect selected-clear">
                                     Clear Selected
-                                </button> {{#if siteConfig.qolreportURL}}
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-fullreport>
-                                    Report
                                 </button>
-                                {{/if}} {{#if siteConfig.qolembedURL}}
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-printmap>
-                                    Print Map
-                                </button> {{/if}}
+                                <% if (VUE_APP_qolreportURL) { %>
+                                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-fullreport>
+                                        Report
+                                    </button>
+                                    <% } %>
+                                        <% if (VUE_APP_qolembedURL) { %>
+                                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-printmap>
+                                                Print Map
+                                            </button>
+                                            <% } %>
                             </p>
-                            {{#if selectgroups}} Select Approximate: {{#each selectgroups}}
-                            <a href="javascript:void(0)" id="selectgroup-{{@index}}" class="selectgroup-link">{{@key}}</a>
-                            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="selectgroup-{{@index}}">
-                                {{#each this}}
-                                <li class="mdl-menu__item" data-selectgroup="{{this}}">{{@key}}</li>
-                                {{/each}}
-                            </ul>
-                            {{/each}} {{/if}}
+                            <sc-selectgroup></sc-selectgroup>
                         </div>
                     </div>
                     <sc-datatable></sc-datatable>
@@ -98,53 +98,40 @@
                     <div class="demo-separator mdl-cell--1-col"></div>
                     <sc-trendchart></sc-trendchart>
                     <div class="demo-separator mdl-cell--1-col"></div>
-                    {{!--
-                    <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop mdl-typography--text-center">
-                        <sc-social></sc-social>
-                    </div> --}}
+
 
                 </div>
             </div>
             <sc-metadata></sc-metadata>
             <div class="mdl-grid demo-cards">
                 <sc-embedcode></sc-embedcode>
-                {{#if siteConfig.contactForm}}
-                <div class="mdl-typography--text-center mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet comment-container">
-                    <div class="comment-form">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-focused">
-                            <input class="mdl-textfield__input" type="email" id="contact-email" required autocomplete="off">
-                            <label class="mdl-textfield__label" for="contact-email">Email Address</label>
+                <% if (VUE_APP_contactForm) { %>
+                    <div class="mdl-typography--text-center mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet comment-container">
+                        <div class="comment-form">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-focused">
+                                <input class="mdl-textfield__input" type="email" id="contact-email" required autocomplete="off">
+                                <label class="mdl-textfield__label" for="contact-email">Email Address</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-focused">
+                                <textarea class="mdl-textfield__input" type="text" rows="3" id="contact-message" required autocomplete="off"></textarea>
+                                <label class="mdl-textfield__label" for="contact-message">Message</label>
+                            </div>
+                            <p>
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="display: inline"
+                                    id="contact-submit">
+                                    Contact Us
+                                </button>
+                            </p>
                         </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-focused">
-                            <textarea class="mdl-textfield__input" type="text" rows="3" id="contact-message" required autocomplete="off"></textarea>
-                            <label class="mdl-textfield__label" for="contact-message">Message</label>
+                        <div class="comment-complete">
+                            <p>
+                                <i class="material-icons">thumb_up</i>
+                                <br> Thanks!
+                            </p>
                         </div>
-                        <p>
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="display: inline"
-                                id="contact-submit">
-                                Contact Us
-                            </button>
-                        </p>
                     </div>
-                    <div class="comment-complete">
-                        <p>
-                            <i class="material-icons">thumb_up</i>
-                            <br> Thanks!
-                        </p>
-                    </div>
-                </div>
-                {{/if}} {{#if siteConfig.whatsnew}}
-                <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet whatsnew">
-                    <div class="">
-                        <h1 class="mdl-typography--text-center">What's New</h1>
-                        {{#each whatsnew}}
-                        <span class="mdl-chip mdl-color--teal mdl-color-text--white">
-                            <span class="mdl-chip__text" data-whatsnew="{{this.metric}}">{{this.title}}</span>
-                        </span>
-                        {{/each}}
-                    </div>
-                </div>
-                {{/if}}
+                    <% } %>
+                        <sc-whatsnew></sc-whatsnew>
             </div>
             <sc-footer></sc-footer>
         </div>

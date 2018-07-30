@@ -3,6 +3,7 @@
   padding: 10px;
   & p {
     font-size: 1.2em;
+    padding: 10px 0;
   }
   & h1 {
     text-shadow: 1px 1px 2px #666;

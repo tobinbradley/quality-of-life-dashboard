@@ -48,23 +48,26 @@ export default {
 
 <style lang="css">
 #metadata .meta {
-    padding: 0 20px 20px;
+  padding: 0 20px 20px;
 }
 #metadata .meta h3 {
-    font-size: 2em;
+  font-size: 2em;
 }
 #metadata .meta h4 {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 #metadata .meta-side {
-    align-items: flex-start;
-    align-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 #metadata table {
-    width: 100%;
-    white-space: normal;
+  width: 100%;
+  white-space: normal;
 }
 #metadata table:first-of-type {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
+}
+#metadata table td {
+  text-align: left;
 }
 </style>

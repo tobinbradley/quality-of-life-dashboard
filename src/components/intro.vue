@@ -4,11 +4,12 @@
       <h1>{{ siteConfig.title }}</h1>
       <div id="dQw4w9WgXcQ" data-params="controls=0&showinfo=0&rel=0" data-background="img/youtube-bg.svg" class="not-youtube"
           style="background-image: url('img/youtube-bg.svg');"></div>
-      <p>
+      <p style="max-width: 800px; margin: 0 auto;">
           Exploring neighborhood character, economics, education, engagement, environment, health, housing, safety and transportation.
+          Want to know more? Here's a <a href="downloads/qol-overview.pdf">quick overview</a>!
       </p>
       <p>
-          <button class="mdl-button mdl-button--raised mdl-button--accent intro-hide" @click="hideCard">OK, I Got It</button>
+          <button class="mdl-button mdl-button--raised mdl-button--accent intro-hide" @click="hideCard">OK, I Got It</button> &nbsp;
           <button class="mdl-button mdl-button--raised mdl-button--accent feedback" @click="contact">Contact Us</button>
       </p>
       <p style="display: inline-block">

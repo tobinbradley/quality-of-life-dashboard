@@ -19,6 +19,7 @@ import axios from "axios";
 import dataConfig from "../data/config/data";
 import mapConfig from "../data/config/map";
 import siteConfig from "../data/config/site";
+import selectGroups from "../data/config/selectgroups";
 import colors from "./modules/breaks";
 import fetchData from "./modules/fetch";
 import {
@@ -43,6 +44,8 @@ import Footer from "./components/footer.vue";
 import Social from "./components/social.vue";
 import Offline from "./components/offline.vue";
 import Tabs from "./components/tabs.vue";
+import Whatsnew from "./components/whatsnew.vue";
+import Selectgroup from "./components/selectgroup.vue";
 import Intro from "./components/intro.vue";
 import ieSVGFixes from "./modules/ie-svg-bugs.js";
 import mapStyle from '../data/gl-style/positron-mecklenburg.json';
@@ -203,6 +206,12 @@ DataTable.data = function () {
     }
   };
 };
+Selectgroup.data = function () {
+  return {
+    sharedState: appState,
+    selectGroup: selectGroups
+  };
+};
 TrendChart.data = function () {
   return {
     sharedState: appState,
@@ -234,6 +243,13 @@ Tabs.data = function () {
       data: dataConfig,
       filterVal: null
     }
+  };
+};
+Whatsnew.data = function () {
+  return {
+    sharedState: appState,
+    data: dataConfig,
+    whatsnew: siteConfig.whatsnew
   };
 };
 DistributionChart.data = function () {
@@ -313,6 +329,10 @@ new Vue({
   render: h => h(YearControl)
 });
 new Vue({
+  el: "sc-selectgroup",
+  render: h => h(Selectgroup)
+});
+new Vue({
   el: "sc-datatable",
   render: h => h(DataTable)
 });
@@ -344,6 +364,10 @@ new Vue({
   el: "sc-social",
   render: h => h(Social)
 });
+new Vue({
+  el: "sc-whatsnew",
+  render: h => h(Whatsnew)
+});
 // offline message
 new Vue({
   el: "sc-offline",
@@ -366,34 +390,6 @@ window.changeMetric = function (m) {
   fetchData(appState, metric);
   scrollTo(document.querySelector(".mdl-layout__content"), 0, 600);
 };
-
-// select groups if present
-let selectGroups = document.querySelectorAll("li[data-selectGroup]");
-let selectGroups_array = [...selectGroups];
-selectGroups_array.forEach(link => {
-  link.addEventListener("click", function () {
-    let selectList = link.getAttribute("data-selectGroup").split(",");
-    appState.selected = selectList;
-    appState.zoomNeighborhoods = selectList.slice(0);
-  });
-});
-
-// what's new links
-let whatsnew = document.querySelectorAll("span[data-whatsnew]");
-let whatsnew_array = [...whatsnew];
-whatsnew_array.forEach(link => {
-  link.addEventListener("click", function () {
-    let metric = link.getAttribute("data-whatsnew");
-    replaceState(metric, appState.selected);
-    gaEvent(
-      "metric",
-      dataConfig[`m${metric}`].title.trim(),
-      dataConfig[`m${metric}`].category.trim()
-    );
-    fetchData(appState, metric);
-    scrollTo(document.querySelector(".mdl-layout__content"), 0, 600);
-  });
-});
 
 // clear selected button
 let clearselected = document.querySelector(".selected-clear");

@@ -11,10 +11,10 @@
 
 <script>
     import Chartist from 'chartist';
-    require('chartist-plugin-axistitle');
-    require('chartist-plugin-tooltip-infl');
     import {calcValue} from '../modules/metric_calculations';
     import {abbrNum, round, prettyNumber} from '../modules/number_format';
+    require('chartist-plugin-axistitle');
+    require('chartist-plugin-tooltips');
 
     export default {
         name: 'sc-trendchart',
@@ -183,25 +183,29 @@
 }
 .ct-trendchart {
   margin-left: 20px;
+  position: relative;
 }
 .ct-axis-title {
   font-size: 10px;
   fill: rgba(0, 0, 0, 0.6);
 }
+
 .chartist-tooltip {
   position: absolute;
   display: inline-block;
   opacity: 0;
   min-width: 5em;
   padding: 0.5em;
-  background: rgba(0, 0, 0, 0.85);
-  color: #ccc;
+  background: #f4c63d;
+  color: #453d3f;
   font-family: Oxygen, Helvetica, Arial, sans-serif;
   font-weight: 700;
   text-align: center;
   pointer-events: none;
   z-index: 1;
-  border-radius: 5px;
+  -webkit-transition: opacity 0.2s linear;
+  -moz-transition: opacity 0.2s linear;
+  -o-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
 }
 .chartist-tooltip:before {
@@ -213,11 +217,12 @@
   height: 0;
   margin-left: -15px;
   border: 15px solid transparent;
-  border-top-color: rgba(0, 0, 0, 0.85);
+  border-top-color: #f4c63d;
 }
 .chartist-tooltip.tooltip-show {
   opacity: 1;
 }
+
 .ct-area,
 .ct-line {
   pointer-events: none;
