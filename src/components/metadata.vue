@@ -18,7 +18,6 @@
 </template>
 
 <script>
-//import axios from 'axios';
 import scrollTo from '../modules/scrollto';
 import {metaAbout, metaImportant, metaResources} from '../modules/meta.js';
 import fetchData from '../modules/fetch.js';

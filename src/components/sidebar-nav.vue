@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import fetchData from "../modules/fetch";
 import { replaceState, gaEvent } from "../modules/tracking";
 
