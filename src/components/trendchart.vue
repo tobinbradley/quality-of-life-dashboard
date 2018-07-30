@@ -11,8 +11,8 @@
 
 <script>
     import Chartist from 'chartist';
-    require('../modules/chartist.axis.title.js');
-    require('../modules/chartist.tooltip.js');
+    require('chartist-plugin-axistitle');
+    require('chartist-plugin-tooltip-infl');
     import {calcValue} from '../modules/metric_calculations';
     import {abbrNum, round, prettyNumber} from '../modules/number_format';
 
@@ -173,74 +173,74 @@
 </script>
 
 <style lang="css">
-    .qol-chart .ct-series-b .ct-line,
-    .qol-chart .ct-series-b .ct-point {
-        stroke: #ba00e4;
-    }
-    .qol-chart .ct-series-a .ct-line,
-    .qol-chart .ct-series-a .ct-point {
-        stroke: orange;
-    }
-    .ct-trendchart {
-        margin-left: 20px;
-    }
-    .ct-axis-title {
-        font-size: 10px;
-        fill: rgba(0, 0, 0, 0.6);
-    }
-    .chartist-tooltip {
-        position: absolute;
-        display: inline-block;
-        opacity: 0;
-        min-width: 5em;
-        padding: .5em;
-        background: rgba(0, 0, 0, 0.85);
-        color: #ccc;
-        font-family: Oxygen, Helvetica, Arial, sans-serif;
-        font-weight: 700;
-        text-align: center;
-        pointer-events: none;
-        z-index: 1;
-        border-radius: 5px;
-        transition: opacity .2s linear;
-    }
-    .chartist-tooltip:before {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        margin-left: -15px;
-        border: 15px solid transparent;
-        border-top-color: rgba(0, 0, 0, 0.85);
-    }
-    .chartist-tooltip.tooltip-show {
-        opacity: 1;
-    }
-    .ct-area,
-    .ct-line {
-        pointer-events: none;
-    }
+.qol-chart .ct-series-b .ct-line,
+.qol-chart .ct-series-b .ct-point {
+  stroke: #ba00e4;
+}
+.qol-chart .ct-series-a .ct-line,
+.qol-chart .ct-series-a .ct-point {
+  stroke: orange;
+}
+.ct-trendchart {
+  margin-left: 20px;
+}
+.ct-axis-title {
+  font-size: 10px;
+  fill: rgba(0, 0, 0, 0.6);
+}
+.chartist-tooltip {
+  position: absolute;
+  display: inline-block;
+  opacity: 0;
+  min-width: 5em;
+  padding: 0.5em;
+  background: rgba(0, 0, 0, 0.85);
+  color: #ccc;
+  font-family: Oxygen, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 5px;
+  transition: opacity 0.2s linear;
+}
+.chartist-tooltip:before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -15px;
+  border: 15px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.85);
+}
+.chartist-tooltip.tooltip-show {
+  opacity: 1;
+}
+.ct-area,
+.ct-line {
+  pointer-events: none;
+}
 </style>
 
 <style lang="css" scoped>
-    h1 {
-        font-size: 1.1em;
-        margin: 15px 0 0;
-    }
-    span.legend {
-        font-size: 0.8em;
-    }
-    .icon {
-        vertical-align: middle;
-        width: 1.5em;
-        height: 1.5em;
-    }
-    .legend-selected {
-        color: #ba00e4;
-    }
-    .legend-county {
-        color: orange;
-    }
+h1 {
+  font-size: 1.1em;
+  margin: 15px 0 0;
+}
+span.legend {
+  font-size: 0.8em;
+}
+.icon {
+  vertical-align: middle;
+  width: 1.5em;
+  height: 1.5em;
+}
+.legend-selected {
+  color: #ba00e4;
+}
+.legend-county {
+  color: orange;
+}
 </style>

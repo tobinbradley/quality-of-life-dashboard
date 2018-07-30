@@ -13,8 +13,8 @@
   "dependencies": {
     "axios": "^0.16.2",
     "chartist": "^0.11.0",
-    "chartist-plugin-axistitle": "^0.0.1",
-    "chartist-plugin-tooltip": "^0.0.11",
+    "chartist-plugin-axistitle": "0.0.4",
+    "chartist-plugin-tooltip-infl": "0.0.3",
     "d3-scale": "^2.1.0",
     "lodash": "^4.17.10",
     "mapbox-gl": "^0.47.0",
