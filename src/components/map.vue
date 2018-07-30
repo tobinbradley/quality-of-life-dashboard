@@ -11,6 +11,7 @@ import { prettyNumber } from "../modules/number_format";
 import { replaceState } from "../modules/tracking";
 import { scaleLinear } from "d3-scale";
 import FullExtent from "../modules/map-fullextent.js";
+import geog from '../../data/geography.geojson.json';
 
 export default {
   name: "sc-map",
@@ -50,14 +51,12 @@ export default {
       map.touchZoomRotate.disableRotation();
 
       // after map initiated, grab geography and intiate/style neighborhoods
-      map.on("style.load", function() {
-        axios.get("data/geography.geojson.json").then(function(response) {
+      map.on("load", function() {
           _this.privateState.mapLoaded = true;
-          _this.privateState.geoJSON = response.data;
+          _this.privateState.geoJSON = geog;
           _this.initNeighborhoods();
           _this.styleNeighborhoods();
           _this.initMapEvents();
-        });
       });
     },
     toggle3D: function() {
