@@ -3,22 +3,16 @@ var path = require('path');
 var dataConfig = require('../data/config/data.js');
 const csv = require('csvtojson');
 const _ = require('lodash');
-var dest = './public/data/metric';
+var dest = './dist/data/metric';
 var marked = require('marked');
 var shell = require('shelljs');
 
 ///////////////////////////////////////////////////
 // Create destination folders
 ///////////////////////////////////////////////////
-shell.mkdir('-p', 'public/data/meta');
-shell.mkdir('-p', 'public/data/metric');
-shell.mkdir('-p', 'public/downloads');
+shell.mkdir('-p', 'dist/data/meta');
+shell.mkdir('-p', 'dist/data/metric');
 
-//////////////////////////////////////////////////
-// Copy download, geography, style
-//////////////////////////////////////////////////
-shell.cp('data/geography.geojson.json', 'public/data/');
-shell.cp('data/download/qol-data.zip', 'public/downloads/');
 
 // return true if convertable to number
 function isNumeric(n) {
@@ -41,11 +35,11 @@ marked.setOptions({
 
 var src = './data/meta';
 
-var _getAllFilesFromFolder = function(dir) {
+var _getAllFilesFromFolder = function (dir) {
   var filesystem = require('fs');
   var results = [];
 
-  filesystem.readdirSync(dir).forEach(function(file) {
+  filesystem.readdirSync(dir).forEach(function (file) {
     file = path.join(dir, file);
     var stat = filesystem.statSync(file);
     if (stat && stat.isDirectory() && path.extname(file) === '.md') {
@@ -63,10 +57,10 @@ for (let i = 0; i < files.length; i++) {
       return console.log(err);
     }
     let outFile =
-      path.join('public/data/meta', path.basename(files[i]).split('.')[0]) +
+      path.join('dist/data/meta', path.basename(files[i]).split('.')[0]) +
       '.html';
 
-    marked(data, function(err, content) {
+    marked(data, function (err, content) {
       if (err) {
         return console.log(err);
       }
@@ -98,7 +92,7 @@ function jsonTransform(jsonArray) {
 }
 
 // loop through the variables
-_.each(dataConfig, function(m) {
+_.each(dataConfig, function (m) {
   if (m.type === 'sum') {
     csv()
       .fromFile('data/metric/r' + m.metric + '.csv')

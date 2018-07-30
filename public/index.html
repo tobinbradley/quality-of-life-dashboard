@@ -4,40 +4,18 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="{{ siteConfig.description }}">
-    <meta name="keywords" content="{{ siteConfig.keywords }}">
-    <meta name="author" content="{{ siteConfig.author }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ siteConfig.jurisdiction }} {{ siteConfig.title }}</title>
+    <meta name="description" content="<%= VUE_APP_description %>">
+    <meta name="keywords" content="<%= VUE_APP_keywords %>">
+    <meta name="author" content="<%= VUE_APP_author %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>
+        <%= VUE_APP_title %>
+    </title>
 
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- chrome theme color -->
-    <meta name="theme-color" content="#1676D2">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="{{ siteConfig.title }}">
-    <link rel="apple-touch-icon-precomposed" href="img/ios-desktop.png">
-
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="img/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#3372DF">
-
-    <!-- preload assets -->
-    <link rel="preload" as="script" href="vendor.js">
-    <link rel="preload" as="script" href="app.js">
-    <link rel="preload" href="img/logo.svg" as="image">
-    <!--<link rel="preload" href="img/youtube-bg.svg" as="image"> -->
-
-    <!-- favicon -->
-    <link rel="shortcut icon" href="img/favicon.png">
-
-    <!-- style sheet -->
-    <link rel="stylesheet" href="vendor.css">
-    <link rel="stylesheet" href="app.css">
+    <!-- polyfill for fetch -->
+    <script>
+        window.fetch || document.write('<script src="https://unpkg.com/whatwg-fetch@1.0.0/fetch.js"><\/script>');
+    </script>
 
 </head>
 
@@ -56,8 +34,7 @@
                 <div class="header-nav" style="height: 54px;">
                     <nav class="mdl-navigation">
                         {{!--
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50"
-                            href="http://charlottenc.gov/HNS/CE/CommunityInfo/Pages/QOL.aspx">About</a> --}}
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" href="http://charlottenc.gov/HNS/CE/CommunityInfo/Pages/QOL.aspx">About</a> --}}
                         <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" href="downloads/qol-overview.pdf"
                             target="_blank">About</a>
                         <a class="mdl-navigation__link mdl-typography--text-uppercase mdl-color-text--blue-grey-50" onclick="ga('send', 'event', 'download', 'metric zip file download')"
@@ -109,7 +86,7 @@
                             {{/each}} {{/if}}
                         </div>
                     </div>
-                    <sc-datatable></<sc-datatable>
+                    <sc-datatable></sc-datatable>
                 </div>
                 <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
                     <sc-search></sc-search>
@@ -232,10 +209,6 @@
         </defs>
     </svg>
 
-
-    <script src="vendor.js"></script>
-    <script src="app.js"></script>
-    <script> require('js/main'); </script>
     <!--   Google Analytics -->
     <script>
         (function (i, s, o, g, r, a, m) {

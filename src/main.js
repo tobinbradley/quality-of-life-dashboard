@@ -10,16 +10,15 @@
 //                ||     ||
 //
 
-require("es6-promise").polyfill(); // Fix for axios on IE11
 require("./modules/ie-polyfill-array-from.js"); // fix for array from on IE11
 require("material-design-lite");
 
 //import {introJs} from 'intro.js';
-import Vue from "vue/dist/vue.js";
+import Vue from "vue";
 import axios from "axios";
-import dataConfig from "../../data/config/data";
-import mapConfig from "../../data/config/map";
-import siteConfig from "../../data/config/site";
+import dataConfig from "../data/config/data";
+import mapConfig from "../data/config/map";
+import siteConfig from "../data/config/site";
 import colors from "./modules/breaks";
 import fetchData from "./modules/fetch";
 import {
@@ -46,20 +45,11 @@ import Offline from "./components/offline.vue";
 import Tabs from "./components/tabs.vue";
 import Intro from "./components/intro.vue";
 import ieSVGFixes from "./modules/ie-svg-bugs.js";
-
-import "vueify/lib/insert-css"; // required for .vue file <style> tags
-
-// to fix vue not including modules bug
-import mapboxgl from "mapbox-gl";
-import { scaleLinear } from "d3-scale";
-import debounce from "lodash.debounce";
+import './main.css';
+import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 
-// register service worker
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./sw.js");
-}
 
 // fix ie SVG bugs
 ieSVGFixes();
@@ -110,7 +100,9 @@ let appState = {
 //window.appState = appState;
 
 // fix meta links
-let model = { metricId: "" };
+let model = {
+  metricId: ""
+};
 window.model = model;
 
 // reset old GET args to hash
@@ -136,7 +128,7 @@ fetchData(appState, metricId);
 
 // show intro if flag not set
 if (!localStorage.getItem("hideIntro")) {
-  Intro.data = function() {
+  Intro.data = function () {
     return {
       siteConfig: siteConfig,
       hide: false
@@ -149,7 +141,7 @@ if (!localStorage.getItem("hideIntro")) {
 }
 
 // Component data setup
-Sidenav.data = function() {
+Sidenav.data = function () {
   return {
     privateState: {
       data: dataConfig,
@@ -158,7 +150,7 @@ Sidenav.data = function() {
     sharedState: appState
   };
 };
-Search.data = function() {
+Search.data = function () {
   return {
     privateState: {
       query: "",
@@ -175,7 +167,7 @@ Search.data = function() {
     sharedState: appState
   };
 };
-Metadata.data = function() {
+Metadata.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -184,7 +176,7 @@ Metadata.data = function() {
   };
 };
 
-YearControl.data = function() {
+YearControl.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -192,7 +184,7 @@ YearControl.data = function() {
     }
   };
 };
-EmbedCode.data = function() {
+EmbedCode.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -201,7 +193,7 @@ EmbedCode.data = function() {
     }
   };
 };
-DataTable.data = function() {
+DataTable.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -210,7 +202,7 @@ DataTable.data = function() {
     }
   };
 };
-TrendChart.data = function() {
+TrendChart.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -218,7 +210,7 @@ TrendChart.data = function() {
     }
   };
 };
-Footer.data = function() {
+Footer.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -226,7 +218,7 @@ Footer.data = function() {
     }
   };
 };
-Social.data = function() {
+Social.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -234,7 +226,7 @@ Social.data = function() {
     }
   };
 };
-Tabs.data = function() {
+Tabs.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -243,7 +235,7 @@ Tabs.data = function() {
     }
   };
 };
-DistributionChart.data = function() {
+DistributionChart.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -253,7 +245,7 @@ DistributionChart.data = function() {
     }
   };
 };
-ToC.data = function() {
+ToC.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -265,7 +257,7 @@ ToC.data = function() {
     }
   };
 };
-MapGL.data = function() {
+MapGL.data = function () {
   return {
     sharedState: appState,
     privateState: {
@@ -362,7 +354,7 @@ new Vue({
 ///////////////////////////////////////////////////////////////////////////
 
 // change metric from meta links
-window.changeMetric = function(m) {
+window.changeMetric = function (m) {
   let metric = m.replace("m", "");
   replaceState(metric, appState.selected);
   gaEvent(
@@ -378,7 +370,7 @@ window.changeMetric = function(m) {
 let selectGroups = document.querySelectorAll("li[data-selectGroup]");
 let selectGroups_array = [...selectGroups];
 selectGroups_array.forEach(link => {
-  link.addEventListener("click", function() {
+  link.addEventListener("click", function () {
     let selectList = link.getAttribute("data-selectGroup").split(",");
     appState.selected = selectList;
     appState.zoomNeighborhoods = selectList.slice(0);
@@ -389,7 +381,7 @@ selectGroups_array.forEach(link => {
 let whatsnew = document.querySelectorAll("span[data-whatsnew]");
 let whatsnew_array = [...whatsnew];
 whatsnew_array.forEach(link => {
-  link.addEventListener("click", function() {
+  link.addEventListener("click", function () {
     let metric = link.getAttribute("data-whatsnew");
     replaceState(metric, appState.selected);
     gaEvent(
@@ -407,7 +399,7 @@ let clearselected = document.querySelector(".selected-clear");
 if (clearselected) {
   clearselected.addEventListener(
     "click",
-    function() {
+    function () {
       appState.selected = [];
       replaceState(appState.metricId, []);
     },
@@ -419,7 +411,7 @@ if (clearselected) {
 let reportEmbed = document.querySelector("button[data-printmap]");
 let reportFull = document.querySelector("button[data-fullreport]");
 if (reportEmbed) {
-  reportEmbed.addEventListener("click", function() {
+  reportEmbed.addEventListener("click", function () {
     window.open(
       `${siteConfig.qolembedURL}?m=${appState.metricId}&y=${
         appState.year
@@ -428,7 +420,7 @@ if (reportEmbed) {
   });
 }
 if (reportFull) {
-  reportFull.addEventListener("click", function() {
+  reportFull.addEventListener("click", function () {
     window.open(`${siteConfig.qolreportURL}?s=${appState.selected.join(",")}`);
   });
 }
@@ -436,7 +428,7 @@ if (reportFull) {
 // contact form
 let contactForm = document.querySelector("#contact-submit");
 if (contactForm) {
-  contactForm.addEventListener("click", function() {
+  contactForm.addEventListener("click", function () {
     let message = document.querySelector("#contact-message");
     let email = document.querySelector("#contact-email");
 
@@ -451,14 +443,13 @@ if (contactForm) {
             subject: "Quality of Life Dashboard Feedback",
             to: "tobin.bradley@gmail.com",
             message: message.value
-          }),
-          {
+          }), {
             headers: {
               "Content-Type": "application/x-www-form-urlencoded"
             }
           }
         )
-        .then(function() {
+        .then(function () {
           document.querySelector(".comment-form").style.display = "none";
           document.querySelector(".comment-complete").style.display = "block";
         });

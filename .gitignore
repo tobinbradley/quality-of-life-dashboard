@@ -4,9 +4,9 @@ node_modules
 bower_components
 data
 deploy.sh
-public
 npm-debug.log
 TODO.md
 .vscode
 yarn.lock
-package-lock.json
+dist
+public/data

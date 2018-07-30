@@ -1,4 +1,4 @@
-import dataConfig from '../../../data/config/data';
+import dataConfig from '../../data/config/data';
 import axios from 'axios';
 import jenksBreaks from './jenksbreaks';
 
@@ -6,10 +6,10 @@ export default function fetchData(appState, metric) {
   appState.metricId = metric;
 
   // fetch data
-  axios.get(`data/metric/m${appState.metricId}.json`).then(function(data) {
+  axios.get(`data/metric/m${appState.metricId}.json`).then(function (data) {
     let nKeys = Object.keys(data.data.map);
     let yKeys = Object.keys(data.data.map[nKeys[0]]);
-    let years = yKeys.map(function(el) {
+    let years = yKeys.map(function (el) {
       return el.replace('y_', '');
     });
 
@@ -31,7 +31,7 @@ export default function fetchData(appState, metric) {
   });
 
   // fetch metadata
-  axios.get(`./data/meta/m${metric}.html`).then(function(response) {
+  axios.get(`./data/meta/m${metric}.html`).then(function (response) {
     appState.metadata = response.data;
   });
 }
