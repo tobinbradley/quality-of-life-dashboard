@@ -45,6 +45,7 @@ import Offline from "./components/offline.vue";
 import Tabs from "./components/tabs.vue";
 import Intro from "./components/intro.vue";
 import ieSVGFixes from "./modules/ie-svg-bugs.js";
+import mapStyle from '../data/gl-style/positron-mecklenburg.json';
 import './main.css';
 import './registerServiceWorker';
 
@@ -264,7 +265,7 @@ MapGL.data = function () {
       locate: null,
       mapOptions: {
         container: "map",
-        style: mapConfig.style,
+        style: mapStyle,
         attributionControl: false,
         zoom: mapConfig.zoom,
         center: mapConfig.center,
