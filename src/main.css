@@ -1,3 +1,28 @@
+/*
+____________________________________
+/ Main CSS file, using PostCSS     \
+------------------------------------
+       \   ^__^
+        \  (oo)\_______
+           (__)\       )\/\
+               ||----w |
+               ||     ||
+*/
+
+/* vendor stuff */
+
+@import '../node_modules/material-design-lite/dist/material.min.css';
+@import '../node_modules/mapbox-gl/dist/mapbox-gl.css';
+@import '../node_modules/chartist/dist/chartist.css';
+/* awesome stuff */
+
+@import './css/contactus.css';
+@import './css/footer.css';
+@import './css/intro.css';
+@import './css/map-fullextent.css';
+@import './css/material.css';
+@import './css/whatsnew.css';
+@import './css/youtube.css';
 *,
 ::after,
 ::before {
@@ -7,12 +32,12 @@
 html,
 body {
   color: #555;
-  font-family: Roboto, 'Helvetica Neue', 'Calibri', 'Liberation Sans',
-    sans-serif;
+  font-family: Roboto, 'Helvetica Neue', 'Calibri', 'Liberation Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0.02em;
 }
+
 h1,
 h2,
 h3,
@@ -20,15 +45,18 @@ h4,
 h5 {
   color: #333;
 }
+
 a {
   text-decoration-skip: ink;
   color: rgb(211, 45, 101);
 }
 
 /* sidebar */
+
 .logo-img {
   width: 100%;
 }
+
 .demo-drawer-header a {
   text-decoration: none;
   color: inherit;
@@ -36,11 +64,13 @@ a {
 }
 
 /* prevent top-of-page spasms */
+
 .map-container {
   height: 600px;
 }
 
 /* fix for mdl menu on linux screwing up page scrolling */
+
 .mdl-menu,
 .mdl-menu__container,
 .mdl-menu__outline {
@@ -55,16 +85,19 @@ a {
 }
 
 /* select group */
+
 .selectgroup-link {
   padding-left: 6px;
   white-space: nowrap;
 }
 
 /* for side by side elements */
+
 .flexcontainer {
   display: flex;
   flex-direction: row;
 }
+
 .flexcontainer .flex-item {
   flex-grow: 1;
   width: 50%;
@@ -90,6 +123,7 @@ textarea {
 }
 
 /* hide content on phones */
+
 @media (max-width: 520px) {
   .phoneHide {
     display: none;

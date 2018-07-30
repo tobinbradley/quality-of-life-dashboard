@@ -19,18 +19,23 @@
 }
 
 /* header nav stuff */
+
 .mdl-layout__header-row .mdl-navigation__link {
   color: rgb(117, 117, 117);
   height: 54px;
   box-sizing: border-box;
 }
+
 .mdl-layout__header-row .mdl-navigation {
   height: 54px;
 }
+
 .header-nav .mdl-navigation__link:hover {
   border-bottom: 4px solid #ff4081;
 }
+
 /* hide content on phones */
+
 @media (max-width: 777px) {
   .header-nav {
     display: none;
@@ -87,7 +92,7 @@
   justify-content: flex-end;
   padding: 16px 16px 5px;
   height: 151px;
-  background: url(img/logo.svg) center center;
+  background: url(assets/logo.svg) center center;
 }
 
 .demo-avatar-dropdown {
