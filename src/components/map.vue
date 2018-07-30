@@ -6,7 +6,6 @@
 
 <script>
 import mapboxgl from "mapbox-gl";
-import axios from "axios";
 import { prettyNumber } from "../modules/number_format";
 import { replaceState } from "../modules/tracking";
 import { scaleLinear } from "d3-scale";
