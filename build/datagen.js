@@ -3,15 +3,15 @@ var path = require('path');
 var dataConfig = require('../data/config/data.js');
 const csv = require('csvtojson');
 const _ = require('lodash');
-var dest = './dist/data/metric';
+var dest = './public/data/metric';
 var marked = require('marked');
 var shell = require('shelljs');
 
 ///////////////////////////////////////////////////
 // Create destination folders
 ///////////////////////////////////////////////////
-shell.mkdir('-p', 'dist/data/meta');
-shell.mkdir('-p', 'dist/data/metric');
+shell.mkdir('-p', 'public/data/meta');
+shell.mkdir('-p', 'public/data/metric');
 
 
 // return true if convertable to number
@@ -57,7 +57,7 @@ for (let i = 0; i < files.length; i++) {
       return console.log(err);
     }
     let outFile =
-      path.join('dist/data/meta', path.basename(files[i]).split('.')[0]) +
+      path.join('public/data/meta', path.basename(files[i]).split('.')[0]) +
       '.html';
 
     marked(data, function (err, content) {
