@@ -1,6 +1,6 @@
-const siteConfig = require("./data/config/site.js");
+const siteConfig = require('./data/config/site.json');
 
-Object.keys(siteConfig).forEach((key) => {
+Object.keys(siteConfig).forEach(key => {
   process.env[`VUE_APP_${key}`] = siteConfig[key];
 });
 

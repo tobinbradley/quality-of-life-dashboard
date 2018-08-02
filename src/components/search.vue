@@ -51,7 +51,7 @@
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import isNumeric from '../modules/isnumeric';
-import dataConfig from '../../data/config/data.js';
+import dataConfig from '../../data/config/data.json';
 import { replaceState, gaEvent } from '../modules/tracking';
 import fetchData from '../modules/fetch';
 

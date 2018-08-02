@@ -6,7 +6,7 @@
   "author": "Tobin Bradley",
   "license": "MIT",
   "scripts": {
-    "start": "vue-cli-service serve --port 3000",
+    "start": "vue-cli-service serve --port 3000 --open",
     "build": "vue-cli-service build --modern",
     "prebuild": "node build/datagen.js"
   },

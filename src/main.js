@@ -10,50 +10,49 @@
 //                ||     ||
 //
 
-require("./modules/ie-polyfill-array-from.js"); // fix for array from on IE11
-require("material-design-lite");
+require('./modules/ie-polyfill-array-from.js'); // fix for array from on IE11
+require('material-design-lite');
 
 //import {introJs} from 'intro.js';
-import Vue from "vue";
-import axios from "axios";
-import dataConfig from "../data/config/data";
-import mapConfig from "../data/config/map";
-import siteConfig from "../data/config/site";
-import selectGroups from "../data/config/selectgroups";
-import colors from "./modules/breaks";
-import fetchData from "./modules/fetch";
+import Vue from 'vue';
+import axios from 'axios';
+import dataConfig from '../data/config/data';
+import mapConfig from '../data/config/map.json';
+import siteConfig from '../data/config/site.json';
+import selectGroups from '../data/config/selectgroups';
+import colors from './modules/breaks';
+import fetchData from './modules/fetch';
 import {
   replaceState,
   gaEvent,
   getHash,
   urlArgsToHash
-} from "./modules/tracking";
-import scrollTo from "./modules/scrollto";
-import querystring from "querystring";
-import Sidenav from "./components/sidebar-nav.vue";
-import Metadata from "./components/metadata.vue";
-import YearControl from "./components/years.vue";
-import DataTable from "./components/datatable.vue";
-import TrendChart from "./components/trendchart.vue";
-import DistributionChart from "./components/distributionchart.vue";
-import ToC from "./components/toc.vue";
-import MapGL from "./components/map.vue";
-import Search from "./components/search.vue";
-import EmbedCode from "./components/embedcode.vue";
-import Footer from "./components/footer.vue";
-import Social from "./components/social.vue";
-import Offline from "./components/offline.vue";
-import Tabs from "./components/tabs.vue";
-import Whatsnew from "./components/whatsnew.vue";
-import Selectgroup from "./components/selectgroup.vue";
-import Intro from "./components/intro.vue";
-import ieSVGFixes from "./modules/ie-svg-bugs.js";
+} from './modules/tracking';
+import scrollTo from './modules/scrollto';
+import querystring from 'querystring';
+import Sidenav from './components/sidebar-nav.vue';
+import Metadata from './components/metadata.vue';
+import YearControl from './components/years.vue';
+import DataTable from './components/datatable.vue';
+import TrendChart from './components/trendchart.vue';
+import DistributionChart from './components/distributionchart.vue';
+import ToC from './components/toc.vue';
+import MapGL from './components/map.vue';
+import Search from './components/search.vue';
+import EmbedCode from './components/embedcode.vue';
+import Footer from './components/footer.vue';
+import Social from './components/social.vue';
+import Offline from './components/offline.vue';
+import Tabs from './components/tabs.vue';
+import Whatsnew from './components/whatsnew.vue';
+import Selectgroup from './components/selectgroup.vue';
+import Intro from './components/intro.vue';
+import ieSVGFixes from './modules/ie-svg-bugs.js';
 import mapStyle from '../data/gl-style/positron-mecklenburg.json';
 import './main.css';
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;
-
 
 // fix ie SVG bugs
 ieSVGFixes();
@@ -105,7 +104,7 @@ let appState = {
 
 // fix meta links
 let model = {
-  metricId: ""
+  metricId: ''
 };
 window.model = model;
 
@@ -114,9 +113,9 @@ urlArgsToHash();
 
 // get random metric if none provided and validate if metric is provided
 let keys = Object.keys(dataConfig);
-let metricId = keys[Math.floor(Math.random() * keys.length)].replace("m", "");
+let metricId = keys[Math.floor(Math.random() * keys.length)].replace('m', '');
 if (getHash(0)) {
-  let passedMetric = getHash(0).replace("m", "");
+  let passedMetric = getHash(0).replace('m', '');
   if (keys.indexOf(`m${passedMetric}`) !== -1) {
     metricId = passedMetric;
   }
@@ -131,21 +130,21 @@ if (getHash(1)) {
 fetchData(appState, metricId);
 
 // show intro if flag not set
-if (!localStorage.getItem("hideIntro")) {
-  Intro.data = function () {
+if (!localStorage.getItem('hideIntro')) {
+  Intro.data = function() {
     return {
       siteConfig: siteConfig,
       hide: false
     };
   };
   new Vue({
-    el: "sc-intro",
+    el: 'sc-intro',
     render: h => h(Intro)
   });
 }
 
 // Component data setup
-Sidenav.data = function () {
+Sidenav.data = function() {
   return {
     privateState: {
       data: dataConfig,
@@ -154,10 +153,10 @@ Sidenav.data = function () {
     sharedState: appState
   };
 };
-Search.data = function () {
+Search.data = function() {
   return {
     privateState: {
-      query: "",
+      query: '',
       results: {
         neighborhood: [],
         zipcode: [],
@@ -171,7 +170,7 @@ Search.data = function () {
     sharedState: appState
   };
 };
-Metadata.data = function () {
+Metadata.data = function() {
   return {
     sharedState: appState,
     privateState: {
@@ -180,7 +179,7 @@ Metadata.data = function () {
   };
 };
 
-YearControl.data = function () {
+YearControl.data = function() {
   return {
     sharedState: appState,
     privateState: {
@@ -188,7 +187,7 @@ YearControl.data = function () {
     }
   };
 };
-EmbedCode.data = function () {
+EmbedCode.data = function() {
   return {
     sharedState: appState,
     privateState: {
@@ -197,7 +196,7 @@ EmbedCode.data = function () {
     }
   };
 };
-DataTable.data = function () {
+DataTable.data = function() {
   return {
     sharedState: appState,
     privateState: {
@@ -206,13 +205,13 @@ DataTable.data = function () {
     }
   };
 };
-Selectgroup.data = function () {
+Selectgroup.data = function() {
   return {
     sharedState: appState,
     selectGroup: selectGroups
   };
 };
-TrendChart.data = function () {
+TrendChart.data = function() {
   return {
     sharedState: appState,
     privateState: {
@@ -220,7 +219,7 @@ TrendChart.data = function () {
     }
   };
 };
-Footer.data = function () {
+Footer.data = function() {
   return {
     sharedState: appState,
     privateState: {
@@ -228,7 +227,7 @@ Footer.data = function () {
     }
   };
 };
-Social.data = function () {
+Social.data = function() {
   return {
     sharedState: appState,
     privateState: {
@@ -236,7 +235,7 @@ Social.data = function () {
     }
   };
 };
-Tabs.data = function () {
+Tabs.data = function() {
   return {
     sharedState: appState,
     privateState: {
@@ -245,14 +244,14 @@ Tabs.data = function () {
     }
   };
 };
-Whatsnew.data = function () {
+Whatsnew.data = function() {
   return {
     sharedState: appState,
     data: dataConfig,
     whatsnew: siteConfig.whatsnew
   };
 };
-DistributionChart.data = function () {
+DistributionChart.data = function() {
   return {
     sharedState: appState,
     privateState: {
@@ -262,7 +261,7 @@ DistributionChart.data = function () {
     }
   };
 };
-ToC.data = function () {
+ToC.data = function() {
   return {
     sharedState: appState,
     privateState: {
@@ -274,20 +273,21 @@ ToC.data = function () {
     }
   };
 };
-MapGL.data = function () {
+MapGL.data = function() {
   return {
     sharedState: appState,
     privateState: {
       locate: null,
       mapOptions: {
-        container: "map",
+        container: 'map',
         style: mapStyle,
         attributionControl: false,
         zoom: mapConfig.zoom,
         center: mapConfig.center,
         maxBounds: mapConfig.maxBounds,
         minZoom: mapConfig.minZoom,
-        preserveDrawingBuffer: mapConfig.preserveDrawingBuffer
+        preserveDrawingBuffer:
+          navigator.userAgent.toLowerCase().indexOf('firefox') > -1
       },
       mapLoaded: false,
       metricId: null,
@@ -309,68 +309,68 @@ MapGL.data = function () {
 
 // initialize components
 new Vue({
-  el: "sc-search",
+  el: 'sc-search',
   render: h => h(Search)
 });
 new Vue({
-  el: "sc-tabs",
+  el: 'sc-tabs',
   render: h => h(Tabs)
 });
 new Vue({
-  el: "sc-sidenav",
+  el: 'sc-sidenav',
   render: h => h(Sidenav)
 });
 new Vue({
-  el: "sc-metadata",
+  el: 'sc-metadata',
   render: h => h(Metadata)
 });
 new Vue({
-  el: "sc-years",
+  el: 'sc-years',
   render: h => h(YearControl)
 });
 new Vue({
-  el: "sc-selectgroup",
+  el: 'sc-selectgroup',
   render: h => h(Selectgroup)
 });
 new Vue({
-  el: "sc-datatable",
+  el: 'sc-datatable',
   render: h => h(DataTable)
 });
 new Vue({
-  el: "sc-distributionchart",
+  el: 'sc-distributionchart',
   render: h => h(DistributionChart)
 });
 new Vue({
-  el: "sc-trendchart",
+  el: 'sc-trendchart',
   render: h => h(TrendChart)
 });
 new Vue({
-  el: "sc-toc",
+  el: 'sc-toc',
   render: h => h(ToC)
 });
 new Vue({
-  el: "sc-embedcode",
+  el: 'sc-embedcode',
   render: h => h(EmbedCode)
 });
 new Vue({
-  el: "sc-map",
+  el: 'sc-map',
   render: h => h(MapGL)
 });
 new Vue({
-  el: "sc-footer",
+  el: 'sc-footer',
   render: h => h(Footer)
 });
 new Vue({
-  el: "sc-social",
+  el: 'sc-social',
   render: h => h(Social)
 });
 new Vue({
-  el: "sc-whatsnew",
+  el: 'sc-whatsnew',
   render: h => h(Whatsnew)
 });
 // offline message
 new Vue({
-  el: "sc-offline",
+  el: 'sc-offline',
   render: h => h(Offline)
 });
 
@@ -379,24 +379,24 @@ new Vue({
 ///////////////////////////////////////////////////////////////////////////
 
 // change metric from meta links
-window.changeMetric = function (m) {
-  let metric = m.replace("m", "");
+window.changeMetric = function(m) {
+  let metric = m.replace('m', '');
   replaceState(metric, appState.selected);
   gaEvent(
-    "metric",
+    'metric',
     dataConfig[`m${metric}`].title.trim(),
     dataConfig[`m${metric}`].category.trim()
   );
   fetchData(appState, metric);
-  scrollTo(document.querySelector(".mdl-layout__content"), 0, 600);
+  scrollTo(document.querySelector('.mdl-layout__content'), 0, 600);
 };
 
 // clear selected button
-let clearselected = document.querySelector(".selected-clear");
+let clearselected = document.querySelector('.selected-clear');
 if (clearselected) {
   clearselected.addEventListener(
-    "click",
-    function () {
+    'click',
+    function() {
       appState.selected = [];
       replaceState(appState.metricId, []);
     },
@@ -405,29 +405,29 @@ if (clearselected) {
 }
 
 // Reports
-let reportEmbed = document.querySelector("button[data-printmap]");
-let reportFull = document.querySelector("button[data-fullreport]");
+let reportEmbed = document.querySelector('button[data-printmap]');
+let reportFull = document.querySelector('button[data-fullreport]');
 if (reportEmbed) {
-  reportEmbed.addEventListener("click", function () {
+  reportEmbed.addEventListener('click', function() {
     window.open(
       `${siteConfig.qolembedURL}?m=${appState.metricId}&y=${
         appState.year
-      }&s=${appState.selected.join(",")}`
+      }&s=${appState.selected.join(',')}`
     );
   });
 }
 if (reportFull) {
-  reportFull.addEventListener("click", function () {
-    window.open(`${siteConfig.qolreportURL}?s=${appState.selected.join(",")}`);
+  reportFull.addEventListener('click', function() {
+    window.open(`${siteConfig.qolreportURL}?s=${appState.selected.join(',')}`);
   });
 }
 
 // contact form
-let contactForm = document.querySelector("#contact-submit");
+let contactForm = document.querySelector('#contact-submit');
 if (contactForm) {
-  contactForm.addEventListener("click", function () {
-    let message = document.querySelector("#contact-message");
-    let email = document.querySelector("#contact-email");
+  contactForm.addEventListener('click', function() {
+    let message = document.querySelector('#contact-message');
+    let email = document.querySelector('#contact-email');
 
     if (message.checkValidity() && email.checkValidity()) {
       axios
@@ -437,18 +437,19 @@ if (contactForm) {
             email: email.value,
             url: window.location.href,
             agent: navigator.userAgent,
-            subject: "Quality of Life Dashboard Feedback",
-            to: "tobin.bradley@gmail.com",
+            subject: 'Quality of Life Dashboard Feedback',
+            to: 'tobin.bradley@gmail.com',
             message: message.value
-          }), {
+          }),
+          {
             headers: {
-              "Content-Type": "application/x-www-form-urlencoded"
+              'Content-Type': 'application/x-www-form-urlencoded'
             }
           }
         )
-        .then(function () {
-          document.querySelector(".comment-form").style.display = "none";
-          document.querySelector(".comment-complete").style.display = "block";
+        .then(function() {
+          document.querySelector('.comment-form').style.display = 'none';
+          document.querySelector('.comment-complete').style.display = 'block';
         });
     }
   });
