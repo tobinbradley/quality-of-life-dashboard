@@ -1,6 +1,6 @@
 var fs = require('fs');
 var path = require('path');
-var dataConfig = require('../data/config/data.js');
+var dataConfig = require('../data/config/data.json');
 const csv = require('csvtojson');
 const _ = require('lodash');
 var dest = './public/data/metric';
@@ -12,7 +12,6 @@ var shell = require('shelljs');
 ///////////////////////////////////////////////////
 shell.mkdir('-p', 'public/data/meta');
 shell.mkdir('-p', 'public/data/metric');
-
 
 // return true if convertable to number
 function isNumeric(n) {
@@ -30,16 +29,16 @@ marked.setOptions({
   pedantic: false,
   sanitize: false,
   smartLists: true,
-  smartypants: false,
+  smartypants: false
 });
 
 var src = './data/meta';
 
-var _getAllFilesFromFolder = function (dir) {
+var _getAllFilesFromFolder = function(dir) {
   var filesystem = require('fs');
   var results = [];
 
-  filesystem.readdirSync(dir).forEach(function (file) {
+  filesystem.readdirSync(dir).forEach(function(file) {
     file = path.join(dir, file);
     var stat = filesystem.statSync(file);
     if (stat && stat.isDirectory() && path.extname(file) === '.md') {
@@ -60,7 +59,7 @@ for (let i = 0; i < files.length; i++) {
       path.join('public/data/meta', path.basename(files[i]).split('.')[0]) +
       '.html';
 
-    marked(data, function (err, content) {
+    marked(data, function(err, content) {
       if (err) {
         return console.log(err);
       }
@@ -92,7 +91,7 @@ function jsonTransform(jsonArray) {
 }
 
 // loop through the variables
-_.each(dataConfig, function (m) {
+_.each(dataConfig, function(m) {
   if (m.type === 'sum') {
     csv()
       .fromFile('data/metric/r' + m.metric + '.csv')
@@ -107,7 +106,7 @@ _.each(dataConfig, function (m) {
               outJSON['a'] = jsonTransform(jsonObj);
               fs.writeFileSync(
                 path.join(dest, `m${m.metric}.json`),
-                JSON.stringify(outJSON, null, '  '),
+                JSON.stringify(outJSON, null, '  ')
               );
             })
             .on('done', error => {
@@ -116,7 +115,7 @@ _.each(dataConfig, function (m) {
         } else {
           fs.writeFileSync(
             path.join(dest, `m${m.metric}.json`),
-            JSON.stringify(outJSON, null, '  '),
+            JSON.stringify(outJSON, null, '  ')
           );
         }
       })
@@ -138,7 +137,7 @@ _.each(dataConfig, function (m) {
               outJSON['a'] = jsonTransform(jsonObj);
               fs.writeFileSync(
                 path.join(dest, `m${m.metric}.json`),
-                JSON.stringify(outJSON, null, '  '),
+                JSON.stringify(outJSON, null, '  ')
               );
             })
             .on('done', error => {
@@ -147,7 +146,7 @@ _.each(dataConfig, function (m) {
         } else {
           fs.writeFileSync(
             path.join(dest, `m${m.metric}.json`),
-            JSON.stringify(outJSON, null, '  '),
+            JSON.stringify(outJSON, null, '  ')
           );
         }
       })
@@ -175,7 +174,7 @@ _.each(dataConfig, function (m) {
                 ) {
                   jsonArrayR[key][key2] =
                     Math.round(
-                      jsonArrayR[key][key2] / jsonArrayD[key][key2] * 1000,
+                      (jsonArrayR[key][key2] / jsonArrayD[key][key2]) * 1000
                     ) / 1000;
                 } else {
                   jsonArrayR[key][key2] = null;
@@ -191,7 +190,7 @@ _.each(dataConfig, function (m) {
                   outJSON['a'] = jsonTransform(jsonObj);
                   fs.writeFileSync(
                     path.join(dest, `m${m.metric}.json`),
-                    JSON.stringify(outJSON, null, '  '),
+                    JSON.stringify(outJSON, null, '  ')
                   );
                 })
                 .on('done', error => {
@@ -200,7 +199,7 @@ _.each(dataConfig, function (m) {
             } else {
               fs.writeFileSync(
                 path.join(dest, `m${m.metric}.json`),
-                JSON.stringify(outJSON, null, '  '),
+                JSON.stringify(outJSON, null, '  ')
               );
             }
           })
