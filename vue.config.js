@@ -8,5 +8,9 @@ module.exports = {
   baseUrl: process.env.NODE_ENV === 'production' ? '' : '/',
   css: {
     sourceMap: true
+  },
+ devServer: {
+    host: '0.0.0.0',
+    disableHostCheck: true
   }
 };
