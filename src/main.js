@@ -44,7 +44,7 @@ import Footer from './components/footer.vue';
 import Social from './components/social.vue';
 import Offline from './components/offline.vue';
 import Tabs from './components/tabs.vue';
-import Whatsnew from './components/whatsnew.vue';
+//import Whatsnew from './components/whatsnew.vue';
 import Selectgroup from './components/selectgroup.vue';
 import Intro from './components/intro.vue';
 import ieSVGFixes from './modules/ie-svg-bugs.js';
@@ -240,17 +240,18 @@ Tabs.data = function() {
     sharedState: appState,
     privateState: {
       data: dataConfig,
-      filterVal: null
+      filterVal: null,
+      whatsnew: siteConfig.whatsnew
     }
   };
 };
-Whatsnew.data = function() {
-  return {
-    sharedState: appState,
-    data: dataConfig,
-    whatsnew: siteConfig.whatsnew
-  };
-};
+//Whatsnew.data = function() {
+//  return {
+//    sharedState: appState,
+//    data: dataConfig,
+//    whatsnew: siteConfig.whatsnew
+//  };
+//};
 DistributionChart.data = function() {
   return {
     sharedState: appState,
@@ -364,10 +365,10 @@ new Vue({
   el: 'sc-social',
   render: h => h(Social)
 });
-new Vue({
-  el: 'sc-whatsnew',
-  render: h => h(Whatsnew)
-});
+//new Vue({
+//  el: 'sc-whatsnew',
+//  render: h => h(Whatsnew)
+//});
 // offline message
 new Vue({
   el: 'sc-offline',

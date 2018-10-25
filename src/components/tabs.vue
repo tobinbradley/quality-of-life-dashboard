@@ -13,6 +13,7 @@
              <template v-for="m in filterMetrics(privateState.data, category)">
                <button type="button" v-bind:class="['mdl-chip', m.metric === sharedState.metricId ? 'is-active' : '']" v-on:click="changeMetric(m.metric)">
                  <span class="mdl-chip__text">{{m.title}}</span>
+                 <span v-if="privateState.whatsnew.indexOf(m.metric) !== -1" class="mdl-chip__text updated-badge">new</span>
                </button>
              </template>
            </div>
@@ -59,6 +60,15 @@
 </script>
 
 <style lang="css" scoped>
+span.mdl-chip__text.updated-badge {
+  margin-left: 6px;
+  margin-right: -12px;
+  background: #616161;
+  padding: 0 5px;
+  border-radius: 16px;
+  color: white;
+}
+
   .mdl-tabs__tab {
     padding: 0 14px;
   }
