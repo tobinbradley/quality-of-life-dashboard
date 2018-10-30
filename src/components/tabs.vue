@@ -74,6 +74,7 @@ span.mdl-chip__text.updated-badge {
   }
   .mdl-tabs__panel {
     padding: 10px;
+    display: none;
   }
   .mdl-tabs__tab-bar {
     justify-content: left;
@@ -99,8 +100,3 @@ span.mdl-chip__text.updated-badge {
   }
 </style>
 
-<style>
-  .mdl-tabs__panel {
-    display: none;
-  }
-</style>
