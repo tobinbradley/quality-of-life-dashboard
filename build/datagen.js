@@ -174,8 +174,8 @@ _.each(dataConfig, function(m) {
                 ) {
                   jsonArrayR[key][key2] =
                     Math.round(
-                      (jsonArrayR[key][key2] / jsonArrayD[key][key2]) * 1000
-                    ) / 1000;
+                      (jsonArrayR[key][key2] / jsonArrayD[key][key2]) * 10000
+                    ) / 10000;
                 } else {
                   jsonArrayR[key][key2] = null;
                 }
