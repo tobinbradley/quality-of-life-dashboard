@@ -1,20 +1,20 @@
 <template>
-  
+
   <div>
     <v-btn text icon small @click="shareTwitter">
       <v-icon>{{ mdiTwitter }}</v-icon>
     </v-btn>
     <v-btn text icon small @click="shareFacebook">
-      <v-icon>{{ mdiFacebook }}</v-icon>          
-    </v-btn> 
+      <v-icon>{{ mdiFacebook }}</v-icon>
+    </v-btn>
     <v-btn text icon small @click="shareLinkedin">
       <v-icon>{{ mdiLinkedin }}</v-icon>
-    </v-btn> 
-    <v-btn text icon small @click="shareLinkedin">
+    </v-btn>
+    <v-btn text icon small @click="shareGithub">
       <v-icon>{{ mdiGithubFace }}</v-icon>
-    </v-btn>         
+    </v-btn>
   </div>
-                                             
+
 
 </template>
 
@@ -49,6 +49,9 @@
       },
       shareLinkedin() {
         window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.url}&title=${encodeURIComponent(this.site.title)}&summary=${encodeURIComponent(`Check this out on the ${this.site.title}!`)}`)
+      },
+      shareGithub() {
+        window.open('https://github.com/tobinbradley/quality-of-life-dashboard')
       }
     }
   }
