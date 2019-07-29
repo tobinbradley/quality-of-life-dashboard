@@ -106,7 +106,6 @@
 
 <script>
   import { mdiDrag, mdiMenu, mdiMap, mdiChartLine, mdiTableLarge, mdiNumeric } from '@mdi/js'
-  // import ResizeObserver from 'resize-observer-polyfill'
   import download from '../js/download'
   import dataToYears from '../js/dataToYears'
   import { formatNumber } from '../js/numberFormatting'
