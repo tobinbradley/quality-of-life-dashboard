@@ -1,7 +1,6 @@
 .DS_Store
 node_modules
 /dist
-/data
 
 # local env files
 .env.local
@@ -24,3 +23,7 @@ yarn-error.log*
 # Extras
 TODO.md
 deploy.sh
+/data
+/dist
+/public/data
+/public/groups
