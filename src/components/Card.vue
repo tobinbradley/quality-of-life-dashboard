@@ -92,8 +92,8 @@
         </v-list>
       </v-menu>
 
-      <v-btn v-if="displayMode !== 'embed'" small color="primary" @click="remove">
-        Close
+      <v-btn v-if="displayMode !== 'embed'" small text color="primary" @click="remove">
+        <v-icon>{{mdiClose}}</v-icon>
       </v-btn>
 
     </v-card-actions>
@@ -105,7 +105,7 @@
 </template>
 
 <script>
-  import { mdiDrag, mdiMenu, mdiMap, mdiChartLine, mdiTableLarge, mdiNumeric } from '@mdi/js'
+  import { mdiDrag, mdiMenu, mdiMap, mdiChartLine, mdiTableLarge, mdiCloseBoxOutline, mdiNumeric } from '@mdi/js'
   import download from '../js/download'
   import dataToYears from '../js/dataToYears'
   import { formatNumber } from '../js/numberFormatting'
@@ -145,6 +145,7 @@
       mdiMap: mdiMap,
       mdiTableLarge: mdiTableLarge,
       mdiNumeric: mdiNumeric,
+      mdiClose: mdiCloseBoxOutline,
       cardData: null,
       yearIndex: null,
       geometry: null,
