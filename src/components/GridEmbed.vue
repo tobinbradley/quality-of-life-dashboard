@@ -61,7 +61,4 @@
 .embed .grid-item:first-child {
   height: 99vh !important;
 }
-
-
-
 </style>

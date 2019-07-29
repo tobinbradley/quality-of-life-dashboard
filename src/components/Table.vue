@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-data-table 
+    <v-data-table
       :headers="headers"
       :items="tableData"
       :items-per-page="5"
@@ -13,7 +13,7 @@
         <tr v-for="item in items" :key="item.name" :class="{ highlight: highlight.indexOf(item.name) !== -1}">
           <td v-for="elem in Object.keys(item)" :key="elem" @mouseenter="setHighlight([item.name])" @mouseleave="setHighlight()">
             {{ item[elem] }}
-          </td>          
+          </td>
         </tr>
       </template>
     </v-data-table>
@@ -26,7 +26,7 @@
 
   export default {
     name: 'datatable',
-    props: {      
+    props: {
       cardData: {
         type: Object
       },
@@ -36,14 +36,14 @@
       highlight: {
         type: Array
       }
-    },       
+    },
     computed: {
-      
+
       years() {
         return dataToYears(this.cardData)
-      }, 
+      },
        dataConfig() {
-        return this.$store.getters.dataConfig(this.metricId)        
+        return this.$store.getters.dataConfig(this.metricId)
       },
       dataOptions() {
         return this.$store.state.dataOptions
@@ -56,8 +56,8 @@
       // },
       geojson() {
         return this.$store.getters.geojsonName(this.metricId)
-      },     
-      selected() {        
+      },
+      selected() {
         return this.$store.getters.selected(this.geojson)
       },
       layerOptions() {
@@ -103,12 +103,12 @@
           })
           if (this.dataConfig.accuracy) {
             rec['accuracy'] = '±' + formatNumber(this.cardData.a[elem][this.years[this.years.length - 1]], this.dataConfig)
-          } 
+          }
 
           dataArray.push(rec)
         })
 
-        return dataArray        
+        return dataArray
       }
 
     },
@@ -126,7 +126,7 @@
 
         items.sort((a, b) => a[index[0]].localeCompare(b[index[0]], 'fr', {numeric: true, ignorePunctuation: true}))
         if (!isDescending[0]) items = items.reverse()
-        return items        
+        return items
 
       }
     }
@@ -134,10 +134,9 @@
 </script>
 
 <style lang="scss">
-
 .table-data.v-data-table {
   margin-top: 20px;
-  
+
   tr.highlight {
     background-color: yellow;
   }
@@ -145,11 +144,9 @@
     white-space: nowrap;
     text-align: right;
   }
-  td:first-of-type, 
+  td:first-of-type,
   th:first-of-type {
     text-align: left;
   }
-
 }
-
 </style>

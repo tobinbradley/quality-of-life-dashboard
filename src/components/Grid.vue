@@ -117,12 +117,9 @@
   }
 }
 
-
 // draggable transition
 .ghost {
   opacity: 0.5;
   background: rgb(200, 235, 251) !important;
-  // border: 3px dashed #2196F3 !important;
 }
-
 </style>

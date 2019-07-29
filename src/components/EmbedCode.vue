@@ -3,7 +3,6 @@
       <v-card>
         <v-divider></v-divider>
 
-
         <v-card-text class="text--primary">
           <p>
             Drop this code into your own web page to embed this metric!
@@ -34,7 +33,6 @@
 </template>
 
 <script>
-
   export default {
     name: 'metadata',
     data() {

@@ -21,7 +21,6 @@
 </template>
 
 <script>
-
   export default {
     name: 'help',
     data () {
@@ -48,7 +47,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

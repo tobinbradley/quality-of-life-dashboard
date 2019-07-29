@@ -112,9 +112,7 @@ h1 {
 }
 
 .blather {
-    column-count: 2;
-    column-gap: 20px;
-
-
+  column-count: 2;
+  column-gap: 20px;
 }
 </style>

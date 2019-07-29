@@ -183,21 +183,6 @@
       }
     },
     mounted () {
-      //this.cardSize = this.setSize()
-
-      // const ro = new ResizeObserver((entries, observer) => {
-      //   for (const entry of entries) {
-      //     const {left, top, width, height} = entry.contentRect;
-      //     if (width >= 500) {
-      //       this.cardSize = 'large'
-      //     }
-      //     else {
-      //       this.cardSize = 'small'
-      //     }
-      //   }
-      // })
-      // ro.observe(this.$refs.card.$el)
-
       // fix for weird Chrome ghost position bug on drag
       const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
       if (isChrome && this.$refs.card.$el) {
@@ -318,7 +303,6 @@
   margin: 2px 2px 0;
 }
 
-
 // switch from side/side to vertical layout
 .flexgrid {
   margin-top: 25px;
@@ -328,7 +312,6 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
-  // margin-top: 7px;
 
   .numbers {
     flex: 2;
@@ -338,6 +321,4 @@
     max-width: 60%;
   }
 }
-
-
 </style>

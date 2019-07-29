@@ -1,6 +1,6 @@
 <template>
   <section>
-     <v-slider 
+     <v-slider
         v-model="yearIndex"
         class="align-center yearslider"
         :class="{singleYear : years.length === 1}"
@@ -11,7 +11,7 @@
         tick-size="4"
       >
         <template v-slot:append>
-          {{ displayYear }}              
+          {{ displayYear }}
         </template>
       </v-slider>
   </section>
@@ -45,8 +45,8 @@ import dataToYears from '../js/dataToYears'
         return dataToYears(this.cardData)
       },
       dataConfig() {
-        return this.$store.getters.dataConfig(this.metricId)        
-      }     
+        return this.$store.getters.dataConfig(this.metricId)
+      }
     },
     watch: {
       yearIndex(newValue, oldValue) {
@@ -66,5 +66,4 @@ import dataToYears from '../js/dataToYears'
 .singleYear .v-input__control {
   visibility: hidden;
 }
-
 </style>

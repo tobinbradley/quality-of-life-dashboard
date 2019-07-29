@@ -1,29 +1,26 @@
-
 /* remove sidebars */
 .print aside {
   display: none;
 }
 
 .print .grid-container {
-    grid-template-columns: 100%;
-    grid-template-rows: 100%;
-    width: 7.9in;
-    margin: 20px auto;
-  }
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
+  width: 7.9in;
+  margin: 20px auto;
+}
 
 .print .grid-item {
   page-break-after: always;
   margin: 20px 0;
 }
 
-
-
 .print .grid-item:first-child {
   grid-column: 1 / 1;
-  grid-row:  1 / 1;
+  grid-row: 1 / 1;
 }
 
-@media only print  {
+@media only print {
   .no-print,
   .mapboxgl-ctrl-top-left,
   .mapboxgl-user-location-dot,
@@ -40,5 +37,4 @@
   .grid-item {
     box-shadow: none;
   }
-
 }
