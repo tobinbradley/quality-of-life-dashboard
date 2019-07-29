@@ -13,12 +13,9 @@ ____________________________________
 @import "../node_modules/mapbox-gl/dist/mapbox-gl.css";
 
 /* awesome stuff */
-@import "./css/variables.css";
-@import "./css/typography.css";
 @import "./css/mapcontrol-fullextent.css";
 @import "./css/mapcontrol-clearselected.css";
 @import "./css/print.css";
-
 
 
 /* override vuetify default show scrollbar */
