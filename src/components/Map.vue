@@ -521,7 +521,7 @@
 
   .mapcontainer {
     position: relative;
-    padding-bottom: 75%;
+    padding-bottom: 74%;
   }
   .large .mapcontainer {
     padding-bottom: 51%;
