@@ -124,7 +124,7 @@
       customSort(items, index, isDescending) {
         if (index.length === 0 || isDescending.length === 0) return items
 
-        items.sort((a, b) => a[index[0]].localeCompare(b[index[0]], 'fr', {numeric: true, ignorePunctuation: true}))
+        items.sort((a, b) => a[index[0]].localeCompare(b[index[0]], navigator.languages[0] || navigator.language, {numeric: true, ignorePunctuation: true}))
         if (!isDescending[0]) items = items.reverse()
         return items
 
