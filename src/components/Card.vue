@@ -323,9 +323,7 @@
 .flexgrid {
   margin-top: 25px;
 }
-.small .flexgrid {
-  // margin: 10px 0;
-}
+
 .large .flexgrid {
   display: flex;
   flex-flow: row wrap;
