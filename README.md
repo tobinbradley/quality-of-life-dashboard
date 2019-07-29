@@ -1,46 +1,148 @@
-# Quality of Life Dashboard v3
+# Quality of Life Dashboard
 
-A dashboard for community data and health. See our [demo site](http://mcmap.org/qol-dev).
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-4.0.0-blue.svg?cacheSeconds=2592000" />
+  <img src="https://img.shields.io/badge/npm-%3E%3D5.5.0-blue.svg" />
+  <img src="https://img.shields.io/badge/node-%3E%3D9.3.0-blue.svg" />
+  <a href="https://github.com/tobinbradley/quality-of-life-dashboard#readme">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
+  </a>
+  <a href="https://github.com/tobinbradley/quality-of-life-dashboard/graphs/commit-activity">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" target="_blank" />
+  </a>
+  <a href="https://github.com/tobinbradley/quality-of-life-dashboard/blob/master/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
+  </a>
+  <a href="https://twitter.com/fuzzytolerance">
+    <img alt="Twitter: fuzzytolerance" src="https://img.shields.io/twitter/follow/fuzzytolerance.svg?style=social" target="_blank" />
+  </a>
+</p>
 
-The original repository with old versions of the Dashboard is [here](https://github.com/tobinbradley/Mecklenburg-County-Quality-of-Life-Dashboard).
+> Neighborhood indicators dashboard built with Vue and Mapbox GL JS.
 
-## Related Projects
+### 🏠 [Homepage](https://github.com/tobinbradley/quality-of-life-dashboard)
 
-*   [quality-of-life-embed](https://github.com/tobinbradley/quality-of-life-embed)
-*   [quality-of-life-report](https://github.com/tobinbradley/quality-of-life-report)
-*   [quality-of-life-data](https://github.com/tobinbradley/mecklenburg-quality-of-life-data)
+## Prerequisites
 
-## Get Started
+- git >= 1.0.0
+- npm >=5.5.0
+- node >=9.3.0
 
-This project requires [git](https://git-scm.com/) and [NodeJS](https://nodejs.org).
+## Install
 
 ``` bash
 git clone https://github.com/tobinbradley/quality-of-life-dashboard.git dashboard
 cd dashboard
 git clone https://github.com/tobinbradley/mecklenburg-quality-of-life-data.git data
 npm install
+```
+
+## Usage
+
+For development:
+
+```sh
+npm run start
+```
+
+Build for production:
+
+```sh
 npm run build
-npm start
 ```
 
-The Dashboard should launch in your default web browser with a live reload server. To build the site for production, run `npm run build` and copy the `public` folder contents to your web server.
+## Options
 
-## Customizing the Dashboard
+`site.js` has a number of customization settings you can set.
 
-Most Dashboard customization can be accomplished by creating your own data repository [following the directions here](https://github.com/tobinbradley/mecklenburg-quality-of-life-data). The data repository includes Dashboard meta (title, author, keywords, etc.), map style and configuration settings, data, etc.
-
-The Dashboard is built using [Vue.js](http://vuejs.org/), [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/), and [Material Design Lite](https://getmdl.io/). The business end of things consists of independent Vue.js components in `app/js/components`. You can very easily create or disable components as needed. Each component has a shared state between all the components, and some components have a private state for things only needed by that component.
-
-The `app/js/search.vue` component searches for the geography id, zip codes, and addresses. Zip code and address searches use HTTP API's from our [Dirt Simple PostGIS HTTP API](https://github.com/tobinbradley/dirt-simple-postgis-http-api) project with Mecklenburg data and won't work for other areas (only the geography ID search will work). Setting up new searches is fairly straight-forward and you can customize it to meet your needs.
-
-To disable the non-geography searches, comment out everything but `searchNeighborhood` in the `search` method of `app/js/search.vue`.
-
-``` javascript
-search: function() {
-    let query = this.privateState.query.trim();
-
-    this.searchNeighborhood(query);
-    //this.searchAddress(query);
-    //this.searchZipcode(query);
-},
+```javascript
+{
+  // REQUIRED
+  // The title of the app as it appears on the page and in the title meta
+  title: 'Charlotte/Mecklenburg Quality of Life Explorer',
+  // REQUIRED
+  // Author meta tag
+  author: 'Tobin Bradley',
+  // REQUIRED
+  // Key word meta tag
+  keywords:
+    'GIS,Mecklenburg County,parks,libraries,schools,environment,impervious surface,floodplain,zoning,assessment,tax,photos,government',
+  // REQUIRED
+  // Description meta tag
+  description:
+    'Exploring neighborhood character, economics, education, engagement, environment, health, housing, safety and transportation.',
+  // OPTIONAL
+  // Google analitics tracking key
+  // Note if you don't want to use this, you can strip out the GA code in
+  // public/index.html and public/embed.html
+  gaKey: 'UA-48797957-1',
+  // OPTIONAL
+  // Location to post contact form. Requires 'submit', 'email', and 'message'
+  // post arguments.
+  contactForm: 'https://mcmap.org/utilities/mail-qol.php',
+  // OPTIONAL
+  // YouTube help video URL
+  // Make sure to include ?enablejsapi=1 on the end or it won't stop playing
+  // when the modal goes away.
+  helpUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1',
+  // OPTIONAL
+  // Links for the left nav bar
+  navLinks: [
+    {
+      title: 'About',
+      url: 'http://charlottenc.gov/HNS/CE/CommunityInfo/Pages/QOL.aspx'
+    },
+    {
+      title: 'Download Data',
+      url: 'https://mcmap.org/qol/downloads/qol-data.zip'
+    },
+    {
+      title: 'Charlotte Open Data Portal',
+      url: 'http://clt.charlotte.opendata.arcgis.com/'
+    },
+    {
+      title: 'Mecklenburg Open Mapping',
+      url: 'http://maps.co.mecklenburg.nc.us/openmapping/'
+    }
+  ]
+}
 ```
+
+The page footer content can also be customized by editing `src/components/Footer.vue`. The left nav bar logo image is located at `src/assets/logo.svg`, the report page image is located at `src/assets/report.jpg`, and the footer image is located at `src/assets/seals.png`.
+
+A PHP MVP for the contact form would look like this:
+
+```php
+<?php
+if (isset($_POST['submit'])) {
+  $to = "you@email.com";
+  $message = "From: " . $_POST['email'] . "\r\n" . $_POST['message'];
+  $message = wordwrap($message, 70, "\r\n");
+  $headers = 'From: Web Feedback <no-reply@yoursite.org>' . "\r\n";
+  mail($to, "Quality of Life Feedback", $message, $headers);
+}
+?>
+```
+
+## Author
+
+👤 **Tobin Bradley**
+
+* Twitter: [@fuzzytolerance](https://twitter.com/fuzzytolerance)
+* Github: [@tobinbradley](https://github.com/tobinbradley)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/tobinbradley/quality-of-life-dashboard/issues).
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+Copyright © 2019 [Tobin Bradley](https://github.com/tobinbradley).<br />
+This project is [MIT](https://github.com/tobinbradley/quality-of-life-dashboard/blob/master/LICENSE) licensed.
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

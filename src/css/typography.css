@@ -1,0 +1,6 @@
+body {
+  font-family: var(--fontfamily);
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: left;
+}

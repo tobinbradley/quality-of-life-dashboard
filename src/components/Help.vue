@@ -1,0 +1,54 @@
+<template>
+  <v-dialog v-model="dialog" width="500" v-if="site.helpUrl">
+    <template v-slot:activator="{ on }">
+      <v-btn text v-on="on">
+        Help
+      </v-btn>
+    </template>
+
+    <v-card>
+      <iframe ref="youtube" width="560" height="315" style="max-width: 100%;" :src="startUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" @click="dialog = false">
+          Close
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+
+  </v-dialog>
+</template>
+
+<script>
+
+  export default {
+    name: 'help',
+    data () {
+      return {
+        dialog: false,
+        startUrl: ''
+      }
+    },
+    computed: {
+      site() {
+        return this.$store.state.siteConfig
+      }
+    },
+    watch: {
+      dialog(newValue, oldValue) {
+        if (newValue) {
+          this.startUrl = this.site.helpUrl
+        }
+        else {
+          const ctx = this.$refs.youtube.contentWindow
+          ctx.postMessage('{"event":"command","func":"stopVideo","args":""}', '*')
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+
+</style>
