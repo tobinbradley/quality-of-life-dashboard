@@ -512,30 +512,16 @@
 </script>
 
 <style lang="scss" scoped>
-/* Other aspect ratios to try:
- * 56.25% = 16:9
- * 75% = 4:3
- * 66.66% = 3:2
- * 62.5% = 8:5
-*/
-
   .mapcontainer {
     position: relative;
-    padding-bottom: 74%;
   }
-  .large .mapcontainer {
-    padding-bottom: 51%;
-  }
-  .map {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+
+  .small .map {
+    height: 257px;
   }
 
   .large .map {
     border-bottom: 1px solid #ccc;
+    height: 380px;
   }
-
 </style>
