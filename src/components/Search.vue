@@ -19,7 +19,7 @@
     </v-flex>
     <v-flex sm1></v-flex>
     <v-flex sm5 id="selectGroup">
-      <v-select v-if="groups.length > 0"        
+      <v-select v-if="groups.length > 0"
         @change="selectGroup"
         :items="groups"
         label="Geography (approximate)"
@@ -78,19 +78,20 @@
 
         // build urls
         const urls = []
-        this.dataOptions.searchPaths.forEach(search => {
+        const searchPaths = this.dataOptions.searchPaths.concat(this.geojsonOptions.searchPaths)
+        searchPaths.forEach(search => {
           let val = search.searchVal(newValue) || newValue
           urls.push(search.url + val)
         })
-      
+
         if (newValue.length >= 4) {
           const promises = urls.map(url => fetch(url).then(y => y.json()))
           Promise.all(promises)
             .then(results => {
               results.forEach((result, idx) => {
                 let final = result
-                if (this.dataOptions.searchPaths[idx].format) {
-                  final = this.dataOptions.searchPaths[idx].format(result)
+                if (searchPaths[idx].format) {
+                  final = searchPaths[idx].format(result)
                 }
                 this.entries.push(...final)
               })
