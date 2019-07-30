@@ -18,10 +18,16 @@
         <template v-if="cardSize === 'large'">
           <div v-if="dataConfig.subtitle" class="overline" style="text-align: center">{{ dataConfig.subtitle }}</div>
 
-          <div class="flexgrid">
-            <Numbers class="numbers" :cardData="cardData" :metricId="metricId" :yearIndex="yearIndex" />
-            <TrendChart class="trendchart" :cardData="cardData" :metricId="metricId" :yearIndex="yearIndex"  />
-          </div>
+          <!-- <div class="flexgrid"> -->
+          <v-layout wrap style="margin: 20px 10px;">
+            <v-flex xs12 sm4>
+              <Numbers class="numbers" :cardData="cardData" :metricId="metricId" :yearIndex="yearIndex" />
+            </v-flex>
+            <v-flex xs12 sm7 offset-sm1>
+              <TrendChart class="trendchart" :cardData="cardData" :metricId="metricId" :yearIndex="yearIndex"  />
+            </v-flex>
+          </v-layout>
+          <!-- </div> -->
 
           <DataTable v-if="showTable" :cardData="cardData" :highlight="highlight" :metricId="metricId" :yearIndex="yearIndex" @updateHighlight="updateHighlight" />
         </template>
@@ -231,7 +237,6 @@
         this.yearIndex = e
       },
       setGeocode(val) {
-        console.log(val)
         this.geocode = val
       },
       getCSVData(keys = Object.keys(this.cardData.map)) {
@@ -304,22 +309,4 @@
   margin: 2px 2px 0;
 }
 
-// switch from side/side to vertical layout
-.flexgrid {
-  margin-top: 25px;
-}
-
-.large .flexgrid {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-
-  .numbers {
-    flex: 2;
-  }
-  .trendchart {
-    flex: 3;
-    max-width: 60%;
-  }
-}
 </style>

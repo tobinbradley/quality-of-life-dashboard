@@ -12,7 +12,7 @@
 
   export default {
     name: "trendchart",
-    props: {     
+    props: {
       cardData: {
         type: Object
       },
@@ -32,7 +32,7 @@
           "#00bcd4",
           "#cddc39"
         ],
-        comparables: []        
+        comparables: []
       }
     },
     computed: {
@@ -40,15 +40,15 @@
         return dataToYears(this.cardData)
       },
       dataConfig() {
-        return this.$store.getters.dataConfig(this.metricId)        
+        return this.$store.getters.dataConfig(this.metricId)
       },
       dataOptions() {
         return this.$store.state.dataOptions
-      }, 
+      },
       geojson() {
         return this.$store.getters.geojsonName(this.metricId)
-      },     
-      selected() {        
+      },
+      selected() {
         return this.$store.getters.selected(this.geojson)
       },
       chartOptions() {
@@ -65,7 +65,7 @@
           hover: {
             mode: 'nearest',
             intersect: true
-          },          
+          },
           scales: {
             yAxes: [{
                 ticks: {
@@ -78,8 +78,8 @@
             intersect: false,
             callbacks: {
               label: (tooltipItem, data) => {
-                return ` ${data.datasets[tooltipItem.datasetIndex].label || ''}: ${formatNumber(tooltipItem.yLabel, this.dataConfig)}`                
-              }                
+                return ` ${data.datasets[tooltipItem.datasetIndex].label || ''}: ${formatNumber(tooltipItem.yLabel, this.dataConfig)}`
+              }
             }
           }
         }
@@ -94,18 +94,18 @@
 
         // push in selected
         if (this.selected.length > 0) this.trendChart.data.datasets.push(this.selectedData())
-        this.trendChart.update()        
+        this.trendChart.update()
       }
     },
     async mounted () {
       const ctx = this.$refs.trendChart.getContext('2d')
-      
+
       this.trendChart = new Chart(ctx, {
           type: 'line',
           data: await this.chartData(),
           options: this.chartOptions
       })
-      
+
     },
     methods: {
       selectedData() {
@@ -139,7 +139,7 @@
         // push in selected
         if (this.selected.length > 0) data.datasets.push(this.selectedData())
 
-        return data 
+        return data
       },
       async compareData() {
         // loop through calculated ones
@@ -164,31 +164,42 @@
             ids = await response.json()
             if (group.format) ids = group.format(ids)
           }
-          
-          this.years.forEach(year => {            
+
+          this.years.forEach(year => {
             let dataPoint = metricCalculation(this.cardData, year, this.dataConfig.type, ids || false)
             if (isNaN(parseFloat(dataPoint))) dataPoint = null
             data.data.push(dataPoint)
           })
 
           this.comparables = data
-           
+
           returnArray.push(data)
-          
+
           idx++
         }
 
-        return returnArray     
+        return returnArray
       }
     }
   }
 </script>
 
 <style scoped>
+section {
+  position: relative;
+  width: 100%;
+}
 .small section {
   margin-top: 30px;
+  min-height: 148px;
 }
 .large section {
-  margin-left: 20px;
+  min-height: 218px;  
+}
+
+@media (max-width: 600px) {
+  section {
+    margin-top: 30px;
+  }
 }
 </style>
