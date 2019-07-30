@@ -1,6 +1,6 @@
 <template>
   <v-layout wrap>
-    <v-flex md5>
+    <v-flex sm5 xs12>
       <v-autocomplete
         v-model="model"
         :items="items"
@@ -17,9 +17,9 @@
         clearable
       ></v-autocomplete>
     </v-flex>
-    <v-flex md1></v-flex>
-    <v-flex md5>
-      <v-select v-if="groups.length > 0"
+    <v-flex sm1></v-flex>
+    <v-flex sm5 id="selectGroup">
+      <v-select v-if="groups.length > 0"        
         @change="selectGroup"
         :items="groups"
         label="Geography (approximate)"
@@ -82,31 +82,36 @@
           let val = search.searchVal(newValue) || newValue
           urls.push(search.url + val)
         })
-
-        const promises = urls.map(url => fetch(url).then(y => y.json()))
-        Promise.all(promises)
-          .then(results => {
-            results.forEach((result, idx) => {
-              let final = result
-              if (this.dataOptions.searchPaths[idx].format) {
-                final = this.dataOptions.searchPaths[idx].format(result)
-              }
-              this.entries.push(...final)
+      
+        if (newValue.length >= 4) {
+          const promises = urls.map(url => fetch(url).then(y => y.json()))
+          Promise.all(promises)
+            .then(results => {
+              results.forEach((result, idx) => {
+                let final = result
+                if (this.dataOptions.searchPaths[idx].format) {
+                  final = this.dataOptions.searchPaths[idx].format(result)
+                }
+                this.entries.push(...final)
+              })
             })
-          })
-          .then(e => {
-            this.isLoading = false
-          })
-          .catch(error => {
-            this.isLoading = false
-            console.log(error)
-          })
+            .then(e => {
+              this.isLoading = false
+            })
+            .catch(error => {
+              this.isLoading = false
+              console.log(error)
+            })
+        } else {
+          this.isLoading = false
+        }
 
       },
       model(val) {
         if (val) {
           if (val.id) {
             this.$store.commit("addSelected", { geography: this.geojson, id: val.id })
+            this.$emit('geocode', {id: val.id})
           }
           if (val.lnglat) {
             this.$emit('geocode', val)
@@ -137,5 +142,11 @@
 .v-text-field {
   padding-top: 0;
   margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  #selectGroup {
+    display: none;
+  }
 }
 </style>
