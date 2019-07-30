@@ -29,7 +29,8 @@
 
 <style lang="css">
 .app-footer {
-  margin-top: 40px;
+  margin: 40px 10px 20px;
   background-color: transparent !important;
+  color: rgba(0, 0, 0, 0.4) !important;
 }
 </style>
