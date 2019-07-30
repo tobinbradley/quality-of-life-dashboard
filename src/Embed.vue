@@ -1,5 +1,5 @@
 <template>
-  <v-app :class="displayMode">
+  <v-app class="embed">
     <EmbedGrid />
   </v-app>
 </template>
@@ -12,13 +12,8 @@
     components: {
       EmbedGrid
     },
-    computed: {
-      displayMode() {
-        return this.$store.state.displayMode
-      }
-    },
     beforeMount () {
-      // set display mode
+      // set display mode to embed
       this.$store.commit('setDisplayMode', 'embed')
     }
   }

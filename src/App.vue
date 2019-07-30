@@ -12,8 +12,6 @@
   import MetricSelectorToggle from './components/MetricSelectorToggle'
   import AppBar from './components/AppBar.vue'
   import Footer from './components/Footer.vue'
-  import setMode from './js/displayMode'
-
 
   export default {
     name: 'app',
@@ -32,12 +30,6 @@
       }
     },
     beforeMount () {
-      // set display mode
-      this.$store.commit('setDisplayMode', setMode())
-      // window.addEventListener('resize', () => {
-      //   if (this.$store.state.displayMode !== 'print') this.$store.commit('setDisplayMode', setMode())
-      // })
-
       // handle pop state
       window.addEventListener('popstate', (event) => {
         if (history.state && history.state.metric && history.state.selected) {

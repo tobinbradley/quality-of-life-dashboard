@@ -23,7 +23,6 @@
   import MetricSelector from './MetricSelector.vue'
   import NavLinks from './NavLinks.vue'
   import { mdiPlus, mdiPrinter, mdiFinance } from '@mdi/js'
-  import setMode from '../js/displayMode'
 
   export default {
     name: 'appbar',
@@ -48,10 +47,10 @@
     methods: {
       togglePrint() {
         if (this.$store.state.displayMode !== 'print') {
-          this.$store.commit("setDisplayMode", setMode('print'))
+          this.$store.commit("setDisplayMode", 'print')
         }
         else {
-          this.$store.commit("setDisplayMode", setMode())
+          this.$store.commit("setDisplayMode", 'desktop')
         }
       }
     }

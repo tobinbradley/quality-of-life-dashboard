@@ -70,7 +70,6 @@
 </template>
 
 <script>
-  import setMode from '../js/displayMode'
   import { mdiPrinter } from '@mdi/js'
 
   export default {
@@ -90,7 +89,7 @@
         window.print()
       },
       close() {
-        this.$store.commit("setDisplayMode", setMode())
+        this.$store.commit("setDisplayMode", 'desktop')
       }
     },
   }

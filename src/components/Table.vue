@@ -51,9 +51,6 @@
       displayMode() {
         return this.$store.state.displayMode
       },
-      // tableRows() {
-      //   return this.displayMode === 'print' ? 9999 : 5
-      // },
       geojson() {
         return this.$store.getters.geojsonName(this.metricId)
       },

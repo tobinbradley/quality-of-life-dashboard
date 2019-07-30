@@ -30,7 +30,7 @@ export default new Vuex.Store({
     dataOptions: options,
     siteConfig: site,
     modal: { modal: null, options: null },
-    displayMode: 'desktop' // desktop, mobile, print, embed
+    displayMode: 'desktop' // desktop, print, embed
   },
   getters: {
     dataConfig: state => id => {
