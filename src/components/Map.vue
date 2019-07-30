@@ -315,9 +315,9 @@
         // add geography events
         // add controls
         this.map.addControl(this.navControl, 'top-left')
-        if (this.displayMode !== 'embed') this.map.addControl(this.geolocateControl, 'top-left')
-        this.map.addControl(this.fullscreenControl, 'top-left')
         this.map.addControl(this.FullExtentControl, 'top-left')
+        this.map.addControl(this.fullscreenControl, 'top-left')
+        if (this.displayMode !== 'embed') this.map.addControl(this.geolocateControl, 'top-left')
         if (this.displayMode !== 'embed') this.map.addControl(this.clearSelectedControl, 'top-left')
 
         // callbacks for control
