@@ -12,7 +12,11 @@ options.geojson.forEach(elem => {
 })
 
 // check history
-const metrics = readMetrics() || ['27', '100', '2']
+const metrics =
+  readMetrics() ||
+  options.defaultMetrics[
+    Math.floor(Math.random() * options.defaultMetrics.length)
+  ]
 
 readSelected(selected)
 
