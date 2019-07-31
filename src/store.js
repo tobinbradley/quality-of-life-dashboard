@@ -13,12 +13,11 @@ options.geojson.forEach(elem => {
 
 // check history
 const metrics =
-  readMetrics() ||
+  readMetrics(data) ||
   options.defaultMetrics[
     Math.floor(Math.random() * options.defaultMetrics.length)
   ]
-
-readSelected(selected)
+readSelected(selected, options.defaultgeojson)
 
 Vue.use(Vuex)
 
