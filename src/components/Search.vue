@@ -76,15 +76,18 @@
         let geomMatches = this.geometry.features.filter(el => { return el.properties.id.toUpperCase().indexOf(newValue.toUpperCase()) !== -1 })
         this.entries = geomMatches.map(el => { return { label: `${this.geojsonOptions.name} ${el.properties.id}`, id: [el.properties.id] } })
 
-        // build urls
-        const urls = []
-        const searchPaths = this.dataOptions.searchPaths.concat(this.geojsonOptions.searchPaths)
-        searchPaths.forEach(search => {
-          let val = search.searchVal(newValue) || newValue
-          urls.push(search.url + val)
-        })
+
 
         if (newValue.length >= 4) {
+          // build urls
+          const urls = []
+          const searchPaths = this.dataOptions.searchPaths.concat(this.geojsonOptions.searchPaths)
+
+          searchPaths.forEach(search => {
+            let val = search.searchVal(newValue) || newValue
+            urls.push(search.url + val)
+          })
+
           const promises = urls.map(url => fetch(url).then(y => y.json()))
           Promise.all(promises)
             .then(results => {
