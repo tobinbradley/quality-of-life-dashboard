@@ -68,15 +68,20 @@
 <style lang="scss">
 
 .grid-container {
-  display: grid;
-  grid-template-columns:  repeat(auto-fill, 380px);
-  grid-template-rows: 400px repeat(auto-fill, 400px);
-  grid-gap: 18px;
   margin: 25px 10px;
-  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+
+  @supports (display: grid) {
+    display: grid;
+    grid-template-columns:  repeat(auto-fill, 380px);
+    grid-template-rows: 400px repeat(auto-fill, 400px);
+    grid-gap: 18px;
+  }
 }
 
 .grid-item {
+  flex: 0 0 380px;
   height: 400px;
   border-radius: 2px;
   box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
@@ -85,15 +90,25 @@
   overflow: auto;
   overflow-x: hidden;
   transition: transform 0.3s;
+  margin: 0 18px 18px 0;
+
+  @supports (display: grid) {
+    margin: 0;
+  }
 }
 
 .grid-item:first-child {
-  height: inherit;
-  grid-column: auto / span 2;
-  grid-row:  auto / span 2;
+  flex: 0 0 778px;
+  height: 818px;
+
+  @supports (display: grid) {
+    height: inherit;
+    grid-column: auto / span 2;
+    grid-row:  auto / span 2;
+  }
 }
 
-.mobile {
+@media (max-width: 800px) {
   .grid-container {
     display: block;
   }

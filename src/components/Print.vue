@@ -51,7 +51,7 @@
           <img src="../assets/report.jpg">
           <h1 contenteditable="true">Report</h1>
         </div>
-        <div class="blather">
+        <div class="blather" style="width: 7in;">
           <p class="text--primary">
             The {{ site.title }} is an interactive online tool to help neighborhoods, government leaders and staff, businesses, community organizations, new residents and others learn more about our county and the diverse neighborhoods within it.  The Explorer features over 80 variables that reflect you, the places you live and work, and collectively, our community.
           </p>
