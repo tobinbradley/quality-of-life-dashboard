@@ -1,9 +1,9 @@
 <template>
   <section>
-    <p class="numbers">   
+    <p class="numbers">
       <span class="selected">
         {{ metric }}
-      </span>   
+      </span>
       <span v-if="dataConfig.label" class="label">
         {{ dataConfig.label }}
       </span>
@@ -22,15 +22,7 @@
         <tbody>
           <tr v-for="item in comparables" :key="item.name">
             <td class="text-xs-left" style="text-align: left;">
-
-              
-              <v-tooltip bottom max-width="200">
-                <template v-slot:activator="{ on }">
-                  <span class="text-tooltip" v-on="on">{{ item.name }}</span>
-                </template>
-                <span>Number is approximate due to boundary and rounding issues.</span>
-              </v-tooltip>
-
+              {{ item.name }}
               <span v-if="item.raw" class="raw">{{ item.raw }} {{ dataConfig.raw_label }}</span>
             </td>
             <td class="text-xs-right" style="text-align: right;">{{ item.val }}</td>
@@ -58,7 +50,7 @@
       metricId: String,
       cardData: {
         type: Object
-      },      
+      },
       yearIndex: {
         type: Number
       }
@@ -66,7 +58,7 @@
     data() {
       return {
         metric: '--',
-        raw: '--',         
+        raw: '--',
         comparables: [],
         fixedComparables: []
       }
@@ -76,7 +68,7 @@
         return dataToYears(this.cardData)
       },
       dataConfig() {
-        return this.$store.getters.dataConfig(this.metricId)        
+        return this.$store.getters.dataConfig(this.metricId)
       },
       dataOptions() {
         return this.$store.state.dataOptions
@@ -87,7 +79,7 @@
       year() {
         return this.years[this.yearIndex]
       },
-      selected() {        
+      selected() {
         return this.$store.state.selected[this.geojson]
       },
     },
@@ -136,12 +128,12 @@
             ids = await response.json()
             if (group.format) ids = group.format(ids)
           }
-                    
+
           record.val = formatNumber(this.metricVal(ids || false), this.dataConfig)
           // raw if needed
           if (this.dataConfig.raw_label) {
             record.raw = formatNumber(this.rawVal(ids || false), this.dataConfig)
-          }    
+          }
 
           this.comparables.push(record)
         })
@@ -175,7 +167,7 @@
   text-transform: uppercase;
 
   span {
-    display: block;    
+    display: block;
   }
   span.subtitle {
     font-size: 0.9em;
@@ -185,7 +177,7 @@
   span.selected {
     font-size: 3em;
     font-weight: bold;
-    line-height: 0.9em;    
+    line-height: 0.9em;
   }
   span.label {
     font-size: 1.1em;
