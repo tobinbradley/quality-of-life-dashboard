@@ -16,15 +16,6 @@
   import ClearSelectedControl from '../js/mapControlClearSelected'
   import mapStyle from '../../data/gl-style/positron-mecklenburg.json'
 
-  // BEHOLD THIS SMELLY THING
-  // There's a slight delay between when draggable has done its thing and the
-  // map should resize the container. The map resize event is firing before the
-  // container is at the new height. So I takes a 100ms nap and fire it manually
-  // like an asshole.
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   export default {
     name: 'qolmap',
     components: {
