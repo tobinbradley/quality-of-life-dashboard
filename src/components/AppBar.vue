@@ -11,37 +11,43 @@
     <v-btn icon @click="togglePrint()">
       <v-icon>{{ mdiPrinter }}</v-icon>
     </v-btn>
-        
-  </v-app-bar>
+    <v-btn icon @click="showHelp = true">
+      <v-icon>{{ mdiHelp }}</v-icon>
+    </v-btn>
 
   <NavLinks />
+  <Help v-model="showHelp" />
+
+  </v-app-bar>
+
+
 
 </div>
 </template>
 
 <script>
-  import MetricSelector from './MetricSelector.vue'
   import NavLinks from './NavLinks.vue'
-  import { mdiPlus, mdiPrinter, mdiFinance } from '@mdi/js'
+  import Help from './Help'
+  import { mdiPrinter, mdiHelp } from '@mdi/js'
 
   export default {
     name: 'appbar',
     components: {
-      MetricSelector,
+      Help,
       NavLinks
     },
     data () {
       return {
         linksDrawer: null,
         metricsDrawer: null,
-        mdiPlus: mdiPlus,
         mdiPrinter: mdiPrinter,
-        mdiFinance: mdiFinance
+        mdiHelp: mdiHelp,
+        showHelp: false
       }
     },
     computed: {
       site() {
-        return this.$store.state.siteConfig 
+        return this.$store.state.siteConfig
       }
     },
     methods: {
