@@ -19,11 +19,11 @@
           <div v-if="dataConfig.subtitle" class="overline" style="text-align: center">{{ dataConfig.subtitle }}</div>
 
           <!-- <div class="flexgrid"> -->
-          <v-layout wrap style="margin: 20px 10px;">
-            <v-flex xs12 sm4>
+          <v-layout wrap class="large-2x2" style="margin: 20px 10px;">
+            <v-flex custom-sm5>
               <Numbers class="numbers" :cardData="cardData" :metricId="metricId" :yearIndex="yearIndex" />
             </v-flex>
-            <v-flex xs12 sm7 offset-sm1>
+            <v-flex custom-sm6>
               <TrendChart class="trendchart" :cardData="cardData" :metricId="metricId" :yearIndex="yearIndex"  />
             </v-flex>
           </v-layout>
@@ -307,6 +307,26 @@
 
 .embed .card-container {
   margin: 2px 2px 0;
+}
+
+@media (min-width: 500px) {
+  .flex.custom-sm5 {
+      -ms-flex-preferred-size: 41.6666666667%;
+      flex-basis: 41.6666666667%;
+      -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+      flex-grow: 0;
+      max-width: 41.6666666667%;
+  }
+  .flex.custom-sm6 {
+      -ms-flex-preferred-size: 50%;
+      flex-basis: 50%;
+      -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+      flex-grow: 0;
+      max-width: 50%;
+      margin-left: 8.3333333333%;
+  }
 }
 
 </style>
