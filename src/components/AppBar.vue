@@ -11,17 +11,14 @@
     <v-btn icon @click="togglePrint()">
       <v-icon>{{ mdiPrinter }}</v-icon>
     </v-btn>
-    <v-btn icon @click="showHelp = true">
+    <v-btn icon v-if="site.helpUrl" @click="showHelp = true">
       <v-icon>{{ mdiHelp }}</v-icon>
     </v-btn>
 
-  <NavLinks />
-  <Help v-model="showHelp" />
+    <Help v-model="showHelp" />
 
   </v-app-bar>
-
-
-
+  <NavLinks />
 </div>
 </template>
 

@@ -27,9 +27,14 @@
         <div style="text-align: center;">
           <Share />
           <Contact v-if="site.contactForm" />
-          <Help />
+          <v-btn v-if="site.helpUrl" text @click="showHelp=true">
+            Help
+          </v-btn>
+
         </div>
       </template>
+
+      <Help v-model="showHelp" />
 
     </v-navigation-drawer>
 </template>
@@ -48,7 +53,7 @@
     },
     data () {
       return {
-        dialog: false,
+        showHelp: false
       }
     },
     computed: {
