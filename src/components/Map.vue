@@ -220,7 +220,7 @@
           this.setBoundary()
           this.setMapHover()
           if (this.displayMode !== 'embed') this.setMapClick()
-          if (map.getCanvas().width > 400) this.setInteractive()
+          if (this.cardSize === 'large') this.setInteractive()
         })
 
         map.on("rotate", e => {

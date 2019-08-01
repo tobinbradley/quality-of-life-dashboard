@@ -21,6 +21,10 @@
 }
 
 @media only print {
+  @page {
+    margin: 0.75in;
+   }
+
   .no-print,
   .mapboxgl-ctrl-top-left,
   .mapboxgl-user-location-dot,
