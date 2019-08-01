@@ -1,8 +1,8 @@
 <template>
   <v-card ref="card" class="card-container">
 
-    <v-card-title>
-      <v-icon class="handle">{{ mdiDrag }}</v-icon>
+    <v-card-title class="handle">
+      <v-icon>{{ mdiDrag }}</v-icon>
       <div class="overline">{{ dataConfig.title }}</div>
     </v-card-title>
 
