@@ -1,6 +1,6 @@
 {
-  "name": "qol4",
-  "short_name": "qol4",
+  "name": "Quality of Life Explorer",
+  "short_name": "QoL",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
