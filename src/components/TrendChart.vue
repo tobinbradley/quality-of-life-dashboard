@@ -56,7 +56,11 @@
           responsive: true,
           preserveAspectRatio: false,
           legend: {
-            position: 'bottom'
+            position: 'bottom',
+            labels: {
+              usePointStyle: true,
+              boxWidth: 7
+						}
           },
           title: {
             display: false,
@@ -194,7 +198,7 @@ section {
   min-height: 148px;
 }
 .large section {
-  min-height: 218px;  
+  min-height: 218px;
 }
 
 @media (max-width: 600px) {
