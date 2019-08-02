@@ -189,6 +189,11 @@
         return this.toolbar[this.toggleToolbar]
       }
     },
+    watch: {
+      cardSize(val) {
+        this.toggleToolbar = 0
+      }
+    },
     mounted () {
       // fix for weird Chrome ghost position bug on drag
       const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
