@@ -26,12 +26,12 @@
     "chart.js": "^2.8.0",
     "core-js": "^2.6.5",
     "dynamic-polyfill": "^1.1.0",
-    "mapbox-gl": "^1.1.1",
+    "mapbox-gl": "^1.2.0",
     "register-service-worker": "^1.6.2",
     "simple-statistics": "^7.0.5",
     "vue": "^2.6.10",
     "vuedraggable": "^2.23.0",
-    "vuetify": "^2.0.3",
+    "vuetify": "^2.0.4",
     "vuex": "^3.1.1"
   },
   "devDependencies": {
