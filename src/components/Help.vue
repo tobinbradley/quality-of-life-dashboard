@@ -3,7 +3,6 @@
 
     <v-card>
       <iframe ref="youtube" width="560" height="315" style="max-width: 100%;" :src="startUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" @click="show = false">
