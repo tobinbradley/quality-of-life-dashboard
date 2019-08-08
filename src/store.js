@@ -47,12 +47,6 @@ export default new Vuex.Store({
   mutations: {
     setMetric(state, payload) {
       state.metric = payload
-      // do something with URL
-      writeState(state.metric, state.selected)
-    },
-    addMetric(state, payload) {
-      state.metric.push(payload)
-      // do something with URL
       writeState(state.metric, state.selected)
     },
     setHighlight(state, payload) {
@@ -82,9 +76,6 @@ export default new Vuex.Store({
     popState(state, payload) {
       state.metric = payload.metric
       state.selected = payload.selected
-    },
-    setModal(state, payload) {
-      state.modal = payload
     }
   }
 })
