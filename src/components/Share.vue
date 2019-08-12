@@ -1,16 +1,16 @@
 <template>
 
   <div>
-    <v-btn text icon small @click="shareTwitter">
+    <v-btn text icon small @click="shareTwitter" aria-label="Share on Twitter" title="Share on Twitter">
       <v-icon>{{ mdiTwitter }}</v-icon>
     </v-btn>
-    <v-btn text icon small @click="shareFacebook">
+    <v-btn text icon small @click="shareFacebook" aria-label="Share of Facebook" title="Share on Facebook">
       <v-icon>{{ mdiFacebook }}</v-icon>
     </v-btn>
-    <v-btn text icon small @click="shareLinkedin">
+    <v-btn text icon small @click="shareLinkedin" aria-label="Share on Linkedin" title="Share on Linkedin">
       <v-icon>{{ mdiLinkedin }}</v-icon>
     </v-btn>
-    <v-btn text icon small @click="shareGithub">
+    <v-btn text icon small @click="shareGithub" aria-label="Source code on Github" title="Source code on Github">
       <v-icon>{{ mdiGithubFace }}</v-icon>
     </v-btn>
   </div>

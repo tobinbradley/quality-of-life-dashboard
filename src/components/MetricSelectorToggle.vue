@@ -10,10 +10,11 @@
       @click="showMetricSelector=true"
       style="top: 73px; right: 10px;"
       class="no-print"
+      aria-label="Select Metrics" title="Select Metrics"
     >
       <v-icon>{{ mdiFinance }}</v-icon>
     </v-btn>
-    
+
     <MetricSelector v-model="showMetricSelector" />
   </div>
 </template>
@@ -32,7 +33,7 @@
     },
     components: {
       MetricSelector
-    }    
+    }
   }
 </script>
 

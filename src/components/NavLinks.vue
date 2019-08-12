@@ -27,7 +27,7 @@
         <div style="text-align: center;">
           <Share />
           <Contact v-if="site.contactForm" />
-          <v-btn v-if="site.helpUrl" text @click="showHelp=true">
+          <v-btn v-if="site.helpUrl" text @click="showHelp=true" aria-label="Help" title="Help">
             Help
           </v-btn>
 

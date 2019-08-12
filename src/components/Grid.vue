@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <main>
     <Print v-if="displayMode === 'print'" />
 
     <draggable
@@ -21,7 +21,7 @@
       </transition-group>
     </draggable>
 
-  </div>
+  </main>
 </template>
 
 <script>

@@ -15,6 +15,7 @@
         :filter="goFilter"
         return-object
         clearable
+        aria-label="search"
       ></v-autocomplete>
     </v-flex>
     <v-flex sm1></v-flex>
@@ -25,6 +26,7 @@
         label="Geography (approximate)"
         hide-details
         clearable
+        aria-label="select geography group"
       ></v-select>
     </v-flex>
   </v-layout>

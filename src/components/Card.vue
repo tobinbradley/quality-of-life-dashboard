@@ -46,16 +46,16 @@
     <v-card-actions class="card-actions">
 
       <v-btn-toggle v-model="toggleToolbar" mandatory v-show="cardSize === 'small'">
-        <v-btn small>
+        <v-btn small aria-label="view map" title="Map">
           <v-icon>{{ mdiMap }}</v-icon>
         </v-btn>
-        <v-btn small title="Trend Chart">
+        <v-btn small title="Trend Chart" aria-label="Trend Chart">
           <v-icon>{{ mdiChartLine }}</v-icon>
         </v-btn>
-        <v-btn small>
+        <v-btn small aria-label="metric summary" title="Metric Summary">
           <v-icon>{{ mdiNumeric }}</v-icon>
         </v-btn>
-        <v-btn small>
+        <v-btn small aria-label="Data Table" title="Data Table">
           <v-icon>{{ mdiTableLarge }}</v-icon>
         </v-btn>
       </v-btn-toggle>
@@ -64,7 +64,7 @@
         <Search v-if="displayMode !== 'embed'" :metricId="metricId" :geometry="geometry" @geocode="setGeocode" />
 
           <v-btn-toggle>
-          <v-btn small @click="showTable = !showTable">
+          <v-btn small @click="showTable = !showTable" aria-label="Data Table" title="Data Table">
             <v-icon>{{ mdiTableLarge }}</v-icon>
           </v-btn>
         </v-btn-toggle>
@@ -72,7 +72,7 @@
 
       <v-menu offset-y>
         <template v-slot:activator="{ on }">
-          <v-btn text small v-on="on">
+          <v-btn text small v-on="on" aria-label="More Options">
             <v-icon>{{ mdiMenu }}</v-icon>
           </v-btn>
         </template>
@@ -98,7 +98,7 @@
         </v-list>
       </v-menu>
 
-      <v-btn v-if="displayMode !== 'embed'" small text color="primary" @click="remove">
+      <v-btn v-if="displayMode !== 'embed'" small text color="primary" @click="remove" aria-label="Close Metric" title="Close Metric">
         <v-icon>{{mdiClose}}</v-icon>
       </v-btn>
 

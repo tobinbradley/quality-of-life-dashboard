@@ -1,7 +1,7 @@
 <template>
     <v-navigation-drawer
       v-model="show"
-      fixed      
+      fixed
       temporary
       right
     >
@@ -27,26 +27,27 @@
         multiple
         clearable
         menu-props="closeOnClick"
+        aria-label="Filter Metrics"
         ></v-select>
       </v-list-item>
 
       <v-list dense>
-        
+
         <v-list-item
           v-for="item in dataConfig"
-          :key="item.metric"                              
-        >     
-        
-          <v-list-item-content>           
-            <v-checkbox              
+          :key="item.metric"
+        >
+
+          <v-list-item-content>
+            <v-checkbox
               :label="item.title"
-              v-model="metric"              
-              
+              v-model="metric"
+
               :value="item.metric"
               height=0
             ></v-checkbox>
             <v-icon v-if="site.whatsnew.indexOf(item.metric) !== -1" class="new" color="pink">{{ mdiNewBox }}</v-icon>
-          </v-list-item-content>   
+          </v-list-item-content>
          </v-list-item>
 
       </v-list>
@@ -66,7 +67,7 @@
         filterBy: [],
         mdiFinance: mdiFinance,
         mdiNewBox: mdiNewBox
-    }),    
+    }),
     computed: {
       show: {
         get () {
@@ -85,7 +86,7 @@
         }
       },
       dataConfig() {
-        if (this.filterBy.length > 0) {          
+        if (this.filterBy.length > 0) {
           return this.$store.state.dataConfig.filter(el => {
             const uniques = [...new Set([...el.tags, ...this.filterBy])]
             return uniques.length !== this.filterBy.length + el.tags.length

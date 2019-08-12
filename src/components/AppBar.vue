@@ -1,17 +1,17 @@
 <template>
 <div>
   <v-app-bar dark color="primary">
-    <v-app-bar-nav-icon @click.stop="linksDrawer = !linksDrawer"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click.stop="linksDrawer = !linksDrawer" aria-label="Navigation Links"></v-app-bar-nav-icon>
 
     <v-toolbar-title>
       {{ site.title }}
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
-    <v-btn icon @click="togglePrint()">
+    <v-btn icon @click="togglePrint()" aria-label="Print" title="Print">
       <v-icon>{{ mdiPrinter }}</v-icon>
     </v-btn>
-    <v-btn icon v-if="site.helpUrl" @click="showHelp = true">
+    <v-btn icon v-if="site.helpUrl" @click="showHelp = true" aria-label="Help" title="Help">
       <v-icon>{{ mdiHelp }}</v-icon>
     </v-btn>
 
