@@ -46,16 +46,16 @@
     <v-card-actions class="card-actions">
 
       <v-btn-toggle v-model="toggleToolbar" mandatory v-show="cardSize === 'small'">
-        <v-btn small aria-label="view map" title="Map">
+        <v-btn small title="Map">
           <v-icon>{{ mdiMap }}</v-icon>
         </v-btn>
-        <v-btn small title="Trend Chart" aria-label="Trend Chart">
+        <v-btn small title="Trend Chart">
           <v-icon>{{ mdiChartLine }}</v-icon>
         </v-btn>
-        <v-btn small aria-label="metric summary" title="Metric Summary">
+        <v-btn small title="Metric Summary">
           <v-icon>{{ mdiNumeric }}</v-icon>
         </v-btn>
-        <v-btn small aria-label="Data Table" title="Data Table">
+        <v-btn small title="Data Table">
           <v-icon>{{ mdiTableLarge }}</v-icon>
         </v-btn>
       </v-btn-toggle>
@@ -308,6 +308,11 @@
   justify-content: flex-end;
   align-content: center;
   display: flex;
+}
+
+// fix button spacing
+.v-btn-toggle > .v-btn.v-btn {
+  margin: 0 !important;
 }
 
 .embed .card-container {
