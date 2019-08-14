@@ -12,7 +12,7 @@
           with much &#9829; for the projects that make this site possible:
           <br>
           <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>,
-          <a href="http://osm2vectortiles.org/" target="_blank">OSM2VectorTiles</a>,
+          <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>,
           <a href="https://www.mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL JS</a>,
           <a href="http://vuejs.org/" target="_blank">Vue.js</a>, and
           <a href="https://vuetifyjs.com/" target="_blank">Vuetify</a>.
