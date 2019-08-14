@@ -10,7 +10,7 @@
       @click="showMetricSelector=true"
       style="top: 73px; right: 10px;"
       class="no-print"
-      aria-label="Select Metrics" title="Select Metrics"
+      aria-label="Add Data" title="Add Data"
     >
       <v-icon>{{ mdiFinance }}</v-icon>
     </v-btn>
