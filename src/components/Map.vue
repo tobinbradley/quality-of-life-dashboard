@@ -70,6 +70,9 @@
       dataOptions() {
         return this.$store.state.dataOptions
       },
+      selectPoint() {
+        return this.$store.state.selectPoint
+      },
       geojsonName() {
         return this.$store.getters.geojsonName(this.metricId)
       },
@@ -125,15 +128,15 @@
       displayMode () {
         this.map.resize()
       },
+      selectPoint(val) {
+        this.selectLnglat(val)
+      },
       geocode(val) {
         if (val.id) {
           this.zoomPolys(val.id)
         }
         else {
-          const features = this.map.queryRenderedFeatures(this.map.project(val.lnglat.split(",")), {
-            layers: ['geographyFill']
-          })
-          this.$store.commit("addSelected", { geography: this.geojsonName, id: [features[0].properties.id] })
+          this.$store.commit("selectPoint", val.lnglat.split(","))
 
           this.geoMarker
             .setLngLat(val.lnglat.split(","))
@@ -316,15 +319,8 @@
           this.$store.commit("setSelected", { geography: this.geojsonName, selected: [] })
         })
         this.geolocateControl.on('geolocate', ev => {
-          const features = this.map.queryRenderedFeatures(this.map.project([ev.coords.longitude, ev.coords.latitude]), {
-            layers: ['geographyFill']
-          })
-          // if there is a poly under that point, do your thing
-          if (features[0] && this.selected.indexOf(features[0].properties.id) === -1) {
-            this.$store.commit("addSelected", { geography: this.geojsonName, id: [features[0].properties.id] })
-          }
+          this.$store.commit("selectPoint", [ev.coords.longitude, ev.coords.latitude])
         })
-
       },
       initGeoJSON() {
         const map = this.map
@@ -473,8 +469,7 @@
       },
       setMapClick() {
         this.map.on('click', 'geographyFill', e => {
-          const id = e.features[0].properties.id
-          this.$store.commit('toggleSelected', {geography: this.geojsonName, id: id})
+          this.$store.commit("selectPoint", [e.lngLat.lng, e.lngLat.lat])
         })
       },
       toggleBackgroundLayers(size = 'large') {
@@ -497,6 +492,14 @@
       },
       updateHighlight(e) {
         this.$emit('updateHighlight', e)
+      },
+      selectLnglat(point) {
+        const features = this.map.queryRenderedFeatures(this.map.project(point), {
+          layers: ['geographyFill']
+        })
+        if (features.length > 0 && this.selected.indexOf(features[0].properties.id) === -1) {
+          this.$store.commit("addSelected", { geography: this.geojsonName, id: [features[0].properties.id] })
+        }
       }
     }
   }

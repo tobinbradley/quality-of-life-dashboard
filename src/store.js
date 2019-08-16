@@ -29,7 +29,8 @@ export default new Vuex.Store({
     dataOptions: options,
     siteConfig: site,
     modal: { modal: null, options: null },
-    displayMode: 'desktop' // desktop, print, embed
+    displayMode: 'desktop', // desktop, print, embed
+    selectPoint: []
   },
   getters: {
     dataConfig: state => id => {
@@ -76,6 +77,9 @@ export default new Vuex.Store({
     popState(state, payload) {
       state.metric = payload.metric
       state.selected = payload.selected
+    },
+    selectPoint(state, payload) {
+      state.selectPoint = payload
     }
   }
 })
