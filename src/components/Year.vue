@@ -11,7 +11,9 @@
         tick-size="4"
       >
         <template v-slot:append>
+          <span style="white-space: nowrap">
           {{ displayYear }}
+          </span>
         </template>
       </v-slider>
   </section>
