@@ -136,7 +136,7 @@
           this.zoomPolys(val.id)
         }
         else {
-          this.$store.commit("selectPoint", val.lnglat.split(","))
+          this.$store.commit("selectPoint", {point: val.lnglat.split(","), remove: false})
 
           this.geoMarker
             .setLngLat(val.lnglat.split(","))
