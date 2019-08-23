@@ -6,12 +6,9 @@
       right
     >
       <v-list-item>
-        <v-list-item-avatar>
-           <v-icon class="pink white--text">{{ mdiPlus }}</v-icon>
-        </v-list-item-avatar>
-
         <v-list-item-content>
-          <v-list-item-title>Add Data</v-list-item-title>
+          <v-list-item-title class="title">
+            Add Data</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -56,7 +53,7 @@
 </template>
 
 <script>
-  import { mdiPlus, mdiNewBox } from '@mdi/js'
+  import { mdiNewBox } from '@mdi/js'
 
   export default {
     name: 'dataselector',
@@ -65,7 +62,6 @@
     },
     data: () => ({
         filterBy: [],
-        mdiPlus: mdiPlus,
         mdiNewBox: mdiNewBox
     }),
     computed: {
