@@ -16,6 +16,7 @@
         return-object
         clearable
         aria-label="search"
+        append-icon=""
       ></v-autocomplete>
     </v-flex>
     <v-flex sm1></v-flex>
@@ -33,11 +34,14 @@
 </template>
 
 <script>
+  import { mdiMapSearch } from '@mdi/js'
+
   export default {
     props: {
       value: Boolean,
       metricId: String,
-      geometry: Object
+      geometry: Object,
+      mdiMapSearch: mdiMapSearch
     },
     data() {
       return {
