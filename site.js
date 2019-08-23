@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Charlotte/Mecklenburg Quality of Life Explorer',
+  title: 'Charlotte-Mecklenburg Quality of Life Dashboard',
   author: 'Tobin Bradley',
   keywords:
     'GIS,Mecklenburg County,parks,libraries,schools,environment,impervious surface,floodplain,zoning,assessment,tax,photos,government',
