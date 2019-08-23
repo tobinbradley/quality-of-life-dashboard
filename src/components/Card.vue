@@ -24,7 +24,7 @@
               <Numbers class="numbers" :cardData="cardData" :metricId="metricId" :yearIndex="yearIndex" />
             </v-flex>
             <v-flex custom-sm6>
-              <TrendChart class="trendchart" :cardData="cardData" :metricId="metricId" :yearIndex="yearIndex"  />
+              <TrendChart class="trendchart trendchart-large" :cardData="cardData" :metricId="metricId" :yearIndex="yearIndex"  />
             </v-flex>
           </v-layout>
           <!-- </div> -->
@@ -317,6 +317,10 @@
 
 .embed .card-container {
   margin: 2px 2px 0;
+}
+
+.trendchart-large {
+  margin-top: 25px;
 }
 
 @media (min-width: 500px) {
