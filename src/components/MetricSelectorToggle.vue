@@ -12,7 +12,7 @@
       class="no-print"
       aria-label="Add Data" title="Add Data"
     >
-      <v-icon>{{ mdiFinance }}</v-icon>
+      <v-icon>{{ mdiPlus }}</v-icon>
     </v-btn>
 
     <MetricSelector v-model="showMetricSelector" />
@@ -21,13 +21,13 @@
 
 <script>
   import MetricSelector from './MetricSelector.vue'
-  import { mdiFinance } from '@mdi/js'
+  import { mdiPlus } from '@mdi/js'
 
   export default {
     name: 'metricToggle',
     data () {
       return {
-        mdiFinance: mdiFinance,
+        mdiPlus: mdiPlus,
         showMetricSelector: false
       }
     },
