@@ -7,7 +7,7 @@
         :max="max"
         :min="min"
         hide-details
-        ticks
+        ticks="always"
         tick-size="4"
       >
         <template v-slot:append>
