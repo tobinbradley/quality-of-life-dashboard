@@ -90,7 +90,7 @@
             <v-list-item-title>Download Selected as GeoJSON</v-list-item-title>
           </v-list-item>
           <v-list-item link @click="showMeta=true">
-            <v-list-item-title>View Metadata</v-list-item-title>
+            <v-list-item-title>About the Data</v-list-item-title>
           </v-list-item>
           <v-list-item link @click="showEmbed=true">
             <v-list-item-title>Embed</v-list-item-title>
