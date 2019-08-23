@@ -319,7 +319,7 @@
           this.$store.commit("setSelected", { geography: this.geojsonName, selected: [] })
         })
         this.geolocateControl.on('geolocate', ev => {
-          this.$store.commit("selectPoint", [ev.coords.longitude, ev.coords.latitude])
+          this.$store.commit("selectPoint", {point: [ev.coords.longitude, ev.coords.latitude], remove: false})
         })
       },
       initGeoJSON() {
@@ -469,7 +469,10 @@
       },
       setMapClick() {
         this.map.on('click', 'geographyFill', e => {
-          this.$store.commit("selectPoint", [e.lngLat.lng, e.lngLat.lat])
+          this.selected.indexOf(e.features[0].properties.id) === -1 ?
+            this.$store.commit("selectPoint", {point: [e.lngLat.lng, e.lngLat.lat], remove: false})
+            :
+            this.$store.commit("selectPoint", {point: [e.lngLat.lng, e.lngLat.lat], remove: true})
         })
       },
       toggleBackgroundLayers(size = 'large') {
@@ -494,11 +497,18 @@
         this.$emit('updateHighlight', e)
       },
       selectLnglat(point) {
-        const features = this.map.queryRenderedFeatures(this.map.project(point), {
+        const features = this.map.queryRenderedFeatures(this.map.project(point.point), {
           layers: ['geographyFill']
         })
-        if (features.length > 0 && this.selected.indexOf(features[0].properties.id) === -1) {
+
+        // add features
+        if (features.length > 0 && this.selected.indexOf(features[0].properties.id) === -1 && !point.remove) {
           this.$store.commit("addSelected", { geography: this.geojsonName, id: [features[0].properties.id] })
+        }
+
+        // remove features
+        if (features.length > 0 && point.remove) {
+          this.$store.commit("removeSelected", { geography: this.geojsonName, id: features[0].properties.id })
         }
       }
     }
