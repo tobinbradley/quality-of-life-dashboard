@@ -1,5 +1,5 @@
 <template>
-  <v-layout wrap>
+  <v-layout wrap class="searchblock">
     <v-flex sm5 xs12>
       <v-autocomplete
         v-model="model"
@@ -11,7 +11,8 @@
         hide-details
         item-text="label"
         item-value="API"
-        label="Search"
+        label="Search the Map"
+        placeholder="Ex: 600 E 4th St"
         :filter="goFilter"
         return-object
         clearable
@@ -152,6 +153,10 @@
 .v-text-field {
   padding-top: 0;
   margin-top: 0;
+}
+
+.searchblock {
+  /* margin-bottom: 20px; */
 }
 
 @media (max-width: 600px) {
