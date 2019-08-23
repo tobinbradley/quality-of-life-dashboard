@@ -30,7 +30,7 @@ export default new Vuex.Store({
     siteConfig: site,
     modal: { modal: null, options: null },
     displayMode: 'desktop', // desktop, print, embed
-    selectPoint: []
+    selectPoint: { point: [], remove: false }
   },
   getters: {
     dataConfig: state => id => {
@@ -62,14 +62,12 @@ export default new Vuex.Store({
         ...new Set([...state.selected[payload.geography], ...payload.id])
       ]
     },
-    toggleSelected(state, payload) {
+    removeSelected(state, payload) {
       const pos = state.selected[payload.geography].indexOf(payload.id)
-      if (pos === -1) {
-        state.selected[payload.geography].push(payload.id)
-      } else {
+      if (pos !== -1) {
         state.selected[payload.geography].splice(pos, 1)
+        writeState(state.metric, state.selected)
       }
-      writeState(state.metric, state.selected)
     },
     setDisplayMode(state, payload) {
       state.displayMode = payload
@@ -80,6 +78,9 @@ export default new Vuex.Store({
     },
     selectPoint(state, payload) {
       state.selectPoint = payload
+    },
+    togglePoint(state, payload) {
+      state.togglePoint = payload
     }
   }
 })
