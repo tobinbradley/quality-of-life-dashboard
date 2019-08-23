@@ -1,5 +1,5 @@
 <template>
-  <v-dialog scrollable v-model="show" width="500">
+  <v-dialog scrollable v-model="show" width="650">
       <v-card>
 
         <v-card-text v-html="metadata" class="metadata">
