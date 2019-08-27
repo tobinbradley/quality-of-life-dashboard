@@ -19,6 +19,16 @@ const metrics =
   ]
 readSelected(selected, options.defaultgeojson)
 
+// detect if site is in iframe
+const iFramed = window.self !== window.top
+if (iFramed) {
+  setInterval(function() {
+    window.top.postMessage({ pageHeight: document.body.scrollHeight }, '*')
+  }, 500)
+}
+
+console.log(iFramed);
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -29,6 +39,7 @@ export default new Vuex.Store({
     dataOptions: options,
     siteConfig: site,
     modal: { modal: null, options: null },
+    iFramed: iFramed,
     displayMode: 'desktop', // desktop, print, embed
     selectPoint: { point: [], remove: false }
   },
@@ -61,6 +72,7 @@ export default new Vuex.Store({
       state.selected[payload.geography] = [
         ...new Set([...state.selected[payload.geography], ...payload.id])
       ]
+      writeState(state.metric, state.selected)
     },
     removeSelected(state, payload) {
       const pos = state.selected[payload.geography].indexOf(payload.id)
@@ -68,6 +80,13 @@ export default new Vuex.Store({
         state.selected[payload.geography].splice(pos, 1)
         writeState(state.metric, state.selected)
       }
+    },
+    clearSelected(state) {
+      const keys = Object.keys(state.selected)
+      keys.forEach(key => {
+        state.selected[key] = []
+      })
+      writeState(state.metric, state.selected)
     },
     setDisplayMode(state, payload) {
       state.displayMode = payload
