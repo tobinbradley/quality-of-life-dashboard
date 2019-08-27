@@ -316,7 +316,7 @@
 
         // callbacks for control
         this.clearSelectedControl.on("clear", ev => {
-          this.$store.commit("setSelected", { geography: this.geojsonName, selected: [] })
+          this.$store.commit("clearSelected")
         })
         this.geolocateControl.on('geolocate', ev => {
           this.$store.commit("selectPoint", {point: [ev.coords.longitude, ev.coords.latitude], remove: false})
