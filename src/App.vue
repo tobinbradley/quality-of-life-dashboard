@@ -1,9 +1,9 @@
 <template>
-  <v-app :class="displayMode">
-    <AppBar />
+  <v-app :class="[displayMode, iFramed ? 'iFramed' : '']">
+    <AppBar v-if="!iFramed" />
     <MetricSelectorToggle />
     <MetricGrid />
-    <Footer />
+    <Footer v-if="!iFramed" />
   </v-app>
 </template>
 
@@ -27,6 +27,9 @@
       },
       site() {
         return this.$store.state.siteConfig
+      },
+      iFramed() {
+        return this.$store.state.iFramed
       }
     },
     beforeMount () {
@@ -50,6 +53,8 @@
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+.iFramed.theme--light.v-application {
+  background: transparent !important;
+}
 </style>
