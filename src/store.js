@@ -27,7 +27,6 @@ if (iFramed) {
   }, 500)
 }
 
-console.log(iFramed);
 
 Vue.use(Vuex)
 
