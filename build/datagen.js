@@ -129,7 +129,7 @@ dataConfig.forEach(m => {
   }
   if (m.type === 'mean') {
     csv()
-      .fromFile('data/metric/n' + m.metric + '.csv')
+      .fromFile('data/metric/r' + m.metric + '.csv')
       .then(jsonObj => {
         let outJSON = {}
         outJSON['map'] = jsonTransform(jsonObj)
