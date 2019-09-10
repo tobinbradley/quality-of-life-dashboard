@@ -29,12 +29,30 @@
 
 ## Install
 
-``` bash
+```sh
 git clone https://github.com/tobinbradley/quality-of-life-dashboard.git dashboard
 cd dashboard
+npm install
 git clone https://github.com/tobinbradley/mecklenburg-quality-of-life-data.git data
 npm install
 ```
+
+You will have to add a data configuration folder for the Dashboard to work. An automatic data configuration for a US State or County can be achieved the [quality-of-life-data-uscensus](https://github.com/tobinbradley/quality-of-life-data-uscensus) repo. From the `dashboard` directory: 
+
+```sh
+git clone https://github.com/tobinbradley/quality-of-life-data-uscensus.git data
+cd data
+npm install
+```
+
+You can find out how to set a state or county FIPS code in the [readme](https://github.com/tobinbradley/quality-of-life-data-uscensus).
+
+Alternately, you can use Mecklenburg County's data repo:
+
+```sh
+git clone https://github.com/tobinbradley/mecklenburg-quality-of-life-data.git data
+```
+
 
 ## Usage
 
