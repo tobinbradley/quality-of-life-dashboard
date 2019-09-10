@@ -14,7 +14,7 @@
   import { formatNumber } from '../js/numberFormatting'
   import FullExtentControl from '../js/mapControlFullextent'
   import ClearSelectedControl from '../js/mapControlClearSelected'
-  import mapStyle from '../../data/gl-style/positron-mecklenburg.json'
+  import mapStyle from '../../data/gl-style/style.json'
 
   export default {
     name: 'qolmap',
@@ -153,7 +153,13 @@
           this.map.resize()
           this.map.fitBounds(this.getFullExtent(), {
             pitch: 0,
-            bearing: 0
+            bearing: 0,
+            padding: {
+              top: 5,
+              bottom: 5,
+              left: 0,
+              right: 65
+            }
           })
 
           if (newValue === 'small') {
@@ -193,7 +199,7 @@
             height
           )
         } else {
-          this.map.moveLayer("geographyFill", this.dataOptions.fillLayerBefore)
+          this.map.moveLayer("geographyFill", this.dataOptions.fillLayerBefore || "geographyLine")
           this.map.setPaintProperty("geographyFill", "fill-extrusion-height", 0)
         }
       }
@@ -212,7 +218,15 @@
           maxBounds: this.dataOptions.maxBounds,
           attributionControl: false,
           interactive: this.cardSize === 'large',
-          preserveDrawingBuffer: navigator.userAgent.toLowerCase().indexOf("firefox") > -1
+          preserveDrawingBuffer: navigator.userAgent.toLowerCase().indexOf("firefox") > -1,
+          fitBoundsOptions: {
+            padding: {
+              top: 5,
+              bottom: 5,
+              left: 0,
+              right: 65
+            }
+          }
         }
 
         const map = this.map = new mapboxgl.Map(mapOptions)
@@ -234,7 +248,13 @@
           if (this.cardSize === 'small') {
             this.map.fitBounds(this.getFullExtent(), {
               pitch: 0,
-              bearing: 0
+              bearing: 0,
+              padding: {
+                top: 5,
+                bottom: 5,
+                left: 0,
+                right: 65
+              }
             })
           }
         })
@@ -270,7 +290,13 @@
 
         this.map.fitBounds(bounds, {
           pitch: 0,
-          bearing: 0
+          bearing: 0,
+          padding: {
+            top: 5,
+            bottom: 5,
+            left: 0,
+            right: 65
+          }
         })
       },
       removeInteractive() {
@@ -326,6 +352,22 @@
         const map = this.map
         const _this = this
 
+        // fill layer
+        map.addLayer(
+          {
+            id: "geographyFill",
+            type: "fill-extrusion",
+            source: {
+              type: "geojson",
+              data: _this.geojson
+            },
+            paint: {
+              "fill-extrusion-opacity": 1
+            }
+          },
+          this.dataOptions.fillLayerBefore
+        )
+
         // outline layer
         map.addLayer(
           {
@@ -343,22 +385,6 @@
             }
           },
           this.dataOptions.lineLayerBefore
-        )
-
-        // fill layer
-        map.addLayer(
-          {
-            id: "geographyFill",
-            type: "fill-extrusion",
-            source: {
-              type: "geojson",
-              data: _this.geojson
-            },
-            paint: {
-              "fill-extrusion-opacity": 1
-            }
-          },
-          this.dataOptions.fillLayerBefore
         )
 
       },
