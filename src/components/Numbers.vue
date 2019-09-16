@@ -129,7 +129,13 @@
             if (group.format) ids = group.format(ids)
           }
 
-          record.val = formatNumber(this.metricVal(ids || false), this.dataConfig)
+          // set world value
+          if (!ids && this.dataConfig.world_val && this.dataConfig.world_val[this.year]) {
+            record.val = formatNumber(this.dataConfig.world_val[this.year], this.dataConfig)
+          } else {
+            record.val = formatNumber(this.metricVal(ids || false), this.dataConfig)
+          }
+
           // raw if needed
           if (this.dataConfig.raw_label) {
             record.raw = formatNumber(this.rawVal(ids || false), this.dataConfig)

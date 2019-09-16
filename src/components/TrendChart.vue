@@ -170,8 +170,15 @@
           }
 
           this.years.forEach(year => {
-            let dataPoint = metricCalculation(this.cardData, year, this.dataConfig.type, ids || false)
-            if (isNaN(parseFloat(dataPoint))) dataPoint = null
+            let dataPoint = null
+            // set world value
+            if (!ids && this.dataConfig.world_val && this.dataConfig.world_val[year]) {
+              dataPoint = this.dataConfig.world_val[year]
+            } else {
+              dataPoint = metricCalculation(this.cardData, year, this.dataConfig.type, ids || false)
+              if (isNaN(parseFloat(dataPoint))) dataPoint = null
+            }
+
             data.data.push(dataPoint)
           })
 
