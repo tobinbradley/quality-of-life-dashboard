@@ -49,7 +49,7 @@
         clearSelectedControl: new ClearSelectedControl({}),
         geolocateControl: new mapboxgl.GeolocateControl({
           positionOptions: {
-          enableHighAccuracy: true
+            enableHighAccuracy: true
           },
           trackUserLocation: true
         }),
@@ -136,16 +136,21 @@
           this.zoomPolys(val.id)
         }
         else {
+          const features = this.map.queryRenderedFeatures(this.map.project(val.lnglat.split(",")), {
+            layers: ['geographyFill']
+          })
+
+          // zoom if a new poly
+          if (features.length > 0) {
+            this.zoomPolys([features[0].properties.id])
+          }
+
           this.$store.commit("selectPoint", {point: val.lnglat.split(","), remove: false})
 
           this.geoMarker
             .setLngLat(val.lnglat.split(","))
             .addTo(this.map)
 
-          this.map.flyTo({
-            center: val.lnglat.split(","),
-            zoom: 13
-          })
         }
       },
       cardSize(newValue, oldValue) {
