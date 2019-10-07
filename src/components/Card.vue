@@ -11,7 +11,8 @@
       <template v-if="cardData && geometry">
 
         <div v-show="show === 'Map' || cardSize === 'large'">
-          <Map :geocode="geocode" :geojson="geometry" :cardSize="cardSize" :cardData="cardData" :highlight="highlight" :metricId="metricId" :yearIndex="yearIndex" @updateHighlight="updateHighlight" />
+          <!-- <Map :geocode="geocode" :geojson="geometry" :cardSize="cardSize" :cardData="cardData" :highlight="highlight" :metricId="metricId" :yearIndex="yearIndex" @updateHighlight="updateHighlight" /> -->
+          <Map :geojson="geometry" :cardSize="cardSize" :cardData="cardData" :highlight="highlight" :metricId="metricId" :yearIndex="yearIndex" @updateHighlight="updateHighlight" />
           <Year class="years" :cardData="cardData" :metricId="metricId" @updateYear="updateYear" />
         </div>
 
@@ -61,7 +62,7 @@
       </v-btn-toggle>
 
       <template v-if="cardSize === 'large'">
-        <Search v-if="displayMode !== 'embed'" :metricId="metricId" :geometry="geometry" @geocode="setGeocode" />
+        <!-- <Search v-if="displayMode !== 'embed'" :metricId="metricId" :geometry="geometry" @geocode="setGeocode" /> -->
 
           <v-btn-toggle>
           <v-btn small @click="showTable = !showTable" aria-label="Data Table" title="Data Table">

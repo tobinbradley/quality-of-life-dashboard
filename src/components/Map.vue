@@ -2,11 +2,13 @@
   <section class="mapcontainer">
     <div :id="mapId" class="map" ref="map"></div>
     <Legend :breaks="breaks" :dataConfig="dataConfig" :cardData="cardData" :yearIndex="yearIndex" @updateHighlight="updateHighlight" />
+    <Search class="mapSearch" :class="{mapSearchHidden: mapSearchHidden}" v-if="displayMode !== 'embed' && cardSize === 'large'" :metricId="metricId" :geometry="geojson" @geocode="setGeocode" />
   </section>
 </template>
 
 <script>
   import Legend from './Legend'
+  import Search from './Search'
   import mapboxgl from 'mapbox-gl'
   import {ckmeans, min, max} from 'simple-statistics'
   import dataToYears from '../js/dataToYears'
@@ -14,12 +16,14 @@
   import { formatNumber } from '../js/numberFormatting'
   import FullExtentControl from '../js/mapControlFullextent'
   import ClearSelectedControl from '../js/mapControlClearSelected'
+  import MapSearchControl from '../js/mapControlSearch'
   import mapStyle from '../../data/gl-style/style.json'
 
   export default {
     name: 'qolmap',
     components: {
-      Legend
+      Legend,
+      Search
     },
     props: {
       cardData: {
@@ -37,16 +41,19 @@
       highlight: {
         type: Array
       },
-      metricId: String,
-      geocode: Object
+      geometry: Array,
+      metricId: String
     },
     data() {
       return {
         map: null,
         geoMarker: null,
+        geocode: null,
+        mapSearchHidden: true,
         navControl: new mapboxgl.NavigationControl(),
         fullscreenControl: new mapboxgl.FullscreenControl(),
         clearSelectedControl: new ClearSelectedControl({}),
+        mapSearchControl: new MapSearchControl({}),
         geolocateControl: new mapboxgl.GeolocateControl({
           positionOptions: {
             enableHighAccuracy: true
@@ -323,6 +330,7 @@
           this.map.removeControl(this.FullExtentControl)
           this.map.removeControl(this.clearSelectedControl)
           this.map.removeControl(this.geolocateControl)
+          this.map.removeControl(this.mapSearchControl)
         } catch (error) { }
       },
       setInteractive() {
@@ -342,12 +350,16 @@
         this.map.addControl(this.navControl, 'top-left')
         this.map.addControl(this.FullExtentControl, 'top-left')
         this.map.addControl(this.fullscreenControl, 'top-left')
+        this.map.addControl(this.mapSearchControl, 'bottom-left')
         if (this.displayMode !== 'embed') this.map.addControl(this.geolocateControl, 'top-left')
         if (this.displayMode !== 'embed') this.map.addControl(this.clearSelectedControl, 'top-left')
 
         // callbacks for control
         this.clearSelectedControl.on("clear", ev => {
           this.$store.commit("clearSelected")
+        })
+        this.mapSearchControl.on("toggle", ev => {
+          this.mapSearchHidden = !this.mapSearchHidden
         })
         this.geolocateControl.on('geolocate', ev => {
           this.$store.commit("selectPoint", {point: [ev.coords.longitude, ev.coords.latitude], remove: false})
@@ -527,6 +539,9 @@
       updateHighlight(e) {
         this.$emit('updateHighlight', e)
       },
+      setGeocode(val) {
+        this.geocode = val
+      },
       selectLnglat(point) {
         const features = this.map.queryRenderedFeatures(this.map.project(point.point), {
           layers: ['geographyFill']
@@ -558,5 +573,15 @@
   .large .map {
     border-bottom: 1px solid #ccc;
     height: 380px;
+  }
+
+  .mapSearch {
+    position: absolute;
+    right: 0;
+    left: 50px;
+    bottom: -15px;
+  }
+  .mapSearchHidden {
+    display: none;
   }
 </style>

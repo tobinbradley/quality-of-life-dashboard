@@ -1,37 +1,42 @@
 <template>
-  <v-layout wrap class="searchblock">
-    <v-flex sm5 xs12>
-      <v-autocomplete
-        v-model="model"
-        :items="items"
-        :loading="isLoading"
-        :search-input.sync="search"
-        hide-no-data
-        hide-selected
-        hide-details
-        item-text="label"
-        item-value="API"
-        label="Search the Map"
-        placeholder="Ex: 600 E 4th St"
-        :filter="goFilter"
-        return-object
-        clearable
-        aria-label="search"
-        append-icon=""
-      ></v-autocomplete>
-    </v-flex>
-    <v-flex sm1></v-flex>
-    <v-flex sm5 id="selectGroup">
-      <v-select v-if="groups.length > 0"
-        @change="selectGroup"
-        :items="groups"
-        label="Geography (approximate)"
-        hide-details
-        clearable
-        aria-label="select geography group"
-      ></v-select>
-    </v-flex>
-  </v-layout>
+  <div class="searchblock">
+    <v-container wrap class="">
+      <v-row>
+        <v-col sm="6" xs="12">
+          <v-autocomplete
+            v-model="model"
+            :items="items"
+            :loading="isLoading"
+            :search-input.sync="search"
+            hide-no-data
+            hide-selected
+            hide-details
+            solo
+            item-text="label"
+            item-value="API"
+            label="Search the Map"
+            placeholder="Ex: 600 E 4th St"
+            :filter="goFilter"
+            return-object
+            clearable
+            aria-label="search"
+            append-icon=""
+          ></v-autocomplete>
+        </v-col>
+        <v-col sm="6" id="selectGroup">
+          <v-select v-if="groups.length > 0"
+            @change="selectGroup"
+            :items="groups"
+            label="Geography (approximate)"
+            hide-details
+            clearable
+            solo
+            aria-label="select geography group"
+          ></v-select>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -154,9 +159,9 @@
   padding-top: 0;
   margin-top: 0;
 }
-/*
-.searchblock {
-  margin-bottom: 20px;
+
+/* .searchblock {
+  background-color: #ccc;
 } */
 
 @media (max-width: 600px) {
