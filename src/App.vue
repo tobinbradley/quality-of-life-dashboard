@@ -4,6 +4,7 @@
     <MetricSelectorToggle />
     <MetricGrid />
     <Footer v-if="!iFramed" />
+    <Splash />
   </v-app>
 </template>
 
@@ -12,6 +13,7 @@
   import MetricSelectorToggle from './components/MetricSelectorToggle'
   import AppBar from './components/AppBar.vue'
   import Footer from './components/Footer.vue'
+  import Splash from './components/Splash.vue'
 
   export default {
     name: 'app',
@@ -19,7 +21,8 @@
       MetricGrid,
       AppBar,
       Footer,
-      MetricSelectorToggle
+      MetricSelectorToggle,
+      Splash
     },
     computed: {
       displayMode() {

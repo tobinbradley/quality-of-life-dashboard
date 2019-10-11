@@ -24,6 +24,10 @@ module.exports = {
     {
       title: 'Mecklenburg Open Mapping',
       url: 'http://maps.co.mecklenburg.nc.us/openmapping/'
+    },
+    {
+      title: 'Quality of Life Explorer',
+      url: 'https://mcmap.org/qolexplorer'
     }
   ]
 }
