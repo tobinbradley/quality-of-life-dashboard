@@ -19,15 +19,11 @@ module.exports = {
     },
     {
       title: 'Charlotte Open Data Portal',
-      url: 'http://clt.charlotte.opendata.arcgis.com/'
+      url: 'https://data.charlottenc.gov/'
     },
     {
       title: 'Mecklenburg Open Mapping',
       url: 'http://maps.co.mecklenburg.nc.us/openmapping/'
-    },
-    {
-      title: 'Quality of Life Explorer',
-      url: 'https://mcmap.org/qolexplorer'
     }
   ]
 }
