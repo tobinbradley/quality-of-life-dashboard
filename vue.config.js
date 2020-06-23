@@ -5,7 +5,7 @@ Object.keys(siteConfig).forEach(key => {
 });
 
 module.exports = {
-  baseUrl: process.env.NODE_ENV === 'production' ? '' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '' : '/',
   css: {
     sourceMap: true
   },
