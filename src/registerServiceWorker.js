@@ -24,7 +24,7 @@ if ('serviceWorker' in navigator) {
               console.log('New content is available, please refresh.')
               newWorker.postMessage({ type: 'SKIP_WAITING' })
               Vue.$toast.open({
-                message: 'The Explorer has been updated! .',
+                message: 'QoL Explorer has been updated! Click this message to reload.',
                 type: 'info',
                 duration: 6000,
                 onClick: () => { location.reload() }
