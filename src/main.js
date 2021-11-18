@@ -54,33 +54,7 @@ import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 
-// fix ie SVG bugs
 ieSVGFixes();
-
-// help system
-//for (const el of document.querySelectorAll('.help')) {
-//  el.addEventListener('click', function() {
-//    console.log('click');
-//    introJs().start();
-//  });
-//}
-
-// youtube video
-// document.querySelector('.youtube').addEventListener('click', function() {
-//   let theElem = document.querySelector('.youtube');
-//   let id = theElem.getAttribute('id');
-
-//   // create iframe
-//   var iframe = document.createElement('iframe');
-//   var url = `https://www.youtube.com/embed/${
-//     id
-//   }?autoplay=1&autohide=1&${theElem.getAttribute('data-params')}`;
-//   iframe.src = url;
-//   iframe.setAttribute('allowfullscreen', 'allowfullscreen');
-//   iframe.setAttribute('frameborder', '0');
-//   iframe.setAttribute('aria-label', 'GeoPortal video tutorial');
-//   theElem.appendChild(iframe);
-// });
 
 // the shared state between components
 let appState = {
