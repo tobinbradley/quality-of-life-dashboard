@@ -4,7 +4,7 @@
     <MetricSelectorToggle />
     <MetricGrid />
     <Footer v-if="!iFramed" />
-    <Splash />
+    <!-- <Splash /> -->
   </v-app>
 </template>
 

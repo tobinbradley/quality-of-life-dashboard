@@ -9,7 +9,7 @@
 <script>
   import Legend from './Legend'
   import Search from './Search'
-  import mapboxgl from 'mapbox-gl'
+  import mapboxgl from 'maplibre-gl'
   import {ckmeans, min, max} from 'simple-statistics'
   import dataToYears from '../js/dataToYears'
   import { dataToArray } from '../js/dataToArray'
