@@ -146,9 +146,13 @@ export default {
                 this.privateState.area = prettyNumber(areaValue, metric.config.decimals, metric.config.prefix, metric.config.suffix);
             }
             if (metric.config.raw_label) {
-                let rawArray = wValsToArray(metric.data.map, metric.data.w, [this.sharedState.year], keys);
-                let rawValue = sum(rawArray);
-                this.privateState.areaRaw = prettyNumber(rawValue, 0);
+                if (metric.config.raw_val && metric.config.raw_val[`y_${this.sharedState.year}`]) {
+                    this.privateState.areaRaw = prettyNumber(metric.config.raw_val[`y_${this.sharedState.year}`], 0);
+                } else {
+                    let rawArray = wValsToArray(metric.data.map, metric.data.w, [this.sharedState.year], keys);
+                    let rawValue = sum(rawArray);
+                    this.privateState.areaRaw = prettyNumber(rawValue, 0);
+                }
             }
         },
         processYear: function() {
