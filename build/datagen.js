@@ -4,7 +4,7 @@ var dataConfig = require('../data/config/data.json');
 const csv = require('csvtojson');
 const _ = require('lodash');
 var dest = './public/data/metric';
-var marked = require('marked');
+const marked = require('marked');
 var shell = require('shelljs');
 
 ///////////////////////////////////////////////////
@@ -59,7 +59,7 @@ for (let i = 0; i < files.length; i++) {
       path.join('public/data/meta', path.basename(files[i]).split('.')[0]) +
       '.html';
 
-    marked(data, function(err, content) {
+    marked.parse(data.replace(/[\u200B-\u200D\uFEFF]/g, ''), function(err, content) {
       if (err) {
         return console.log(err);
       }
