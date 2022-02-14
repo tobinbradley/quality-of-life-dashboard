@@ -21,3 +21,6 @@
 .comment-container .comment-complete p {
   font-size: 2em;
 }
+.comment-form #website {
+  display: none;
+}

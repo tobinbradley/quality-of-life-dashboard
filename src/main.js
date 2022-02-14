@@ -410,10 +410,7 @@ if (contactForm) {
           siteConfig.contactForm,
           querystring.stringify({
             email: email.value,
-            url: window.location.href,
-            agent: navigator.userAgent,
-            subject: 'Quality of Life Dashboard Feedback',
-            to: 'tobin.bradley@gmail.com',
+            website: document.querySelector("#website").value,
             message: message.value
           }),
           {
