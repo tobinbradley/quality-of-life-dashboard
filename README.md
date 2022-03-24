@@ -1,4 +1,8 @@
-# Quality of Life Dashboard v3
+# THIS PROJECT HAS MOVED!
+
+It's now located at [https://github.com/tobinbradley/quality-of-life-explorer](https://github.com/tobinbradley/quality-of-life-explorer). 
+
+## Quality of Life Dashboard v3
 
 A dashboard for community data and health. See our [demo site](http://mcmap.org/qol-dev).
 
